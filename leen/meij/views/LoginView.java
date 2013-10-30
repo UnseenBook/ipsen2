@@ -30,7 +30,7 @@ public class LoginView extends View<Gebruiker> implements ActionListener
 		
 		setLayout(new MigLayout("center"));
 		
-		add(lblGebruikersnaam , "padding");
+		add(lblGebruikersnaam);
 		add(txtGebruikersnaam,"wrap");
 		
 		add(lblWachtwoord);

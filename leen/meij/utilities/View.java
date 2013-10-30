@@ -45,7 +45,7 @@ public abstract class View<T> extends JPanel
 	protected View(T model)
 	{
 		this.model = model;
-		this.initialize(model);
+		
 	}
 
 	/**

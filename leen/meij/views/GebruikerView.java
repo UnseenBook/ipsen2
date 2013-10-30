@@ -27,7 +27,7 @@ public class GebruikerView extends MasterView<ArrayList<Gebruiker>>
 		throw new UnsupportedOperationException();
 	}
 
-	protected ArrayList<Gebruiker> retrieveModel()
+	protected ArrayList<Gebruiker> getEditedModel()
 	{
 		// TODO - implement {class}.{operation}
 		throw new UnsupportedOperationException();

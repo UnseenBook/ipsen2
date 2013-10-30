@@ -25,7 +25,7 @@ public class RapportView extends MasterView<ArrayList<Reservering>>
 		throw new UnsupportedOperationException();
 	}
 
-	protected ArrayList<Reservering> retrieveModel()
+	protected ArrayList<Reservering> getEditedModel()
 	{
 		// TODO - implement {class}.{operation}
 		throw new UnsupportedOperationException();

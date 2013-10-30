@@ -34,7 +34,7 @@ public class VoertuigDetailsView extends MasterView<Voertuig>
 		throw new UnsupportedOperationException();
 	}
 
-	protected Voertuig retrieveModel()
+	protected Voertuig getEditedModel()
 	{
 		// TODO - implement {class}.{operation}
 		throw new UnsupportedOperationException();

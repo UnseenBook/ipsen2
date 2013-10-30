@@ -29,7 +29,7 @@ public class OnderhoudDetailsView extends MasterView<Onderhoud>
 		throw new UnsupportedOperationException();
 	}
 
-	protected Onderhoud retrieveModel()
+	protected Onderhoud getEditedModel()
 	{
 		// TODO - implement {class}.{operation}
 		throw new UnsupportedOperationException();

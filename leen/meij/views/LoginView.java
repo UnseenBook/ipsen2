@@ -52,7 +52,7 @@ public class LoginView extends View<Gebruiker> implements ActionListener
 		
 	}
 
-	protected Gebruiker retrieveModel()
+	protected Gebruiker getEditedModel()
 	{
 		return this.model;
 	}

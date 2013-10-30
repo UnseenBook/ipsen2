@@ -56,7 +56,7 @@ public class KlantDetailsView extends MasterView<Klant>
 		throw new UnsupportedOperationException();
 	}
 
-	protected Klant retrieveModel()
+	protected Klant getEditedModel()
 	{
 		// TODO - implement {class}.{operation}
 		throw new UnsupportedOperationException();

@@ -15,7 +15,8 @@ public class Site extends JFrame
 	private static Site instance;
 
 	private View currentView;
-
+	private Gebruiker user;
+	
 	public static Site getInstance()
 	{
 		if(Site.instance == null)
@@ -101,6 +102,16 @@ public class Site extends JFrame
 			
 			
 		}
+	}
+
+	public Gebruiker getUser()
+	{
+		return user;
+	}
+
+	public void setUser(Gebruiker user)
+	{
+		this.user = user;
 	}
 
 

@@ -41,7 +41,7 @@ public class GebruikerDetailsView extends MasterView<Gebruiker>
 		throw new UnsupportedOperationException();
 	}
 
-	protected Gebruiker retrieveModel()
+	protected Gebruiker getEditedModel()
 	{
 		// TODO - implement {class}.{operation}
 		throw new UnsupportedOperationException();

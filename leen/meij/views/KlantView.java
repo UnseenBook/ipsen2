@@ -27,7 +27,7 @@ public class KlantView extends MasterView<ArrayList<Klant>>
 		throw new UnsupportedOperationException();
 	}
 
-	protected ArrayList<Klant> retrieveModel()
+	protected ArrayList<Klant> getEditedModel()
 	{
 		// TODO - implement {class}.{operation}
 		throw new UnsupportedOperationException();

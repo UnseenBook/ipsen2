@@ -37,7 +37,7 @@ public class ReververingDetailsView extends MasterView<Reservering>
 		throw new UnsupportedOperationException();
 	}
 
-	protected Reservering retrieveModel()
+	protected Reservering getEditedModel()
 	{
 		// TODO - implement {class}.{operation}
 		throw new UnsupportedOperationException();

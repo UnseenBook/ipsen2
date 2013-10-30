@@ -39,16 +39,8 @@ public class Site extends JFrame
 		this.setLocationRelativeTo(null);
 		this.setLayout(new BorderLayout());
 		
-		ArrayList<Klant> klanten = new ArrayList<Klant>();
-		
-		klanten.add(new Klant(12,"Thijs"));
-		klanten.add(new Klant(23,"Daan"));
-		
-
-		currentView = new KlantView(klanten);
-		
 		// default initial view
-		//currentView = new LoginView(new Gebruiker());
+		currentView = new LoginView(new Gebruiker());
 		
 		this.add(currentView);
 		this.setVisible(true);

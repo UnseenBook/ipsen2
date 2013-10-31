@@ -8,6 +8,11 @@ import javax.swing.event.*;
 import javax.swing.table.*;
 import leen.meij.*;
 
+/**
+ * 
+ * @author Thijs
+ *
+ */
 public class KlantView extends MasterView<ArrayList<Klant>> implements
 		ListSelectionListener, ActionListener
 {
@@ -25,40 +30,13 @@ public class KlantView extends MasterView<ArrayList<Klant>> implements
 
 		this.setTitle("Klanten");
 
-		DefaultTableModel dtm = new DefaultTableModel();
-		dtm.addColumn("Klantnummer");
-		dtm.addColumn("Voornaam");
-		dtm.addColumn("Email");
-		dtm.addColumn("Telefoonnummer");
+		// content panel
 
-		for (Klant klant : model)
-		{
-			dtm.addRow(new Object[] { klant.getKlantNummer(),
-					klant.getVoornaam(), klant.getEmailadres(),
-					klant.getTelefoonnummer(), });
-		}
+		tblKlanten = createKlantTable();
+		this.pnlContent.add(this.tblKlanten.getTableHeader(), "wrap");
+		this.pnlContent.add(this.tblKlanten);
 
-		TableColumnModel tcm = new DefaultTableColumnModel();
-		tcm.addColumn(new TableColumn(0, 50));
-		tcm.addColumn(new TableColumn(1, 200));
-		tcm.addColumn(new TableColumn(2, 200));
-		tcm.addColumn(new TableColumn(3, 200));
-		tcm.getColumn(0).setHeaderValue("ID");
-		tcm.getColumn(1).setHeaderValue("Voornaam");
-		tcm.getColumn(2).setHeaderValue("Email adres");
-		tcm.getColumn(3).setHeaderValue("Telefoonnummer");
-
-		tblKlanten = new JTable(dtm, tcm)
-		{
-			private static final long serialVersionUID = 1L;
-
-			public boolean isCellEditable(int row, int column)
-			{
-				return false;
-			};
-		};
-		tblKlanten.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		tblKlanten.getSelectionModel().addListSelectionListener(this);
+		// bottom menu panel
 
 		btnWijzigen.setEnabled(false);
 		btnVerwijderen.setEnabled(false);
@@ -67,8 +45,9 @@ public class KlantView extends MasterView<ArrayList<Klant>> implements
 		this.pnlBotMenu.add(this.btnVerwijderen);
 		this.pnlBotMenu.add(this.btnToevoegen);
 
-		this.pnlContent.add(this.tblKlanten.getTableHeader(), "wrap");
-		this.pnlContent.add(this.tblKlanten);
+		btnWijzigen.addActionListener(this);
+		btnVerwijderen.addActionListener(this);
+		btnToevoegen.addActionListener(this);
 	}
 
 	protected ArrayList<Klant> getEditedModel()
@@ -76,23 +55,27 @@ public class KlantView extends MasterView<ArrayList<Klant>> implements
 		return model;
 	}
 
-	public void ActionPerformed(ActionEvent e)
+	public void actionPerformed(ActionEvent e)
 	{
 		super.actionPerformed(e);
 
 		if (e.getSource() == btnToevoegen)
 		{
-			runTask("Klant","klantToevoegen");
+			runTask("Klant", "klantToevoegen");
 		}
-		else if(selectedKlant != null)
+		else if (selectedKlant != null) // only enable this buttons if a Klant
+										// is selected
 		{
 			if (e.getSource() == btnVerwijderen)
 			{
-				runTask("Klant","klantVerwijderen", new Object[]{new Integer(selectedKlant.getKlantID())});
+				runTask("Klant",
+						"klantVerwijderen",
+						new Object[] { new Integer(selectedKlant.getKlantID()) });
 			}
 			else if (e.getSource() == btnWijzigen)
 			{
-				runTask("Klant","klantWijzigen", new Object[]{new Integer(selectedKlant.getKlantID())});
+				runTask("Klant", "klantWijzigen", new Object[] { new Integer(
+						selectedKlant.getKlantID()) });
 			}
 		}
 	}
@@ -112,4 +95,47 @@ public class KlantView extends MasterView<ArrayList<Klant>> implements
 		btnWijzigen.setEnabled(inRange);
 	}
 
+	private JTable createKlantTable()
+	{
+		DefaultTableModel dtm = new DefaultTableModel();
+		dtm.addColumn("Klantnummer");
+		dtm.addColumn("Voornaam");
+		dtm.addColumn("Email");
+		dtm.addColumn("Telefoonnummer");
+
+		for (Klant klant : model)
+		{
+			dtm.addRow(new Object[] { klant.getKlantNummer(),
+					klant.getVoornaam(), klant.getEmailadres(),
+					klant.getTelefoonnummer() });
+		}
+
+		TableColumnModel tcm = new DefaultTableColumnModel();
+		tcm.addColumn(new TableColumn(0, 50));
+		tcm.addColumn(new TableColumn(1, 200));
+		tcm.addColumn(new TableColumn(2, 200));
+		tcm.addColumn(new TableColumn(3, 200));
+		
+		tcm.getColumn(0).setHeaderValue("ID");
+		tcm.getColumn(1).setHeaderValue("Voornaam");
+		tcm.getColumn(2).setHeaderValue("Email adres");
+		tcm.getColumn(3).setHeaderValue("Telefoonnummer");
+
+		JTable table = new JTable(dtm, tcm)
+		{
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column)
+			{
+				return false;
+			};
+		};
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // let only
+																		// one
+																		// row
+																		// be
+																		// selected
+		table.getSelectionModel().addListSelectionListener(this);
+		return table;
+	}
 }

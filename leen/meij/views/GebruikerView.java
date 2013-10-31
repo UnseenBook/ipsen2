@@ -15,19 +15,8 @@ public class GebruikerView extends MasterView<ArrayList<Gebruiker>>
 		// TODO Auto-generated constructor stub
 	}
 
-	private JTable tblGebruikers;
 
-	/**
-	 * 
-	 * @param model
-	 */
-	protected void initialize(ArrayList<Gebruiker> model)
-	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
-	}
-
-	protected ArrayList<Gebruiker> retrieveModel()
+	protected ArrayList<Gebruiker> getEditedModel()
 	{
 		// TODO - implement {class}.{operation}
 		throw new UnsupportedOperationException();

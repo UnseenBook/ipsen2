@@ -46,6 +46,13 @@ public class Klant extends Entity
 
 	private byte[] kopieRijbewijs;
 
+	public Klant(){}
+	
+	public Klant(int klantNummer, String voornaam){
+		this.klantNummer = klantNummer;
+		this.voornaam = voornaam;
+	}
+	
 	public int getKlantID()
 	{
 		return this.klantID;

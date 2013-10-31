@@ -43,16 +43,7 @@ public class LoginView extends View<Gebruiker> implements ActionListener
 		btnExit.addActionListener(this);
 	}
 
-	/**
-	 * 
-	 * @param model
-	 */
-	protected void initialize(Gebruiker model)
-	{
-		
-	}
-
-	protected Gebruiker retrieveModel()
+	protected Gebruiker getEditedModel()
 	{
 		return this.model;
 	}

@@ -3,6 +3,12 @@ package leen.meij.utilities;
 
 import javax.swing.JPanel;
 
+/**
+ * THe base class of every View class.
+ * @author Thijs
+ *
+ * @param <T> The type of Data used in this View. 
+ */
 public abstract class View<T> extends JPanel
 {
 
@@ -39,19 +45,13 @@ public abstract class View<T> extends JPanel
 	protected View(T model)
 	{
 		this.model = model;
-		this.initialize(model);
+		
 	}
 
 	/**
-	 * Initializes the data in the model in controls; such as JTextFields.
-	 * @param model The model used by the View.
+	 * Gets the model modified by user input.
+	 * @return Returns the model modified by user input.
 	 */
-	protected abstract void initialize(T model);
-
-	/**
-	 * Retrieves the model from the controls in the View.
-	 * @return
-	 */
-	protected abstract T retrieveModel();
+	protected abstract T getEditedModel();
 
 }

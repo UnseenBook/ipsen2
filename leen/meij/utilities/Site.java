@@ -3,11 +3,13 @@ package leen.meij.utilities;
 
 import java.awt.BorderLayout;
 import java.lang.reflect.Method;
-import javax.swing.JFrame;
-import javax.swing.WindowConstants;
+import java.util.*;
 
-import leen.meij.Gebruiker;
-import leen.meij.views.LoginView;
+import javax.swing.*;
+
+import leen.meij.*;
+
+import leen.meij.views.*;
 
 public class Site extends JFrame
 {
@@ -15,7 +17,8 @@ public class Site extends JFrame
 	private static Site instance;
 
 	private View currentView;
-
+	private Gebruiker user;
+	
 	public static Site getInstance()
 	{
 		if(Site.instance == null)
@@ -36,8 +39,9 @@ public class Site extends JFrame
 		this.setLocationRelativeTo(null);
 		this.setLayout(new BorderLayout());
 		
-		// initial view
+		// default initial view
 		currentView = new LoginView(new Gebruiker());
+		
 		this.add(currentView);
 		this.setVisible(true);
 		
@@ -101,6 +105,16 @@ public class Site extends JFrame
 			
 			
 		}
+	}
+
+	public Gebruiker getUser()
+	{
+		return user;
+	}
+
+	public void setUser(Gebruiker user)
+	{
+		this.user = user;
 	}
 
 

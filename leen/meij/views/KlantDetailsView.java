@@ -46,17 +46,8 @@ public class KlantDetailsView extends MasterView<Klant>
 		super(model);
 		// TODO Auto-generated constructor stub
 	}
-	/**
-	 * 
-	 * @param model
-	 */
-	protected void initialize(Klant model)
-	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
-	}
 
-	protected Klant retrieveModel()
+	protected Klant getEditedModel()
 	{
 		// TODO - implement {class}.{operation}
 		throw new UnsupportedOperationException();

@@ -27,17 +27,8 @@ public class ReververingDetailsView extends MasterView<Reservering>
 		super(model);
 		// TODO Auto-generated constructor stub
 	}
-	/**
-	 * 
-	 * @param model
-	 */
-	protected void initialize(Reservering model)
-	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
-	}
 
-	protected Reservering retrieveModel()
+	protected Reservering getEditedModel()
 	{
 		// TODO - implement {class}.{operation}
 		throw new UnsupportedOperationException();

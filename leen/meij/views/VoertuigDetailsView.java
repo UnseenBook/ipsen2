@@ -24,17 +24,8 @@ public class VoertuigDetailsView extends MasterView<Voertuig>
 		super(model);
 		// TODO Auto-generated constructor stub
 	}
-	/**
-	 * 
-	 * @param model
-	 */
-	protected void initialize(Voertuig model)
-	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
-	}
 
-	protected Voertuig retrieveModel()
+	protected Voertuig getEditedModel()
 	{
 		// TODO - implement {class}.{operation}
 		throw new UnsupportedOperationException();

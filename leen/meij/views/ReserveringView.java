@@ -17,16 +17,6 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>>
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * 
-	 * @param model
-	 */
-	protected void initialize(ArrayList<Reservering> model)
-	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
-	}
-
 	protected ArrayList<Reservering> getEditedModel()
 	{
 		// TODO - implement {class}.{operation}

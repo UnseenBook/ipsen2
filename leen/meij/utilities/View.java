@@ -49,12 +49,6 @@ public abstract class View<T> extends JPanel
 	}
 
 	/**
-	 * Initializes the data in the model in controls; such as JTextFields.
-	 * @param model The model used by the View.
-	 */
-	protected abstract void initialize(T model);
-
-	/**
 	 * Gets the model modified by user input.
 	 * @return Returns the model modified by user input.
 	 */

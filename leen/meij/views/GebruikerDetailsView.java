@@ -31,15 +31,6 @@ public class GebruikerDetailsView extends MasterView<Gebruiker>
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * 
-	 * @param model
-	 */
-	protected void initialize(Gebruiker model)
-	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
-	}
 
 	protected Gebruiker getEditedModel()
 	{

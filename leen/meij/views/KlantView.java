@@ -52,17 +52,6 @@ public class KlantView extends MasterView<ArrayList<Klant>>
 		this.pnlBotMenu.add(this.btnWijzigen);
 		this.pnlContent.add(this.tblKlanten);
 	}
-	
-	/**
-	 * 
-	 * @param model
-	 */
-	protected void initialize(ArrayList<Klant> model)
-	{
-
-		
-		
-	}
 
 	protected ArrayList<Klant> getEditedModel()
 	{

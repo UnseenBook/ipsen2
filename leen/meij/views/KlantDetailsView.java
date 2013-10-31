@@ -46,14 +46,6 @@ public class KlantDetailsView extends MasterView<Klant>
 		super(model);
 		// TODO Auto-generated constructor stub
 	}
-	/**
-	 * 
-	 * @param model
-	 */
-	protected void initialize(Klant model)
-	{
-		
-	}
 
 	protected Klant getEditedModel()
 	{

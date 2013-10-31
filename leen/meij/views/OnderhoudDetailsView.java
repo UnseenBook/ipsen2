@@ -19,16 +19,6 @@ public class OnderhoudDetailsView extends MasterView<Onderhoud>
 		// TODO Auto-generated constructor stub
 	}
 
-	/**
-	 * 
-	 * @param model
-	 */
-	protected void initialize(Onderhoud model)
-	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
-	}
-
 	protected Onderhoud getEditedModel()
 	{
 		// TODO - implement {class}.{operation}

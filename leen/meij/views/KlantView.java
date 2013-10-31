@@ -35,8 +35,7 @@ public class KlantView extends MasterView<ArrayList<Klant>>
 					klant.getVoornaam(),
 					klant.getEmailadres(),
 					klant.getTelefoonnummer(),
-			});
-			
+			});	
 		}
 		
 		TableColumnModel tcm = new DefaultTableColumnModel();
@@ -52,7 +51,8 @@ public class KlantView extends MasterView<ArrayList<Klant>>
 		
 		tblKlanten = new JTable(dtm,tcm);
 		
-		
+		tblKlanten.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		tblKlanten.setAutoCreateRowSorter(true);
 		
 		
 		this.pnlBotMenu.add(this.btnWijzigen);

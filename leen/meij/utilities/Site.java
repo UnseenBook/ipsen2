@@ -46,7 +46,7 @@ public class Site extends JFrame
 		currentView = new LoginView(new Gebruiker());
 		panel.add(currentView);
 		
-<<<<<<< HEAD
+
 		ArrayList<Klant> klanten = new ArrayList<Klant>();
 		klanten.add(new Klant(400,"Thijs"));
 		klanten.add(new Klant(440,"Daan"));
@@ -59,9 +59,8 @@ public class Site extends JFrame
 		//currentView = new ReserveringView(reserveringen);
 		
 		this.add(currentView);
-=======
+
 		this.add(panel);
->>>>>>> 9ddd83f5b1e4442ca16e4d11887632563826068b
 		this.setVisible(true);
 		
 	}

@@ -81,7 +81,7 @@ public abstract class MasterView<T> extends View<T> implements ActionListener
 		}
 		else if (e.getSource() == btnReserveringen)
 		{
-
+			
 		}
 		else if (e.getSource() == btnManagement)
 		{

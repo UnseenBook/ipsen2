@@ -49,6 +49,10 @@ public class Site extends JFrame
 		
 		currentView = new KlantView(klanten);
 		
+		//test Reserveringview
+		//ArrayList<Reservering> reserveringen = new ArrayList<Reservering>();
+		//currentView = new ReserveringView(reserveringen);
+		
 		this.add(currentView);
 		this.setVisible(true);
 		

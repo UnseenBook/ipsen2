@@ -14,6 +14,7 @@ public class KlantView extends MasterView<ArrayList<Klant>>
 
 	private JButton btnWijzigen = new JButton("Wijzigen");
 
+
 	private JTable tblKlanten;
 
 	public KlantView(ArrayList<Klant> model)
@@ -21,6 +22,7 @@ public class KlantView extends MasterView<ArrayList<Klant>>
 		super(model);
 		
 		this.setTitle("Klanten");
+		
 		
 		DefaultTableModel dtm = new DefaultTableModel();
 		dtm.addColumn("Klantnummer");

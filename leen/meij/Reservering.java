@@ -3,27 +3,26 @@ package leen.meij;
 
 import java.util.Date;
 
+/****
+ * 
+ * @author Jovanny Martis
+ * 
+ * 
+ */
+
 import leen.meij.utilities.*;
 
 public class Reservering extends Entity
 {
 
 	private int klantID;
-
 	private int voertuigID;
-
 	private Klant klant;
-
 	private Voertuig voertuig;
-
 	private Date reserveerDatum;
-
 	private Date beginDatum;
-
 	private Date eindDatum;
-
 	private int kilometer;
-
 	private double bedrag;
 
 	public Klant getKlant()

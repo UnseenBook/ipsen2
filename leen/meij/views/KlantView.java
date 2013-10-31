@@ -23,8 +23,6 @@ public class KlantView extends MasterView<ArrayList<Klant>>
 		
 		this.setTitle("Klanten");
 		
-		int niks = 10;
-		int jemoeder = 100;
 		
 		DefaultTableModel dtm = new DefaultTableModel();
 		dtm.addColumn("Klantnummer");

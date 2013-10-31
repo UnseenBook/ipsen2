@@ -1,31 +1,48 @@
 
 package leen.meij.controllers;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
+import leen.meij.dataAccess.ReserveringDataAccess;
 import leen.meij.utilities.*;
+import leen.meij.views.ReserveringView;
+import leen.meij.views.ReserveringDetailsView;
 import leen.meij.*;
 
+/**
+ * 
+ * @author Jovanny
+ * 
+ * **/
 public class ReserveringController extends Controller
 {
+	
+	private ReserveringDataAccess reserveringDataAccess = new ReserveringDataAccess();
 
 	public View reserveringOverzichtRaadplegenTask()
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		ArrayList<Reservering> reserveringen = new ArrayList<Reservering>();
+				
+		reserveringen.add(new Reservering(1,null,null, null, null));
+		reserveringen.add(new Reservering(2,null,null, null, null));
+		reserveringen.add(new Reservering(3,null,null, null, null));
+		reserveringen.add(new Reservering(4,null,null, null, null));
+		return new ReserveringView(reserveringen);
 	}
 
 	public View reserveringToevoegenTask()
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		return new ReserveringDetailsView(new Reservering());
 	}
 
 	/**
 	 * 
 	 * @param reservering
 	 */
-	public View reserveringToeveogenTask(Reservering reservering)
+	public View reserveringToevoegenTask(Reservering reservering)
 	{
-		// TODO - implement {class}.{operation}
+		
 		throw new UnsupportedOperationException();
 	}
 

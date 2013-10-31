@@ -81,6 +81,7 @@ public abstract class MasterView<T> extends View<T> implements ActionListener
 		if (e.getSource() == btnKlanten)
 		{
 			runTask("Klant","klantOverzichtRaadplegen");
+			
 		}
 		else if (e.getSource() == btnVoertuigen)
 		{
@@ -90,6 +91,7 @@ public abstract class MasterView<T> extends View<T> implements ActionListener
 		{
 
 			runTask("Reservering","reserveringOverzichtRaadplegen");
+			this.setTitle("Reservering");
 
 		}
 		else if (e.getSource() == btnManagement)

@@ -1,6 +1,7 @@
 
 package leen.meij;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 /****
@@ -9,6 +10,7 @@ import java.util.Date;
  * 
  * 
  */
+
 
 import leen.meij.utilities.*;
 
@@ -24,6 +26,22 @@ public class Reservering extends Entity
 	private Date eindDatum;
 	private int kilometer;
 	private double bedrag;
+	
+	/**
+	 * @author Jovanny
+	 * **/
+	
+	
+	public Reservering(){};
+	public Reservering(int klantID,Klant klant, Voertuig voertuig, Date begin, Date eind)
+	{
+		this.klantID = klantID;
+		this.klant = klant;
+		this.voertuig = voertuig;
+		this.beginDatum = begin;
+		this.eindDatum = eind;
+	}
+
 
 	public Klant getKlant()
 	{

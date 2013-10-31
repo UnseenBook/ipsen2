@@ -27,7 +27,7 @@ public abstract class MasterView<T> extends View<T> implements ActionListener
 	/**
 	 * Default Label in the content area.
 	 */
-	protected JLabel lblTitle = new JLabel("View Title");
+	protected JLabel lblTitle = new JLabel("View Title (use this.setTitle in the view to change it)");
 
 	private JButton btnKlanten = new JButton("Klanten"),
 			btnVoertuigen = new JButton("Voertuigen"),
@@ -42,6 +42,8 @@ public abstract class MasterView<T> extends View<T> implements ActionListener
 		lblTitle.setFont(new Font("Arial", Font.PLAIN, 24));
 
 		setLayout(new BorderLayout());
+		
+		// add components
 		add(pnlTopMenu, BorderLayout.NORTH);
 		add(pnlBotMenu, BorderLayout.SOUTH);
 		add(pnlContent, BorderLayout.CENTER);
@@ -54,9 +56,14 @@ public abstract class MasterView<T> extends View<T> implements ActionListener
 		pnlTopMenu.add(btnReserveringen);
 		pnlTopMenu.add(btnManagement);
 		pnlTopMenu.add(btnAfsluiten);
-		
-		
 		pnlBotMenu.setLayout(new MigLayout("right"));
+		
+		// add listeners
+		btnAfsluiten.addActionListener(this);
+		btnKlanten.addActionListener(this);
+		btnManagement.addActionListener(this);
+		btnReserveringen.addActionListener(this);
+		btnVoertuigen.addActionListener(this);
 	}
 
 	public JPanel getPnlBotMenu()
@@ -73,23 +80,23 @@ public abstract class MasterView<T> extends View<T> implements ActionListener
 	{
 		if (e.getSource() == btnKlanten)
 		{
-
+			runTask("Klant","klantOverzichtRaadplegen");
 		}
 		else if (e.getSource() == btnVoertuigen)
 		{
-
+			runTask("Voertuig","voertuigOverzichtRaadplegen");
 		}
 		else if (e.getSource() == btnReserveringen)
 		{
-
+			runTask("Reservering","reserveringOverzichtRaadplegen");
 		}
 		else if (e.getSource() == btnManagement)
 		{
-
+			runTask("Reservering","huurlijstOverzichtRaadplegen");
 		}
 		else if (e.getSource() == btnAfsluiten)
 		{
-
+			System.exit(0);
 		}
 	}
 

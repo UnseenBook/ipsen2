@@ -18,6 +18,7 @@ public class Site extends JFrame
 
 	private View currentView;
 	private Gebruiker user;
+	private JPanel panel;
 	
 	public static Site getInstance()
 	{
@@ -37,19 +38,15 @@ public class Site extends JFrame
 		this.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		this.setTitle("LeenMij Office Management System");
 		this.setLocationRelativeTo(null);
-		this.setLayout(new BorderLayout());
+		
+		panel = new JPanel();
+		panel.setLayout(new BorderLayout());
 		
 		// default initial view
 		currentView = new LoginView(new Gebruiker());
+		panel.add(currentView);
 		
-		ArrayList<Klant> klanten = new ArrayList<Klant>();
-		klanten.add(new Klant(400,"Thijs"));
-		klanten.add(new Klant(440,"Daan"));
-		klanten.add(new Klant(460,"Jovanny"));
-		
-		currentView = new KlantView(klanten);
-		
-		this.add(currentView);
+		this.add(panel);
 		this.setVisible(true);
 		
 	}
@@ -105,10 +102,10 @@ public class Site extends JFrame
 		{
 			this.currentView = newView;
 			
-			this.removeAll();
-			this.setVisible(false);
-			this.add(this.currentView);
-			this.setVisible(true);
+			panel.removeAll();
+			panel.setVisible(false);
+			panel.add(this.currentView);
+			panel.setVisible(true);
 			
 			
 		}

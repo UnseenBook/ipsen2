@@ -7,6 +7,7 @@ import leen.meij.dataAccess.GebruikerDataAccess;
 import leen.meij.utilities.*;
 import leen.meij.views.LoginView;
 import leen.meij.views.ReserveringView;
+import leen.meij.views.TemporaryDefaultView;
 import leen.meij.*;
 
 public class GebruikerController extends Controller
@@ -24,7 +25,11 @@ public class GebruikerController extends Controller
 	 */
 	public View inloggenTask(String gebruikersnaam, String wachtwoord)
 	{
+		return new TemporaryDefaultView();
+		/*
 		GebruikerDataAccess gebruikerDataAccess = new GebruikerDataAccess();
+		
+		
 		
 		Gebruiker gebruiker = gebruikerDataAccess.select(gebruikersnaam, wachtwoord);
 		if(gebruiker != null)
@@ -35,7 +40,8 @@ public class GebruikerController extends Controller
 		gebruiker = new Gebruiker();
 		gebruiker.setGebruikersnaam(gebruikersnaam);
 		gebruiker.getErrors().add("Gebruikersnaam of wachtwoord klopt niet.");
-		return new LoginView(gebruiker);
+		
+		return new LoginView(gebruiker);*/
 	}
 
 	public View gebruikersOverzichtRaadplegenTask()

@@ -17,7 +17,7 @@ public class Site extends JFrame
 	private static Site instance;
 
 	private View currentView;
-	private Gebruiker user;
+	private Gebruiker gebruiker;
 	private JPanel panel;
 	
 	public static Site getInstance()
@@ -111,14 +111,14 @@ public class Site extends JFrame
 		}
 	}
 
-	public Gebruiker getUser()
+	public Gebruiker getGebruiker()
 	{
-		return user;
+		return gebruiker;
 	}
 
-	public void setUser(Gebruiker user)
+	public void setGebruiker(Gebruiker gebruiker)
 	{
-		this.user = user;
+		this.gebruiker = gebruiker;
 	}
 
 

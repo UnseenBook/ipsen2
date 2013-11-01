@@ -1,4 +1,3 @@
-
 package leen.meij;
 
 import java.util.Date;
@@ -46,13 +45,16 @@ public class Klant extends Entity
 
 	private byte[] kopieRijbewijs;
 
-	public Klant(){}
-	
-	public Klant(int klantID, String voornaam){
+	public Klant()
+	{
+	}
+
+	public Klant(int klantID, String voornaam)
+	{
 		this.klantID = klantID;
 		this.voornaam = voornaam;
 	}
-	
+
 	public int getKlantID()
 	{
 		return this.klantID;
@@ -321,7 +323,21 @@ public class Klant extends Entity
 
 	public void validateFields()
 	{
-	
+
+	}
+
+	public String getVolledigeNaam()
+	{
+		String naam = "";
+		if (voornaam != null)
+		{
+			naam += voornaam;
+		}
+		if (achternaam != null)
+		{
+			naam += achternaam;
+		}
+		return naam;
 	}
 
 }

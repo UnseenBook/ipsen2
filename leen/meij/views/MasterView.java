@@ -35,6 +35,7 @@ public abstract class MasterView<T> extends View<T> implements ActionListener
 			btnVoertuigen = new JButton("Voertuigen"),
 			btnReserveringen = new JButton("Reserveringen"),
 			btnManagement = new JButton("Management"),
+			btnGebruikers = new JButton("Gebruikers"),
 			btnAfsluiten = new JButton("Afsluiten");
 
 	
@@ -62,6 +63,7 @@ public abstract class MasterView<T> extends View<T> implements ActionListener
 		pnlTopMenu.add(btnVoertuigen);
 		pnlTopMenu.add(btnReserveringen);
 		pnlTopMenu.add(btnManagement);
+		pnlTopMenu.add(btnGebruikers);
 		pnlTopMenu.add(btnAfsluiten);
 		pnlBotMenu.setLayout(new MigLayout("right"));
 		

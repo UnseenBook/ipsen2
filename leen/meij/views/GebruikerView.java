@@ -21,6 +21,8 @@ public class GebruikerView extends MasterView<ArrayList<Gebruiker>> implements L
 	{
 		super(model);
 
+		this.setTitle("Gebruikers");
+
 		// content panel
 
 		tblGebruikers = createGebruikerTable();
@@ -45,8 +47,6 @@ public class GebruikerView extends MasterView<ArrayList<Gebruiker>> implements L
 	{
 		return model;
 	}
-
-
 
 	public void actionPerformed(ActionEvent e)
 	{
@@ -88,7 +88,7 @@ public class GebruikerView extends MasterView<ArrayList<Gebruiker>> implements L
 		btnWijzigen.setEnabled(inRange);
 
 	}
-	
+
 	private JTable createGebruikerTable()
 	{
 		DefaultTableModel dtm = new DefaultTableModel();
@@ -123,11 +123,9 @@ public class GebruikerView extends MasterView<ArrayList<Gebruiker>> implements L
 				return false;
 			};
 		};
-		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // let only
-																		// one
-																		// row
-																		// be
-																		// selected
+
+		// let only one row be selected
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getSelectionModel().addListSelectionListener(this);
 		return table;
 	}

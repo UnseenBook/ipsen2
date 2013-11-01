@@ -49,8 +49,8 @@ public class GebruikerController extends Controller
 
 	public View gebruikerToevoegenTask()
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+
+		return new GebruikerDetailsView(new Gebruiker());
 	}
 
 	/**

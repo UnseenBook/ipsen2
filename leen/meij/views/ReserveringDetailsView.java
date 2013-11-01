@@ -1,4 +1,3 @@
-
 package leen.meij.views;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -82,7 +81,7 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 	
 	public void actionPerformed(ActionEvent e)
 	{
-		
+		super.actionPerformed(e);
 		if(e.getSource() == btnCancel)
 		{
 			runTask("Reservering", "reserveringOverzichtRaadplegen");

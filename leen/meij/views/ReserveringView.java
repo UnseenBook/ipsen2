@@ -29,13 +29,15 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 
 	private JTable tblReserveringen;
 	
+	
 	public ReserveringView(ArrayList<Reservering> model)
 	{
 		super(model);
-		this.setTitle(title);
+		this.setTitle("Reserveringen");
 		
-		tblReserveringen = createReseveringTable();
-
+		
+		tblReserveringen = createReserveringOverviewTable();
+		
 		btnAanpassen.setEnabled(false);
 		btnVerwijderen.setEnabled(false);
 		
@@ -63,22 +65,33 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 	
 	}
 	
+
+	
 	public void actionPerformed(ActionEvent e)
 	{
+		super.actionPerformed(e);
+		
 		if (e.getSource() == btnInleverlijst)
 		{
-			runTask("Resevering","inleverlijstRaadplegen");
+			this.setTitle("Inleverlijst");
+			runTask("Reservering","inleverlijstRaadplegen");
+			
 		}
 		if (e.getSource() == btnHuurlijst)
 		{
+			this.setTitle("Huurlijst");
 			runTask("Reservering","huurlijstOverzichtRaadplegen");
+			
 		}
 		if(e.getSource() == btnToevoegen)
 		{
+			
 			runTask("Reservering", "reserveringToevoegen");
+			
 		}
 		if(e.getSource() == btnAanpassen)
 		{
+			this.setTitle("Reservering aanpassen");
 			runTask("Reservering","reserveringAanpassen");
 		}
 		if(e.getSource() == btnVerwijderen)
@@ -87,22 +100,24 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 		}
 	}
 	
-	private JTable createReseveringTable()
+	
+	private JTable createReserveringOverviewTable()
 	{
 		DefaultTableModel dm = new DefaultTableModel();
 		dm.addColumn("Klantnummer");
 		dm.addColumn("Naam");
 		dm.addColumn("Voertuig");
-		dm.addColumn("Datum"); 
+		dm.addColumn("Begin datum"); 
+		dm.addColumn("Eind datum");
 		
 		for(Reservering reservering : model)
 		{
 			dm.addRow(new Object[]{
 					reservering.getKlantID(),
-					reservering.getKlant(),
+					reservering.getKlant().getVolledigeNaam(),
 					reservering.getVoertuig(),
-					reservering.getBeginDatum()
-					//reservering.getEindDatum()
+					reservering.getBeginDatum(),
+					reservering.getEindDatum()
 			});
 		}
 		
@@ -110,18 +125,21 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 		tcm.addColumn(new TableColumn(0, 100));
 		tcm.addColumn(new TableColumn(1, 150));
 		tcm.addColumn(new TableColumn(2, 150));
-		tcm.addColumn(new TableColumn(3, 200));
+		tcm.addColumn(new TableColumn(3, 150));
+		tcm.addColumn(new TableColumn(4, 150));
 		tcm.getColumn(0).setHeaderValue("Klantnummer");
 		tcm.getColumn(1).setHeaderValue("Naam");
 		tcm.getColumn(2).setHeaderValue("Voertuig");
-		tcm.getColumn(3).setHeaderValue("Begin - eind datum");
+		tcm.getColumn(3).setHeaderValue("Begindatum");
+		tcm.getColumn(4).setHeaderValue("Einddatum");
 		
 		JTable table = new JTable(dm,tcm);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setAutoCreateRowSorter(true);
+		table.setAutoCreateRowSorter(false);
 		
 		
 		return table;
 	}
-
+	
+	
 }

@@ -10,7 +10,6 @@ public class KlantDataAccess extends DataAccess
 
 	private static ArrayList<Klant> tempData = new ArrayList<Klant>( Arrays.asList(new Klant[] { new Klant(10, "Thijs"),
 			new Klant(11, "Daan"), new Klant(12, "Jovanny"), new Klant(13, "Angelo") }));
-
 	/**
 	 * 
 	 * @param klantID

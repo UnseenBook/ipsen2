@@ -1,14 +1,12 @@
 
 package leen.meij.controllers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
+import leen.meij.Reservering;
 import leen.meij.dataAccess.ReserveringDataAccess;
-import leen.meij.utilities.*;
-import leen.meij.views.ReserveringView;
+import leen.meij.utilities.Controller;
+import leen.meij.utilities.View;
 import leen.meij.views.ReserveringDetailsView;
-import leen.meij.*;
+import leen.meij.views.ReserveringView;
 
 /**
  * 
@@ -19,16 +17,13 @@ public class ReserveringController extends Controller
 {
 	
 	private ReserveringDataAccess reserveringDataAccess = new ReserveringDataAccess();
-
+	/**
+	 * Shows the reserveringen overzicht View.
+	 */
 	public View reserveringOverzichtRaadplegenTask()
 	{
-		ArrayList<Reservering> reserveringen = new ArrayList<Reservering>();
-				
-		reserveringen.add(new Reservering(1,null,null, null, null));
-		reserveringen.add(new Reservering(2,null,null, null, null));
-		reserveringen.add(new Reservering(3,null,null, null, null));
-		reserveringen.add(new Reservering(4,null,null, null, null));
-		return new ReserveringView(reserveringen);
+		
+		return new ReserveringView(reserveringDataAccess.selectAll());
 	}
 
 	public View reserveringToevoegenTask()
@@ -88,14 +83,12 @@ public class ReserveringController extends Controller
 
 	public View huurlijstOverzichtRaadplegenTask()
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		return new ReserveringView(reserveringDataAccess.selectAll());
 	}
 
 	public View inleverlijstRaadplegenTask()
-	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+	{	
+		return new ReserveringView(reserveringDataAccess.selectAll());
 	}
 
 }

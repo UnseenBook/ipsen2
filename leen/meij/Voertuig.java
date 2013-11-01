@@ -23,6 +23,14 @@ public class Voertuig extends Entity
 	private String beschrijving;
 
 	private boolean verhuurbaar;
+	
+	public Voertuig(){}
+	
+	public Voertuig(String merk)
+	{
+		this.merk = merk;
+	}
+	
 
 	public ArrayList<Onderhoud> getOnderhoud()
 	{

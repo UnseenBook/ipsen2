@@ -115,7 +115,7 @@ public class KlantView extends MasterView<ArrayList<Klant>> implements ListSelec
 		tcm.addColumn(new TableColumn(2, 200));
 		tcm.addColumn(new TableColumn(3, 200));
 
-		tcm.getColumn(0).setHeaderValue("ID");
+		tcm.getColumn(0).setHeaderValue("Klantnummer");
 		tcm.getColumn(1).setHeaderValue("Voornaam");
 		tcm.getColumn(2).setHeaderValue("Email adres");
 		tcm.getColumn(3).setHeaderValue("Telefoonnummer");

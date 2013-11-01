@@ -6,8 +6,11 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
@@ -16,7 +19,7 @@ import javax.swing.table.TableColumnModel;
 import leen.meij.Klant;
 import leen.meij.Reservering;
 
-public class ReserveringView extends MasterView<ArrayList<Reservering>> implements ActionListener
+public class ReserveringView extends MasterView<ArrayList<Reservering>> implements ListSelectionListener,ActionListener
 
 {
 	private JButton btnVerwijderen = new JButton("Verwijderen");
@@ -25,6 +28,7 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 	private JButton btnHuurlijst = new JButton("Huurlijst");
 	private JButton btnInleverlijst = new JButton("Inleverlijst");
 	private String title = "Reserveringen";
+	private Reservering selectedReservering;
 	Klant klant;
 
 	private JTable tblReserveringen;
@@ -33,7 +37,7 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 	public ReserveringView(ArrayList<Reservering> model)
 	{
 		super(model);
-		this.setTitle("Reserveringen");
+		this.setTitle(title);
 		
 		
 		tblReserveringen = createReserveringOverviewTable();
@@ -89,15 +93,40 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 			runTask("Reservering", "reserveringToevoegen");
 			
 		}
-		if(e.getSource() == btnAanpassen)
+		else if (selectedReservering != null) 
+		
 		{
-			this.setTitle("Reservering aanpassen");
-			runTask("Reservering","reserveringAanpassen");
-		}
+			
+			if(e.getSource() == btnAanpassen)
+				{
+					this.setTitle("Reservering aanpassen");
+					runTask("Reservering","reserveringWijzigen", new Object[]{new Integer(selectedReservering.getKlantID()) });
+				}
 		if(e.getSource() == btnVerwijderen)
 		{
-			runTask("Reservering", "reserveringVerwijderen");
+			int result = JOptionPane.showConfirmDialog(this, "Weet u zeker dat u de geselecteerde reservering wilt verwijderen?",
+					"Reservering verwijderen?", JOptionPane.YES_NO_OPTION);
+			if (result == JOptionPane.YES_OPTION)
+			{
+				runTask("Reservering", "reserveringVerwijderen", new Object[] { new Integer(selectedReservering.getKlantID()) });
+			}
+			
 		}
+		}
+	}
+	
+	public void valueChanged(ListSelectionEvent e)
+	{
+		int index = tblReserveringen.getSelectedRow();
+		boolean inRange = index >= 0 && index < this.model.size();
+
+		if (inRange)
+		{
+			this.selectedReservering = this.model.get(index);
+
+		}
+		btnVerwijderen.setEnabled(inRange);
+		btnAanpassen.setEnabled(inRange);
 	}
 	
 	
@@ -133,9 +162,19 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 		tcm.getColumn(3).setHeaderValue("Begindatum");
 		tcm.getColumn(4).setHeaderValue("Einddatum");
 		
-		JTable table = new JTable(dm,tcm);
+		JTable table = new JTable(dm,tcm)
+		{
+			private static final long serialVersionUID = 1L;
+
+			public boolean isCellEditable(int row, int column)
+			{
+				return false;
+			};
+			
+		};
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setAutoCreateRowSorter(false);
+		table.getSelectionModel().addListSelectionListener(this);
+		//table.setAutoCreateRowSorter(false);
 		
 		
 		return table;

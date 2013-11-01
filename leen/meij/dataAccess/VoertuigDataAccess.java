@@ -2,12 +2,17 @@
 package leen.meij.dataAccess;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import leen.meij.utilities.*;
 import leen.meij.*;
 
+
+
 public class VoertuigDataAccess extends DataAccess
 {
+	private static ArrayList<Voertuig> tempData = new ArrayList<Voertuig>( Arrays.asList(new Voertuig[] { new Voertuig("Audi"),
+			new Voertuig("Volkswagen"), new Voertuig("Rotbus"), new Voertuig("Snorauto") }));
 
 	/**
 	 * 
@@ -21,8 +26,7 @@ public class VoertuigDataAccess extends DataAccess
 
 	public ArrayList<Voertuig> selectAll()
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		return tempData;
 	}
 
 	/**

@@ -24,7 +24,10 @@ public class ReserveringDataAccess extends DataAccess
 	{
 		for (Reservering reservering : tempData)
 		{
-			if (reservering.getKlantID() == reserveringID) { return reservering; }
+			if (reservering.getKlantID() == reserveringID)
+			{
+				return reservering; 
+				}
 		}
 		return null;
 	}
@@ -40,18 +43,28 @@ public class ReserveringDataAccess extends DataAccess
 	 */
 	public Reservering add(Reservering reservering)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		tempData.add(reservering);
+		return reservering;
 	}
 
 	/**
 	 * 
 	 * @param klantID
 	 */
-	public void delete(int klantID)
+	public void delete(int reserveringID)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		Reservering toRemove = null;
+		for (Reservering reservering : tempData)
+		{
+			if (reservering.getKlantID() == reserveringID)
+			{
+				toRemove = reservering;
+			}
+		}
+		if (toRemove != null)
+		{
+			tempData.remove(toRemove);
+		}
 	}
 
 	/**
@@ -60,8 +73,12 @@ public class ReserveringDataAccess extends DataAccess
 	 */
 	public Klant edit(Klant klant)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		return klant;
+	}
+	
+	public Reservering edit (Reservering reservering)
+	{
+		return reservering;
 	}
 
 }

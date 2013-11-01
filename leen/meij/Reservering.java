@@ -1,7 +1,7 @@
 package leen.meij;
 
-import java.util.ArrayList;
 import java.util.Date;
+
 
 /****
  * 
@@ -9,9 +9,7 @@ import java.util.Date;
  * 
  * 
  */
-
-
-import leen.meij.utilities.*;
+import leen.meij.utilities.Entity;
 
 public class Reservering extends Entity
 {
@@ -112,7 +110,7 @@ public class Reservering extends Entity
 	{
 		return this.eindDatum;
 	}
-
+	
 	public int getKilometer()
 	{
 		return this.kilometer;
@@ -143,8 +141,7 @@ public class Reservering extends Entity
 
 	public void validateFields()
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+	
 	}
 
 	/**

@@ -38,7 +38,14 @@ public class ReserveringController extends Controller
 	public View reserveringToevoegenTask(Reservering reservering)
 	{
 		
-		throw new UnsupportedOperationException();
+		reservering.validateFields();
+		
+		if(reservering.isValid())
+		{
+			reservering = reserveringDataAccess.add(reservering);
+			return reserveringOverzichtRaadplegenTask();
+		}
+		return new ReserveringDetailsView(reservering);
 	}
 
 	/**
@@ -47,8 +54,8 @@ public class ReserveringController extends Controller
 	 */
 	public View reserveringWijzigenTask(Integer reserveringID)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		Reservering reservering = reserveringDataAccess.select(reserveringID);
+		return new ReserveringDetailsView(reservering);
 	}
 
 	/**
@@ -57,8 +64,15 @@ public class ReserveringController extends Controller
 	 */
 	public View reserveringWijzigenTask(Reservering reservering)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		reservering.validateFields();
+		if(reservering.isValid())
+		{
+			reservering = reserveringDataAccess.edit(reservering);
+			
+			return reserveringOverzichtRaadplegenTask();
+		}
+		
+		return new ReserveringDetailsView(reservering);
 	}
 
 	/**
@@ -67,8 +81,9 @@ public class ReserveringController extends Controller
 	 */
 	public View reserveringVerwijderenTask(Integer reserveringID)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		reserveringDataAccess.delete(reserveringID);
+		
+		return reserveringOverzichtRaadplegenTask();
 	}
 
 	/**

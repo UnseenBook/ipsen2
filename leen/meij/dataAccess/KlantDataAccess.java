@@ -1,7 +1,6 @@
-
 package leen.meij.dataAccess;
 
-import java.util.ArrayList;
+import java.util.*;
 
 import leen.meij.utilities.*;
 import leen.meij.*;
@@ -9,20 +8,25 @@ import leen.meij.*;
 public class KlantDataAccess extends DataAccess
 {
 
+	private static ArrayList<Klant> tempData = (ArrayList<Klant>) Arrays.asList(new Klant[] { new Klant(10, "Thijs"),
+			new Klant(11, "Daan"), new Klant(12, "Jovanny"), new Klant(13, "Angelo") });
+
 	/**
 	 * 
 	 * @param klantID
 	 */
 	public Klant select(int klantID)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		for (Klant klant : tempData)
+		{
+			if (klant.getKlantID() == klantID) { return klant; }
+		}
+		return null;
 	}
 
 	public ArrayList<Klant> selectAll()
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		return tempData;
 	}
 
 	/**
@@ -31,8 +35,9 @@ public class KlantDataAccess extends DataAccess
 	 */
 	public Klant add(Klant klant)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		tempData.add(klant);
+		// select klant from newly inserted ID
+		return klant;
 	}
 
 	/**
@@ -41,8 +46,18 @@ public class KlantDataAccess extends DataAccess
 	 */
 	public void delete(int klantID)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		Klant toRemove = null;
+		for (Klant klant : tempData)
+		{
+			if (klant.getKlantID() == klantID)
+			{
+				toRemove = klant;
+			}
+		}
+		if (toRemove != null)
+		{
+			tempData.remove(toRemove);
+		}
 	}
 
 	/**
@@ -51,8 +66,7 @@ public class KlantDataAccess extends DataAccess
 	 */
 	public Klant edit(Klant klant)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		return klant;
 	}
 
 }

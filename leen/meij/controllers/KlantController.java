@@ -65,8 +65,11 @@ public class KlantController extends Controller
 	{
 		// TODO select klant from database
 		// Klant klant = klantDataAccess.select(klantID);
+		Klant klant = new Klant(324,"Jaaap");
 		
-		return new KlantDetailsView(new Klant(324,"Jaaap"));
+		klant.getErrors().add("KlantController::klantWijzigenTask(Integer) is not yet implemented");
+		
+		return new KlantDetailsView(klant);
 	}
 	
 	/**
@@ -77,6 +80,7 @@ public class KlantController extends Controller
 	{
 		// TODO: edit klant to database
 		// klant = klantDataAccess.edit(klant);
+		klant.getErrors().add("KlantController::klantWijzigenTask(Klant) is not yet implemented");
 		
 		return new KlantDetailsView(klant);
 	}
@@ -90,6 +94,8 @@ public class KlantController extends Controller
 		
 		// TODO: delete klant from database
 		// klantDataAccess.delete(klantID);
+		
+		
 		
 		// redirect back to the overview
 		return klantOverzichtRaadplegenTask();

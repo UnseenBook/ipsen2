@@ -3,6 +3,8 @@ package leen.meij.views;
 import java.awt.Image;
 import java.awt.event.*;
 import java.io.*;
+import java.sql.Date;
+
 import javax.imageio.*;
 import javax.swing.*;
 
@@ -199,6 +201,29 @@ public class KlantDetailsView extends MasterView<Klant> implements
 
 	protected Klant getEditedModel()
 	{
+		model.setAchternaam(txtAchternaam.getText());
+		model.setBedrijfsnaam(txtBedrijfsnaam.getText());
+		model.setEmailadres(txtEmailadres.getText());
+		try
+		{
+			model.setGeboorteDatum(Date.valueOf(txtGeboorteDatum.getText()));
+		}
+		catch (IllegalArgumentException ex)
+		{
+			model.setGeboorteDatum(null);
+		}
+		model.setHuisNummer(txtHuisnummer.getText());
+		model.setKvknummer(txtKvkNummer.getText());
+		model.setLand(txtLand.getText());
+		model.setMobielnummer(txtMobielnummer.getText());
+		model.setPostcode(txtPostcode.getText());
+		model.setProvincie(txtProvincie.getText());
+		model.setStraat(txtStraat.getText());
+		model.setTelefoonnummer(txtTelefoonnummer.getText());
+		model.setTussenvoegsel(txtTussenvoegsel.getText());
+		model.setVoornaam(txtVoornaam.getText());
+		model.setWoonplaats(txtWoonplaats.getText());
+		
 		return this.model;
 	}
 

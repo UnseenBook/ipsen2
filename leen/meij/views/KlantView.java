@@ -11,10 +11,9 @@ import leen.meij.*;
 /**
  * 
  * @author Thijs
- *
+ * 
  */
-public class KlantView extends MasterView<ArrayList<Klant>> implements
-		ListSelectionListener, ActionListener
+public class KlantView extends MasterView<ArrayList<Klant>> implements ListSelectionListener, ActionListener
 {
 	private Klant selectedKlant;
 
@@ -68,14 +67,16 @@ public class KlantView extends MasterView<ArrayList<Klant>> implements
 		{
 			if (e.getSource() == btnVerwijderen)
 			{
-				runTask("Klant",
-						"klantVerwijderen",
-						new Object[] { new Integer(selectedKlant.getKlantID()) });
+				int result = JOptionPane.showConfirmDialog(this, "Weet u zeker dat u de geselecteerde Klant wilt verwijderen?",
+						"Klant verwijderen?", JOptionPane.YES_NO_OPTION);
+				if (result == JOptionPane.YES_OPTION)
+				{
+					runTask("Klant", "klantVerwijderen", new Object[] { new Integer(selectedKlant.getKlantID()) });
+				}
 			}
 			else if (e.getSource() == btnWijzigen)
 			{
-				runTask("Klant", "klantWijzigen", new Object[] { new Integer(
-						selectedKlant.getKlantID()) });
+				runTask("Klant", "klantWijzigen", new Object[] { new Integer(selectedKlant.getKlantID()) });
 			}
 		}
 	}
@@ -105,9 +106,7 @@ public class KlantView extends MasterView<ArrayList<Klant>> implements
 
 		for (Klant klant : model)
 		{
-			dtm.addRow(new Object[] { klant.getKlantNummer(),
-					klant.getVoornaam(), klant.getEmailadres(),
-					klant.getTelefoonnummer() });
+			dtm.addRow(new Object[] { klant.getKlantNummer(), klant.getVoornaam(), klant.getEmailadres(), klant.getTelefoonnummer() });
 		}
 
 		TableColumnModel tcm = new DefaultTableColumnModel();
@@ -115,7 +114,7 @@ public class KlantView extends MasterView<ArrayList<Klant>> implements
 		tcm.addColumn(new TableColumn(1, 200));
 		tcm.addColumn(new TableColumn(2, 200));
 		tcm.addColumn(new TableColumn(3, 200));
-		
+
 		tcm.getColumn(0).setHeaderValue("ID");
 		tcm.getColumn(1).setHeaderValue("Voornaam");
 		tcm.getColumn(2).setHeaderValue("Email adres");

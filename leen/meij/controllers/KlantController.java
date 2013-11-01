@@ -52,8 +52,9 @@ public class KlantController extends Controller
 		// TODO: add klant to database
 		// klant = klantDataAccess.add(klant);
 		
+		klant.getErrors().add("KlantController::klantToevoegenTask(Klant) is not yet implemented");
 		// redirect back to the overview
-		return klantOverzichtRaadplegenTask();
+		return new KlantDetailsView(klant);
 	}
 
 	/**

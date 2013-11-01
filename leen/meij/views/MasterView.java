@@ -1,9 +1,11 @@
 package leen.meij.views;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
@@ -35,12 +37,15 @@ public abstract class MasterView<T> extends View<T> implements ActionListener
 			btnManagement = new JButton("Management"),
 			btnAfsluiten = new JButton("Afsluiten");
 
+	
+	private JLabel lblErrorMessages = new JLabel();
+	
 	protected MasterView(T model)
 	{
 		super(model);
 
 		lblTitle.setFont(new Font("Arial", Font.PLAIN, 24));
-
+		lblErrorMessages.setForeground(Color.RED);
 		setLayout(new BorderLayout());
 		
 		// add components
@@ -49,6 +54,8 @@ public abstract class MasterView<T> extends View<T> implements ActionListener
 		add(pnlContent, BorderLayout.CENTER);
 		pnlContent.setLayout(new MigLayout());
 		pnlContent.add(lblTitle,"wrap");
+		pnlContent.add(lblErrorMessages, "pos 300px 10px");
+		
 		
 		pnlTopMenu.setLayout(new MigLayout());
 		pnlTopMenu.add(btnKlanten);
@@ -66,6 +73,15 @@ public abstract class MasterView<T> extends View<T> implements ActionListener
 		btnVoertuigen.addActionListener(this);
 	}
 
+	public void setErrorMessages(ArrayList<String> errorMessages){
+		String text = "<html>";
+		for(String str : errorMessages){
+			text += str + "<br>";
+		}
+		lblErrorMessages.setText(text);
+		
+	}
+	
 	public JPanel getPnlBotMenu()
 	{
 		return this.pnlBotMenu;

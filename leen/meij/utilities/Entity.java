@@ -8,7 +8,7 @@ public abstract class Entity
 
 	private boolean isValid;
 
-	private ArrayList<String> errors;
+	private ArrayList<String> errors = new ArrayList<String>();
 
 	public abstract void validateFields();
 

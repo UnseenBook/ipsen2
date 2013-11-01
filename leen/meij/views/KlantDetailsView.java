@@ -129,6 +129,7 @@ public class KlantDetailsView extends MasterView<Klant> implements
 		btnPaspoort.addActionListener(this);
 		btnRijbewijs.addActionListener(this);
 
+		setErrorMessages(model.getErrors());
 		loadModelData();
 	}
 

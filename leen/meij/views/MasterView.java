@@ -71,6 +71,7 @@ public abstract class MasterView<T> extends View<T> implements ActionListener
 		btnAfsluiten.addActionListener(this);
 		btnKlanten.addActionListener(this);
 		btnManagement.addActionListener(this);
+		btnGebruikers.addActionListener(this);
 		btnReserveringen.addActionListener(this);
 		btnVoertuigen.addActionListener(this);
 	}
@@ -107,10 +108,12 @@ public abstract class MasterView<T> extends View<T> implements ActionListener
 		}
 		else if (e.getSource() == btnReserveringen)
 		{
-
 			runTask("Reservering","reserveringOverzichtRaadplegen");
 			this.setTitle("Reservering");
-
+		}
+		else if(e.getSource() == btnGebruikers)
+		{
+			runTask("Gebruiker","gebruikersOverzichtRaadplegen");
 		}
 		else if (e.getSource() == btnManagement)
 		{

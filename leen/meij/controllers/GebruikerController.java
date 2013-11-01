@@ -1,18 +1,16 @@
 
 package leen.meij.controllers;
 
-import java.util.ArrayList;
-
-import leen.meij.dataAccess.GebruikerDataAccess;
+import java.util.*;
+import leen.meij.dataAccess.*;
 import leen.meij.utilities.*;
-import leen.meij.views.LoginView;
-import leen.meij.views.ReserveringView;
-import leen.meij.views.TemporaryDefaultView;
+import leen.meij.views.*;
 import leen.meij.*;
 
 public class GebruikerController extends Controller
 {
-
+	private GebruikerDataAccess gebruikerDataAccess = new GebruikerDataAccess();
+	
 	public View inloggenTask()
 	{
 		return new LoginView(new Gebruiker());
@@ -46,8 +44,7 @@ public class GebruikerController extends Controller
 
 	public View gebruikersOverzichtRaadplegenTask()
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		return new GebruikerView(new ArrayList<Gebruiker>());
 	}
 
 	public View gebruikerToevoegenTask()

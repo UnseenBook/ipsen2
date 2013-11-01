@@ -48,8 +48,8 @@ public class Klant extends Entity
 
 	public Klant(){}
 	
-	public Klant(int klantNummer, String voornaam){
-		this.klantNummer = klantNummer;
+	public Klant(int klantID, String voornaam){
+		this.klantID = klantID;
 		this.voornaam = voornaam;
 	}
 	
@@ -321,8 +321,7 @@ public class Klant extends Entity
 
 	public void validateFields()
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+	
 	}
 
 }

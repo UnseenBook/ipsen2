@@ -1,10 +1,13 @@
 
 package leen.meij.dataAccess;
 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
-import leen.meij.utilities.*;
-import leen.meij.*;
+import leen.meij.Gebruiker;
+import leen.meij.utilities.DataAccess;
 
 public class GebruikerDataAccess extends DataAccess
 {
@@ -16,6 +19,21 @@ public class GebruikerDataAccess extends DataAccess
 	public Gebruiker select(int gebruikerID)
 	{
 		openConnection();
+		try 
+		{
+			PreparedStatement ps = connection.prepareStatement("SELECT id, naam FROM gebruiker WHERE id = ?");
+			ps.setInt(1, gebruikerID);
+			ResultSet rs = ps.executeQuery();
+			while (rs.next())
+			{
+				System.out.println("ID: " + rs.getString("id"));
+				System.out.println("Naam: " + rs.getString("naam"));
+			}
+		} catch(SQLException sqle) 
+		{
+			sqle.printStackTrace();
+		}
+		
 		// TODO - implement {class}.{operation}
 		throw new UnsupportedOperationException();
 	}

@@ -14,17 +14,17 @@ public abstract class DataAccess
 	
 	protected Connection connection;
 	
-	public DataAccess () {
+	/*public DataAccess () {
 		this.username = "postgres";
 		this.password = "1234";
 		this.url = "jdbc:postgresql://192.168.170.128:5432/leenmeij";
 		
-		/*try {
+		try {
 			Class.forName("org.postgresql.Driver");
 		} catch(ClassNotFoundException cnfe) {
 			System.out.println(cnfe);
-		}*/
-	}
+		}
+	}*/
 
 	protected void openConnection()
 	{

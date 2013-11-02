@@ -86,7 +86,7 @@ public class GebruikerDetailsView extends MasterView<Gebruiker> implements Actio
 		}
 		else if (e.getSource() == btnCancel)
 		{
-			runTask("Gebruiker", "gebruikerOverzichtRaadplegen");
+			runTask("Gebruiker", "gebruikersOverzichtRaadplegen");
 		}
 	}
 

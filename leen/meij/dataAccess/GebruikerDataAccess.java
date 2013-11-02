@@ -15,6 +15,7 @@ public class GebruikerDataAccess extends DataAccess
 	 */
 	public Gebruiker select(int gebruikerID)
 	{
+		openConnection();
 		// TODO - implement {class}.{operation}
 		throw new UnsupportedOperationException();
 	}

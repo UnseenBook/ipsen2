@@ -23,6 +23,15 @@ public class Voertuig extends Entity
 	private String beschrijving;
 
 	private boolean verhuurbaar;
+	
+	public Voertuig(){}
+	
+	public Voertuig(int VoertuigID,String merk)
+	{
+		this.voertuigID = voertuigID;
+		this.merk = merk;
+	}
+	
 
 	public ArrayList<Onderhoud> getOnderhoud()
 	{
@@ -70,7 +79,8 @@ public class Voertuig extends Entity
 	{
 		return this.merk;
 	}
-
+	
+	
 	/**
 	 * 
 	 * @param merk

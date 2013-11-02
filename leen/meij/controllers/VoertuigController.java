@@ -1,12 +1,15 @@
 
 package leen.meij.controllers;
 
+import leen.meij.dataAccess.VoertuigDataAccess;
 import leen.meij.utilities.*;
 import leen.meij.*;
 
 public class VoertuigController extends Controller
 {
 
+	private VoertuigDataAccess voertuigDataAccess = new VoertuigDataAccess();
+	
 	public View voertuigOverzichtRaadplegenTask()
 	{
 		// TODO - implement {class}.{operation}

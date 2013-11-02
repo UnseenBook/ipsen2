@@ -1,14 +1,23 @@
-
 package leen.meij.views;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
+import leen.meij.Klant;
 import leen.meij.Reservering;
+import leen.meij.Voertuig;
+import leen.meij.dataAccess.KlantDataAccess;
+import leen.meij.dataAccess.VoertuigDataAccess;
 
 public class ReserveringDetailsView extends MasterView<Reservering> implements ActionListener
 {
@@ -16,17 +25,24 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 
 	private JComboBox cbKlant = new JComboBox();
 	private JComboBox cbVoertuig = new JComboBox();
-	private JTextField txtBeginDatum = new JTextField(15);
-	private JTextField txtEindDatum = new JTextField(15);
+	private JFormattedTextField txtBeginDatum = new JFormattedTextField();
+	private JFormattedTextField txtEindDatum = new JFormattedTextField();
 	private JTextField txtKilometer = new JTextField(15);
 	private JTextField txtBedrag = new JTextField(15);
 	private JTextField attribute = new JTextField(15); 
+	private ArrayList<Klant> tempList;
+	private ArrayList<Voertuig> tempListvoertuig;
+	private KlantDataAccess klantDataAccess = new KlantDataAccess();
+	private VoertuigDataAccess voertuigDataAccess = new VoertuigDataAccess();
+	
 	private JButton btnSave = new JButton("Opslaan");
 	private JButton btnCancel = new JButton("Annuleren");
 
 	public ReserveringDetailsView(Reservering model)
 	{
 		super(model);
+		this.tempList = klantDataAccess.selectAll();
+		this.tempListvoertuig = voertuigDataAccess.selectAll();
 		if(model.getKlantID() == 0)
 		{
 			this.setTitle("Reservering toevoegen");
@@ -39,6 +55,20 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 		String gapTop = "gaptop 10, ";
 		String wrap = "wrap,";
 		String span2 = "spanx 2,";
+		txtBeginDatum.setColumns(15);
+		txtEindDatum.setColumns(15);
+		
+		//temporary list
+		for(Klant klant: tempList)
+		{
+			cbKlant.addItem(klant.getVolledigeNaam());
+		}
+		
+		//temporary list 2
+		for(Voertuig voertuig: tempListvoertuig)
+		{
+			cbVoertuig.addItem(voertuig.getMerk());
+		}
 		
 		//row 1
 		pnlContent.add(new JLabel("Klant"));
@@ -70,28 +100,56 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 		btnCancel.addActionListener(this);
 		pnlBotMenu.add(btnSave);
 		pnlBotMenu.add(btnCancel);
-		
+		setErrorMessages(model.getErrors());
+	    loadModelData();
 		
 		
 	}
 
-	protected Reservering getEditedModel()
-	{
-		return this.model;
-	}
 	
 	public void actionPerformed(ActionEvent e)
 	{
-		
+		super.actionPerformed(e);
 		if(e.getSource() == btnCancel)
 		{
 			runTask("Reservering", "reserveringOverzichtRaadplegen");
 		}
 		if(e.getSource() == btnSave)
 		{
-			//action
+			if (model.getKlantID() == 0)
+			{
+				runTask("Reservering", "reserveringToevoegen",
+						new Object[] { getEditedModel() });
+			}
+			else
+			{
+				runTask("Reservering", "reserveringWijzigen",
+						new Object[] { getEditedModel() });
+			}
 		}
 		
 	}
+	
+	private void loadModelData()
+	{
+
+		cbKlant.setSelectedIndex(model.getKlantID());
+		cbVoertuig.setSelectedIndex(model.getVoertuigID());
+		txtBeginDatum.setValue(model.getBeginDatum());
+		txtEindDatum.setValue(model.getEindDatum());
+		txtKilometer.setText(Integer.toString(model.getKilometer()) + " KM");
+		
+	}
+	
+	protected Reservering getEditedModel()
+	{
+		model.setKlant((Klant) cbKlant.getSelectedItem());
+		model.setBeginDatum((java.util.Date) txtBeginDatum.getValue());
+		model.setEindDatum((java.util.Date) txtEindDatum.getValue());
+		model.setKilometer(Integer.parseInt(txtKilometer.getText()));
+		return this.model;
+	}
+	
+
 
 }

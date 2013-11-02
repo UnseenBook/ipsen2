@@ -9,6 +9,7 @@ import java.util.Calendar;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 
@@ -24,8 +25,8 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 
 	private JComboBox cbKlant = new JComboBox();
 	private JComboBox cbVoertuig = new JComboBox();
-	private JTextField txtBeginDatum = new JTextField(15);
-	private JTextField txtEindDatum = new JTextField(15);
+	private JFormattedTextField txtBeginDatum = new JFormattedTextField();
+	private JFormattedTextField txtEindDatum = new JFormattedTextField();
 	private JTextField txtKilometer = new JTextField(15);
 	private JTextField txtBedrag = new JTextField(15);
 	private JTextField attribute = new JTextField(15); 
@@ -41,6 +42,7 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 	{
 		super(model);
 		this.tempList = klantDataAccess.selectAll();
+		this.tempListvoertuig = voertuigDataAccess.selectAll();
 		if(model.getKlantID() == 0)
 		{
 			this.setTitle("Reservering toevoegen");
@@ -53,6 +55,8 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 		String gapTop = "gaptop 10, ";
 		String wrap = "wrap,";
 		String span2 = "spanx 2,";
+		txtBeginDatum.setColumns(15);
+		txtEindDatum.setColumns(15);
 		
 		//temporary list
 		for(Klant klant: tempList)
@@ -61,10 +65,10 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 		}
 		
 		//temporary list 2
-	//	for(Voertuig voertuig: tempListvoertuig)
-		//{
-			//cbVoertuig.addItem(voertuig.getMerk());
-//		}
+		for(Voertuig voertuig: tempListvoertuig)
+		{
+			cbVoertuig.addItem(voertuig.getMerk());
+		}
 		
 		//row 1
 		pnlContent.add(new JLabel("Klant"));
@@ -96,15 +100,12 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 		btnCancel.addActionListener(this);
 		pnlBotMenu.add(btnSave);
 		pnlBotMenu.add(btnCancel);
-		loadModelData();
+		setErrorMessages(model.getErrors());
+	    loadModelData();
 		
 		
 	}
 
-	protected Reservering getEditedModel()
-	{
-		return this.model;
-	}
 	
 	public void actionPerformed(ActionEvent e)
 	{
@@ -132,10 +133,21 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 	private void loadModelData()
 	{
 
-		cbKlant.setSelectedItem(model.getKlant().getVolledigeNaam());
-		//cbVoertuig.setSelectedItem(model.getVoertuig().getMerk());
+		cbKlant.setSelectedIndex(model.getKlantID());
+		cbVoertuig.setSelectedIndex(model.getVoertuigID());
+		txtBeginDatum.setValue(model.getBeginDatum());
+		txtEindDatum.setValue(model.getEindDatum());
 		txtKilometer.setText(Integer.toString(model.getKilometer()) + " KM");
 		
+	}
+	
+	protected Reservering getEditedModel()
+	{
+		model.setKlant((Klant) cbKlant.getSelectedItem());
+		model.setBeginDatum((java.util.Date) txtBeginDatum.getValue());
+		model.setEindDatum((java.util.Date) txtEindDatum.getValue());
+		model.setKilometer(Integer.parseInt(txtKilometer.getText()));
+		return this.model;
 	}
 	
 

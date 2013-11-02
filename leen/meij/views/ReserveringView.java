@@ -3,6 +3,8 @@ package leen.meij.views;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -15,6 +17,7 @@ import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import javax.swing.text.DateFormatter;
 
 import leen.meij.Klant;
 import leen.meij.Reservering;
@@ -29,6 +32,8 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 	private JButton btnInleverlijst = new JButton("Inleverlijst");
 	private String title = "Reserveringen";
 	private Reservering selectedReservering;
+	private SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
+	
 	Klant klant;
 
 	private JTable tblReserveringen;
@@ -89,7 +94,7 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 		}
 		if(e.getSource() == btnToevoegen)
 		{
-			
+			this.setTitle("Reservering toevoegen");
 			runTask("Reservering", "reserveringToevoegen");
 			
 		}
@@ -138,13 +143,14 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 		dm.addColumn("Voertuig");
 		dm.addColumn("Begin datum"); 
 		dm.addColumn("Eind datum");
+	
 		
 		for(Reservering reservering : model)
 		{
 			dm.addRow(new Object[]{
 					reservering.getKlantID(),
 					reservering.getKlant().getVolledigeNaam(),
-					reservering.getVoertuig(),
+					reservering.getVoertuig().getMerk(),
 					reservering.getBeginDatum(),
 					reservering.getEindDatum()
 			});

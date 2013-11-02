@@ -26,8 +26,9 @@ public class Voertuig extends Entity
 	
 	public Voertuig(){}
 	
-	public Voertuig(String merk)
+	public Voertuig(int VoertuigID,String merk)
 	{
+		this.voertuigID = voertuigID;
 		this.merk = merk;
 	}
 	
@@ -78,7 +79,8 @@ public class Voertuig extends Entity
 	{
 		return this.merk;
 	}
-
+	
+	
 	/**
 	 * 
 	 * @param merk

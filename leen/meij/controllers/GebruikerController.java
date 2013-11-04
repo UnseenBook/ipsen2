@@ -44,7 +44,9 @@ public class GebruikerController extends Controller
 
 	public View gebruikersOverzichtRaadplegenTask()
 	{
-		return new GebruikerView(new ArrayList<Gebruiker>());
+		ArrayList<Gebruiker> gebruikers = new ArrayList<Gebruiker>();
+		gebruikers = gebruikerDataAccess.selectAll();
+		return new GebruikerView(gebruikers);
 	}
 
 	public View gebruikerToevoegenTask()

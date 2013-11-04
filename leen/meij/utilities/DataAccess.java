@@ -48,12 +48,13 @@ public abstract class DataAccess
 
 	protected void closeConnection()
 	{
-		try
-		{
-			connection.close();
-		} catch (SQLException sqle) {
-			sqle.printStackTrace();
-			
+		if (connection != null) {
+			try
+			{
+				connection.close();
+			} catch (SQLException sqle) {
+				sqle.printStackTrace();
+			}
 		}
 		// TODO - implement {class}.{operation}
 		//throw new UnsupportedOperationException();

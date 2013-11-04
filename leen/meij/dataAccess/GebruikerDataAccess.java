@@ -11,9 +11,9 @@ import leen.meij.utilities.DataAccess;
 
 public class GebruikerDataAccess extends DataAccess
 {
-	private PreparedStatement prepareStatement = null;
-	private ResultSet resultSet                = null;
-	private Gebruiker gebruiker;
+	private PreparedStatement preparedStatement = null;
+	private ResultSet resultSet                 = null;
+	private Gebruiker gebruiker                 = null;
 
 
 	private Gebruiker buildModel(ResultSet resultSet)
@@ -21,20 +21,31 @@ public class GebruikerDataAccess extends DataAccess
 		gebruiker = new Gebruiker();
 		try
 		{
-			while (resultSet.next())
-			{
-				gebruiker.setGebruikerID(resultSet.getInt("id"));
-				gebruiker.setPersoneelnummer(resultSet.getInt("personeelnummer"));
-				gebruiker.setGebruikersnaam(resultSet.getString("gebruikersnaam")); 
-				gebruiker.setWachtworod(resultSet.getString("wachtwoord"));
-				gebruiker.setAfdeling("afdeling placeholder");
-				gebruiker.setVoornaam(resultSet.getString("voornaam"));
-				gebruiker.setTussenvoegsel(resultSet.getString("tussenvoegsel"));
-				gebruiker.setAchternaam(resultSet.getString("achternaam"));
-				
-			}
+			gebruiker.setGebruikerID(resultSet.getInt("id"));
+			gebruiker.setPersoneelnummer(resultSet.getInt("personeelnummer"));
+			gebruiker.setGebruikersnaam(resultSet.getString("gebruikersnaam")); 
+			gebruiker.setWachtworod(resultSet.getString("wachtwoord"));
+			gebruiker.setAfdeling("afdeling placeholder");///////////////////////////////      Hardcoded afdeling
+			gebruiker.setVoornaam(resultSet.getString("voornaam"));
+			gebruiker.setTussenvoegsel(resultSet.getString("tussenvoegsel"));
+			gebruiker.setAchternaam(resultSet.getString("achternaam"));
 		} catch (SQLException negeer) {}
 		return gebruiker;
+	}
+
+	private void fillStatement(PreparedStatement preparedStatement, Gebruiker gebruiker)
+	{
+		try
+		{
+		preparedStatement.setInt(1,gebruiker.getPersoneelnummer());
+		preparedStatement.setString(2,gebruiker.getGebruikersnaam());
+		preparedStatement.setString(3,gebruiker.getWachtworod());
+		preparedStatement.setString(4,gebruiker.getVoornaam());
+		preparedStatement.setString(5,gebruiker.getTussenvoegsel());
+		preparedStatement.setString(6,gebruiker.getAchternaam());
+		preparedStatement.setInt(7,1);///////////////////////////////      Hardcoded afdeling
+
+		} catch (SQLException negeer) {}
 	}
 
 	/**
@@ -46,22 +57,24 @@ public class GebruikerDataAccess extends DataAccess
 		openConnection();
 		try 
 		{
-			prepareStatement = connection.prepareStatement("SELECT * FROM gebruiker WHERE id = ?");
-			prepareStatement.setInt(1, gebruikerID);
-			resultSet = prepareStatement.executeQuery();
-			gebruiker = buildModel(resultSet);
+			preparedStatement = connection.prepareStatement("SELECT * FROM gebruiker WHERE id = ?");
+			preparedStatement.setInt(1, gebruikerID);
+			resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+			{
+				gebruiker = buildModel(resultSet);
+			}
 		} catch (SQLException sqle)
 		{
 			sqle.printStackTrace();
 		} finally {
-		if (resultSet != null) try { resultSet.close(); } catch (SQLException logOrIgnore) {}
-		if (prepareStatement != null) try { prepareStatement.close(); } catch (SQLException logOrIgnore) {}
-		if (connection != null) try { connection.close(); } catch (SQLException logOrIgnore) {}
+			if (resultSet != null) try { resultSet.close(); } catch (SQLException negeer) {}
+			if (preparedStatement != null) try { preparedStatement.close(); } catch (SQLException negeer) {}
+			closeConnection();
 		}
 
-		// TODO - implement {class}.{operation}
-		//throw new UnsupportedOperationException();
-		return new Gebruiker();
+		return gebruiker;
 	}
 
 	/**
@@ -71,14 +84,52 @@ public class GebruikerDataAccess extends DataAccess
 	 */
 	public Gebruiker select(String gebruikersNaam, String wachtwoord)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		openConnection();
+		try 
+		{
+			preparedStatement = connection.prepareStatement("SELECT * FROM gebruiker WHERE gebruikersnaam = ? AND wachtwoord = ?");
+			preparedStatement.setString(1, gebruikersNaam);
+			preparedStatement.setString(2, wachtwoord);
+			resultSet = preparedStatement.executeQuery();
+
+			if(resultSet.next())
+			{
+				gebruiker = buildModel(resultSet);
+			}
+		} catch (SQLException sqle)
+		{
+			sqle.printStackTrace();
+		} finally {
+			if (resultSet != null) try { resultSet.close(); } catch (SQLException negeer) {}
+			if (preparedStatement != null) try { preparedStatement.close(); } catch (SQLException negeer) {}
+			closeConnection();
+		}
+		
+		return gebruiker;
 	}
 
 	public ArrayList<Gebruiker> selectAll()
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		ArrayList<Gebruiker> gebruikerList = new ArrayList<Gebruiker>();
+		openConnection();
+		try
+		{
+			preparedStatement = connection.prepareStatement("SELECT * FROM gebruiker");
+			resultSet = preparedStatement.executeQuery();
+
+			if(resultSet.next())
+			{
+				gebruikerList.add(buildModel(resultSet));
+			}
+		} catch (SQLException sqle)
+		{
+			sqle.printStackTrace();
+		} finally {
+			if (resultSet != null) try { resultSet.close(); } catch (SQLException negeer) {}
+			if (preparedStatement != null) try { preparedStatement.close(); } catch (SQLException negeer) {}
+			closeConnection();
+		}
+		return gebruikerList;
 	}
 
 	/**
@@ -87,8 +138,27 @@ public class GebruikerDataAccess extends DataAccess
 	 */
 	public Gebruiker add(Gebruiker gebruiker)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		openConnection();
+		try
+		{
+			preparedStatement = connection.prepareStatement("INSERT INTO gebruiker (personeelnummer,gebruikersnaam,wachtwoord,voornaam,tussenvoegsel,achternaam,afdelingid) VALUES (?,?,?,?,?,?,1) RETURNING *");///////////////////////////////      Hardcoded afdeling
+			fillStatement(preparedStatement, gebruiker);
+			resultSet = preparedStatement.executeQuery();
+
+			if(resultSet.next())
+			{
+				gebruiker = buildModel(resultSet);
+			}
+		} catch (SQLException sqle)
+		{
+			sqle.printStackTrace();
+		} finally {
+			if (resultSet != null) try { resultSet.close(); } catch (SQLException negeer) {}
+			if (preparedStatement != null) try { preparedStatement.close(); } catch (SQLException negeer) {}
+			closeConnection();
+		}
+
+		return gebruiker;
 	}
 
 	/**

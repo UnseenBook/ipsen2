@@ -177,8 +177,28 @@ public class GebruikerDataAccess extends DataAccess
 	 */
 	public Gebruiker edit(Gebruiker gebruiker)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		openConnection();
+		try
+		{
+			preparedStatement = connection.prepareStatement("UPDATE gebruiker SET personeelnummer = ?, gebruikersnaam = ?, wachtwoord = ?, voornaam = ?, tussenvoegsel = ?, achternaam = ?, afdelingid = ? WHERE id = ? RETURNING *");///////////////////////////////      Hardcoded afdeling
+			fillStatement(preparedStatement, gebruiker);
+			preparedStatement.setInt(8,gebruiker.getGebruikerID());
+			resultSet = preparedStatement.executeQuery();
+
+			if(resultSet.next())
+			{
+				gebruiker = buildModel(resultSet);
+			}
+		} catch (SQLException sqle)
+		{
+			sqle.printStackTrace();
+		} finally {
+			if (resultSet != null) try { resultSet.close(); } catch (SQLException negeer) {}
+			if (preparedStatement != null) try { preparedStatement.close(); } catch (SQLException negeer) {}
+			closeConnection();
+		}
+
+		return gebruiker;
 	}
 
 }

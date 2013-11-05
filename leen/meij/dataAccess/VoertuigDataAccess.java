@@ -8,11 +8,6 @@ import leen.meij.*;
 
 public class VoertuigDataAccess extends DataAccess
 {
-	private static ArrayList<Voertuig> tempData = new ArrayList<Voertuig>(
-			Arrays.asList(new Voertuig[] { new Voertuig(1, "Volkswagen"),
-					new Voertuig(2, "Toyota"), new Voertuig(3, "Chevrolet"),
-					new Voertuig(4, "Ford"), new Voertuig(5, "Audi"),
-					new Voertuig(6, "Honda") }));
 
 	private Voertuig buildVoertuigModel(ResultSet resultSet) throws SQLException
 	{

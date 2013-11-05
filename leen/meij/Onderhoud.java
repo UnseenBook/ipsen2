@@ -17,7 +17,8 @@ public class Onderhoud extends Entity
 	private String handeling;
 
 	private boolean voldaan;
-private String beschrijving;
+
+	private String beschrijving;
 
 	public Klant getKlant()
 	{
@@ -105,8 +106,7 @@ private String beschrijving;
 
 	public void validateFields()
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		isValid = true;
 	}
 
 	public String getBeschrijving()

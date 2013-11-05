@@ -301,7 +301,7 @@ public class KlantDetailsView extends MasterView<Klant> implements
 			ByteArrayInputStream stream = new ByteArrayInputStream(rijbewijs);
 			try
 			{
-				iiPaspoort.setImage(ImageIO.read(stream).getScaledInstance(350,
+				iiRijbewijs.setImage(ImageIO.read(stream).getScaledInstance(350,
 						300, Image.SCALE_SMOOTH));
 			}
 			catch (IOException e)

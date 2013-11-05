@@ -6,7 +6,7 @@ import java.util.ArrayList;
 public abstract class Entity
 {
 
-	private boolean isValid;
+	protected boolean isValid;
 
 	private ArrayList<String> errors = new ArrayList<String>();
 

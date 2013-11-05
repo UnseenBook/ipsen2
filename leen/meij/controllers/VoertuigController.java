@@ -1,6 +1,9 @@
 
 package leen.meij.controllers;
 
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
 import leen.meij.dataAccess.VoertuigDataAccess;
 import leen.meij.utilities.*;
 import leen.meij.*;

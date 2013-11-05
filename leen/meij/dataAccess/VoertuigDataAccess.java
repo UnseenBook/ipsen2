@@ -12,11 +12,11 @@ public class VoertuigDataAccess extends DataAccess
         private Voertuig buildVoertuigModel(ResultSet resultSet) throws SQLException
         {
                 Voertuig voertuig = new Voertuig();
-                voertuig.setBeschrijving(resultSet.getString("beschrijving"));
-                voertuig.setCategorie(resultSet.getString("categorie"));
-                voertuig.setKleur(resultSet.getString("kleur"));
-                voertuig.setMerk(resultSet.getString("merk"));
-                voertuig.setType(resultSet.getString("type"));
+                voertuig.setBeschrijving(resultSet.getString("categorie"));
+                voertuig.setCategorie(resultSet.getString("merk"));
+                voertuig.setKleur(resultSet.getString("type"));
+                voertuig.setMerk(resultSet.getString("kleur"));
+                voertuig.setType(resultSet.getString("beschrijving"));
                 
                 voertuig.setVoertuigID(resultSet.getInt("id"));
                 

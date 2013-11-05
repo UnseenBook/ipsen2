@@ -83,7 +83,7 @@ public class VoertuigDataAccess extends DataAccess
                                 Voertuig voertuig = buildVoertuigModel(resultSet);
                                 voertuig.setOnderhoud(getOnderhoud(voertuigID));
                                 
-                                
+                                return voertuig;
                         }
                 } catch (SQLException sqle)
                 {

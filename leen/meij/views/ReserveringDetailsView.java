@@ -118,7 +118,7 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 			    });
 		
 		
-		
+		calBeginDatum.setDate(model.getDate());
 		btnSave.addActionListener(this);
 		btnCancel.addActionListener(this);
 		pnlBotMenu.add(btnSave);

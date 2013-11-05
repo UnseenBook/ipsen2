@@ -224,8 +224,8 @@ public class VoertuigDataAccess extends DataAccess
                 {
         
                         ps = connection.prepareStatement(
-                                        "INSERT INTO voertuig (categorie,merk,type,kleur,beschrijving,verhuurbaar,id) "+
-                                        "VALUES (?,?,?,?,?,?,?) RETURNING *");
+                                        "UPDATE voertuig SET categorie=?,merk=?,type=?,kleur=?,beschrijving=?,verhuurbaar=? "+
+                                        "WHERE id=? RETURNING *");
                         int index = this.fillVoertuigStatement(ps, voertuig);
                         ps.setInt(index++,voertuig.getVoertuigID());
                         resultSet = ps.executeQuery();
@@ -291,7 +291,7 @@ public class VoertuigDataAccess extends DataAccess
         private ArrayList<Onderhoud> getOnderhoud(int voertuigID)
         {
                 openConnection();
-                
+                ArrayList<Onderhoud> onderhouden = new ArrayList<Onderhoud>();
                 PreparedStatement ps = null;
                 ResultSet resultSet = null;
                 
@@ -304,12 +304,11 @@ public class VoertuigDataAccess extends DataAccess
                         ps.setInt(1, voertuigID);
                         
                         resultSet = ps.executeQuery();
-                        ArrayList<Onderhoud> onderhouden = new ArrayList<Onderhoud>();
+                        
                         while(resultSet.next())
                         {
                                 Onderhoud onderhoud = buildOnderhoud(resultSet);
                                 onderhouden.add(onderhoud);
-                                return onderhouden;
                         }
                 } catch (SQLException sqle)
                 {
@@ -320,7 +319,7 @@ public class VoertuigDataAccess extends DataAccess
                         closeConnection();
                 }
                 
-                return null;
+                return onderhouden;
         }
         
         

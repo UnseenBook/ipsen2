@@ -1,34 +1,157 @@
-
 package leen.meij.views;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.table.*;
+import leen.meij.Onderhoud;
+
 import leen.meij.Voertuig;
 
+public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionListener {
 
-public class VoertuigDetailsView extends MasterView<Voertuig>
-{
+    private JTextField txtType = new JTextField(15);
+    private JTextField txtCategorie = new JTextField(15);
+    private JTextField txtMerk = new JTextField(15);
+    private JTextField txtKleur = new JTextField(15);
+    private JTextField txtBeschrijving = new JTextField(15);
+    private JTable tblOnderhoud = new JTable();
+    
+    private JButton btnOnderhoudToevoegen = new JButton("Onderhoud Toevoegen");
+    private JButton btnSave = new JButton("Opslaan");
+    private JButton btnCancel = new JButton("Annuleren");
+
+    public VoertuigDetailsView(Voertuig model) {
+        super(model);
+
+        
+        if (model.getVoertuigID() == 0) {
+            this.setTitle("Voertuig toevoegen");
+        } else {
+            this.setTitle("Voertuig aanpassen");
+        }
+
+        String gap = "gapright 20,";
+        String wrap = "wrap,";
+        String span2 = "spanx 2,";
+        
+        tblOnderhoud = createOnderhoudTable(model.getOnderhoud());
+        
+
+        pnlContent.add(new JLabel("Type"));
+        pnlContent.add(txtType, wrap);
+
+        pnlContent.add(new JLabel("Categorie"));
+        pnlContent.add(txtCategorie, wrap);
+
+        pnlContent.add(new JLabel("Merk"));
+        pnlContent.add(txtMerk, wrap);
+
+        pnlContent.add(new JLabel("Kleur"));
+        pnlContent.add(txtKleur, wrap);
+
+        pnlContent.add(new JLabel("Beschrijving"));
+        pnlContent.add(txtBeschrijving, wrap);
+
+        this.pnlContent.add(this.tblOnderhoud.getTableHeader(), span2 + wrap);
+        this.pnlContent.add(this.tblOnderhoud, span2 + wrap);
+        
+        pnlBotMenu.add(btnOnderhoudToevoegen);
+        pnlBotMenu.add(btnSave);
+        pnlBotMenu.add(btnCancel);
+
+        btnSave.addActionListener(this);
+        btnCancel.addActionListener(this);
+
+        setErrorMessages(model.getErrors());
+        loadModelData();
+    }
+
+    protected Voertuig getEditedModel() {
+        // TODO - implement {class}.{operation}
+
+        model.setType(txtType.getText());
+        model.setCategorie(txtCategorie.getText());
+        model.setMerk(txtMerk.getText());
+        model.setKleur(txtKleur.getText());
+        model.setBeschrijving(txtBeschrijving.getText());
+        
+        return this.model;
+    }
+
+    private void loadModelData() {
+        //setAllThings!
+        txtType.setText(model.getType());
+        txtCategorie.setText(model.getCategorie());
+        txtMerk.setText(model.getMerk());
+        txtKleur.setText(model.getKleur());
+        txtBeschrijving.setText(model.getBeschrijving());
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        super.actionPerformed(e);
+        
+        if (e.getSource() == btnSave)
+		{
+			// no voertuigID? this means we know we're adding a new Klant object
+			if (model.getVoertuigID() == 0)
+			{
+				runTask("Voertuig", "voertuigToevoegen",
+						new Object[] { getEditedModel() }); 
+                                
+			}
+			else
+			{
+				runTask("Voertuig", "voertuigWijzigen",
+						new Object[] { getEditedModel() });
+			}
+		}
+		else if (e.getSource() == btnCancel)
+		{
+			runTask("Voertuig", "voertuigOverzichtRaadplegen");
+		}
+    }
+    
+    private JTable createOnderhoudTable(ArrayList<Onderhoud> onderhoudLijst) {
+        
+        DefaultTableModel dtm = new DefaultTableModel();
+        dtm.addColumn("Nummer");
+        dtm.addColumn("Klant");
+        dtm.addColumn("Locatie");
+        dtm.addColumn("Handeling");
+
+        for (Onderhoud onderhoud : onderhoudLijst) {
+            dtm.addRow(new Object[]{onderhoud.getOnderhoudID(), onderhoud.getKlant(), onderhoud.getLocatie(), onderhoud.getHandeling()});
+        }
+
+        TableColumnModel tcm = new DefaultTableColumnModel();
+        tcm.addColumn(new TableColumn(0, 50));
+        tcm.addColumn(new TableColumn(1, 200));
+        tcm.addColumn(new TableColumn(2, 200));
+        tcm.addColumn(new TableColumn(3, 200));
+
+        tcm.getColumn(0).setHeaderValue("Nummer");
+        tcm.getColumn(1).setHeaderValue("Klant");
+        tcm.getColumn(2).setHeaderValue("Locatie");
+        tcm.getColumn(3).setHeaderValue("Handeling");
 
 
-	private JTextField txtCategorie;
+        JTable table = new JTable(dtm, tcm) {
+            private static final long serialVersionUID = 1L;
 
-	private JTextField txtMerk;
-
-	private JTextField txtType;
-
-	private JTextField txtKleur;
-
-	private JTextField txtBeschrijving;
-
-	public VoertuigDetailsView(Voertuig model)
-	{
-		super(model);
-		// TODO Auto-generated constructor stub
-	}
-
-	protected Voertuig getEditedModel()
-	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
-	}
-
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        ;
+        };
+		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // let only
+        // one
+        // row
+        // be
+        // selected
+        
+        return table;
+    }
 }

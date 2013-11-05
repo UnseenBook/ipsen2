@@ -11,8 +11,13 @@ import leen.meij.*;
 
 public class VoertuigDataAccess extends DataAccess
 {
-	private static ArrayList<Voertuig> tempData = new ArrayList<Voertuig>( Arrays.asList(new Voertuig[] { new Voertuig(1,"Volkswagen"),
-			new Voertuig(2,"Toyota"), new Voertuig(3,"Chevrolet"), new Voertuig(4,"Ford"),new Voertuig(5,"Audi"),new Voertuig(6,"Honda")   }));
+	private static ArrayList<Voertuig> tempData = new ArrayList<Voertuig>( Arrays.asList(new Voertuig[] { 
+            new Voertuig(1,"Volkswagen"),
+            new Voertuig(2,"Toyota"), 
+            new Voertuig(3,"Chevrolet"), 
+            new Voertuig(4,"Ford"),
+            new Voertuig(5,"Audi"),
+            new Voertuig(6,"Honda")   }));
 
 	/**
 	 * 
@@ -42,7 +47,13 @@ public class VoertuigDataAccess extends DataAccess
 	public Voertuig add(Voertuig voertuig)
 	{
 		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		//throw new UnsupportedOperationException();
+            System.out.println("toegevoegd");
+            
+            tempData.add(voertuig);
+		// select klant from newly inserted ID
+		return voertuig;
+            
 	}
 
 	/**

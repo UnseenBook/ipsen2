@@ -4,6 +4,7 @@ package leen.meij.controllers;
 import leen.meij.dataAccess.VoertuigDataAccess;
 import leen.meij.utilities.*;
 import leen.meij.*;
+import leen.meij.views.VoertuigDetailsView;
 import leen.meij.views.VoertuigView;
 
 public class VoertuigController extends Controller
@@ -20,7 +21,7 @@ public class VoertuigController extends Controller
 	public View voertuigToevoegenTask()
 	{
 		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		return new VoertuigDetailsView(new Voertuig());
 	}
 
 	/**
@@ -29,8 +30,20 @@ public class VoertuigController extends Controller
 	 */
 	public View voertuigToevoegenTask(Voertuig voertuig)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		// validate user data
+		voertuig.validateFields();
+                
+		if (voertuig.isValid())
+		{
+
+			voertuig = voertuigDataAccess.add(voertuig);
+			                 
+			// redirect back to the overview
+			return voertuigOverzichtRaadplegenTask();
+		}
+		
+		// show the same view with error messages
+		return new VoertuigDetailsView(voertuig);
 	}
 
 	/**
@@ -39,8 +52,9 @@ public class VoertuigController extends Controller
 	 */
 	public View voertuigWijzigenTask(Integer voertuigID)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		Voertuig voertuig = voertuigDataAccess.select(voertuigID);
+
+		return new VoertuigDetailsView(voertuig);
 	}
 
 	/**
@@ -49,8 +63,18 @@ public class VoertuigController extends Controller
 	 */
 	public View voertuigWijzigenTask(Voertuig voertuig)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		voertuig.validateFields();
+		
+		if(voertuig.isValid())
+		{
+			voertuig = voertuigDataAccess.edit(voertuig);
+			
+			// redirect back to the overview
+			return voertuigOverzichtRaadplegenTask();
+		}
+		
+		// show the same view with error messages
+		return new VoertuigDetailsView(voertuig);
 	}
 
 	/**

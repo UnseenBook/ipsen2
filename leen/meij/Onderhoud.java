@@ -7,16 +7,20 @@ public class Onderhoud extends Entity
 {
 
 	private int onderhoudID;
-
-	private Klant klant;
-
-	private Voertuig voertuig;
-
-	private String locatie;
-
-	private String handeling;
-
-	private boolean voldaan;
+        private Klant klant;
+        private Voertuig voertuig;
+        private String locatie;
+        private String handeling;
+        private boolean voldaan;
+        
+        public Onderhoud(){
+            
+        }
+        
+        public Onderhoud(int onderhoudID, String handeling){
+            this.onderhoudID = onderhoudID;
+            this.handeling = handeling;
+        }
 
 	public Klant getKlant()
 	{

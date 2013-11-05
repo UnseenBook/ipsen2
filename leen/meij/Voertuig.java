@@ -8,7 +8,7 @@ import leen.meij.utilities.*;
 public class Voertuig extends Entity
 {
 
-	private ArrayList<Onderhoud> onderhoud;
+	private ArrayList<Onderhoud> onderhoud = new ArrayList<Onderhoud>();
 
 	private int voertuigID;
 
@@ -26,7 +26,7 @@ public class Voertuig extends Entity
 	
 	public Voertuig(){}
 	
-	public Voertuig(int VoertuigID,String merk)
+	public Voertuig(int voertuigID,String merk)
 	{
 		this.voertuigID = voertuigID;
 		this.merk = merk;
@@ -35,6 +35,11 @@ public class Voertuig extends Entity
 
 	public ArrayList<Onderhoud> getOnderhoud()
 	{
+                this.onderhoud.add(new Onderhoud(1, "Tanken"));
+                this.onderhoud.add(new Onderhoud(2, "Linkerdeur repareren"));
+                this.onderhoud.add(new Onderhoud(3, "Ramen zemen"));
+                this.onderhoud.add(new Onderhoud(4, "Olie vervangen"));
+                
 		return this.onderhoud;
 	}
 
@@ -150,7 +155,7 @@ public class Voertuig extends Entity
 	public void validateFields()
 	{
 		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		isValid = true;
 	}
 
 }

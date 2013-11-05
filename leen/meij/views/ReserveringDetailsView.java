@@ -1,14 +1,15 @@
 package leen.meij.views;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -19,9 +20,14 @@ import leen.meij.Voertuig;
 import leen.meij.dataAccess.KlantDataAccess;
 import leen.meij.dataAccess.VoertuigDataAccess;
 
+import com.toedter.calendar.JCalendar;
+import com.toedter.calendar.JDateChooser;
+
 public class ReserveringDetailsView extends MasterView<Reservering> implements ActionListener
 {
-
+	
+	private JDateChooser calBeginDatum = new JDateChooser();
+	private JButton btnBeginDatum = new JButton("Selecteer datum...");
 
 	private JComboBox cbKlant = new JComboBox();
 	private JComboBox cbVoertuig = new JComboBox();
@@ -79,12 +85,17 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 		pnlContent.add(cbVoertuig, wrap + span2);
 		
 		pnlContent.add(new JLabel("Begin datum"));
-		pnlContent.add(txtBeginDatum,wrap +  gapTop + span2);
+		txtBeginDatum.setEditable(false);
+		//pnlContent.add(txtBeginDatum,wrap +  gapTop + span2);
+		pnlContent.add(calBeginDatum,wrap +  gapTop + span2);
+		
 		
 		
 		//row 3
 		pnlContent.add(new JLabel("Eind datum"));
+		txtBeginDatum.setEditable(false);
 		pnlContent.add(txtEindDatum,wrap +   gapTop + span2);
+		
 		
 		//row 4
 		pnlContent.add(new JLabel("Kilometers"));
@@ -95,7 +106,19 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 		pnlContent.add(txtBedrag, wrap + gapTop + span2);
 		
 		
-
+		calBeginDatum.getDateEditor().addPropertyChangeListener(
+			    new PropertyChangeListener() {
+			        @Override
+			        public void propertyChange(PropertyChangeEvent e) {
+			            if ("date".equals(e.getPropertyName())) {
+			                System.out.println(e.getPropertyName()
+			                    + ": " + (Date) e.getNewValue());
+			            }
+			        }
+			    });
+		
+		
+		
 		btnSave.addActionListener(this);
 		btnCancel.addActionListener(this);
 		pnlBotMenu.add(btnSave);
@@ -107,14 +130,22 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 	}
 
 	
+	
 	public void actionPerformed(ActionEvent e)
 	{
 		super.actionPerformed(e);
-		if(e.getSource() == btnCancel)
+		if (e.getSource() == btnBeginDatum)
+		{
+			JDialog dialog = new JDialog();
+			dialog.setVisible(true);
+  			dialog.setLocationRelativeTo(null);
+  			dialog.add(calBeginDatum);
+		}
+		else if(e.getSource() == btnCancel)
 		{
 			runTask("Reservering", "reserveringOverzichtRaadplegen");
 		}
-		if(e.getSource() == btnSave)
+		else if(e.getSource() == btnSave)
 		{
 			if (model.getKlantID() == 0)
 			{

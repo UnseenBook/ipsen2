@@ -16,27 +16,24 @@ public class GebruikerDataAccess extends DataAccess
 	private Gebruiker gebruiker                 = null;
 
 
-	private Gebruiker buildModel(ResultSet resultSet)
+	private Gebruiker buildModel(ResultSet resultSet) throws SQLException
 	{
 		gebruiker = new Gebruiker();
-		try
-		{
-			gebruiker.setGebruikerID(resultSet.getInt("id"));
-			gebruiker.setPersoneelnummer(resultSet.getInt("personeelnummer"));
-			gebruiker.setGebruikersnaam(resultSet.getString("gebruikersnaam")); 
-			gebruiker.setWachtworod(resultSet.getString("wachtwoord"));
-			gebruiker.setAfdeling("afdeling placeholder");///////////////////////////////      Hardcoded afdeling
-			gebruiker.setVoornaam(resultSet.getString("voornaam"));
-			gebruiker.setTussenvoegsel(resultSet.getString("tussenvoegsel"));
-			gebruiker.setAchternaam(resultSet.getString("achternaam"));
-		} catch (SQLException negeer) {}
+	
+		gebruiker.setGebruikerID(resultSet.getInt("id"));
+		gebruiker.setPersoneelnummer(resultSet.getInt("personeelnummer"));
+		gebruiker.setGebruikersnaam(resultSet.getString("gebruikersnaam")); 
+		gebruiker.setWachtworod(resultSet.getString("wachtwoord"));
+		gebruiker.setAfdeling("afdeling placeholder");///////////////////////////////      Hardcoded afdeling
+		gebruiker.setVoornaam(resultSet.getString("voornaam"));
+		gebruiker.setTussenvoegsel(resultSet.getString("tussenvoegsel"));
+		gebruiker.setAchternaam(resultSet.getString("achternaam"));
+	
 		return gebruiker;
 	}
 
-	private void fillStatement(PreparedStatement preparedStatement, Gebruiker gebruiker)
+	private void fillStatement(PreparedStatement preparedStatement, Gebruiker gebruiker) throws SQLException
 	{
-		try
-		{
 		preparedStatement.setInt(1,gebruiker.getPersoneelnummer());
 		preparedStatement.setString(2,gebruiker.getGebruikersnaam());
 		preparedStatement.setString(3,gebruiker.getWachtworod());
@@ -44,8 +41,6 @@ public class GebruikerDataAccess extends DataAccess
 		preparedStatement.setString(5,gebruiker.getTussenvoegsel());
 		preparedStatement.setString(6,gebruiker.getAchternaam());
 		preparedStatement.setInt(7,1);///////////////////////////////      Hardcoded afdeling
-
-		} catch (SQLException negeer) {}
 	}
 
 	/**

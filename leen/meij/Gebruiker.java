@@ -136,8 +136,7 @@ public class Gebruiker extends Entity
 
 	public void validateFields()
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		isValid = true;
 	}
 
 }

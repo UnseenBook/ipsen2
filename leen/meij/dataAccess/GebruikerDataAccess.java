@@ -117,7 +117,7 @@ public class GebruikerDataAccess extends DataAccess
 			preparedStatement = connection.prepareStatement("SELECT * FROM gebruiker");
 			resultSet = preparedStatement.executeQuery();
 
-			if(resultSet.next())
+			while(resultSet.next())
 			{
 				gebruikerList.add(buildModel(resultSet));
 			}
@@ -167,8 +167,22 @@ public class GebruikerDataAccess extends DataAccess
 	 */
 	public void delete(int gebruikerID)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		openConnection();
+		try
+		{
+			preparedStatement = connection.prepareStatement("DELETE FROM gebruiker WHERE id=?");
+			
+			preparedStatement.setInt(1,gebruikerID);
+			preparedStatement.execute();
+
+		} catch (SQLException sqle)
+		{
+			sqle.printStackTrace();
+		} finally {
+			if (resultSet != null) try { resultSet.close(); } catch (SQLException negeer) {}
+			if (preparedStatement != null) try { preparedStatement.close(); } catch (SQLException negeer) {}
+			closeConnection();
+		}
 	}
 
 	/**

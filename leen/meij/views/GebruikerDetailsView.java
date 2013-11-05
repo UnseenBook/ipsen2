@@ -14,6 +14,8 @@ public class GebruikerDetailsView extends MasterView<Gebruiker> implements Actio
 	private JTextField txtTussenvoegsel = new JTextField(15);
 	private JTextField txtAchternaam = new JTextField(15);
 
+	private JTextField txtWachtwoord = new JTextField(15);
+
 	private JButton btnSave = new JButton("Opslaan");
 	private JButton btnCancel = new JButton("Annuleren");
 
@@ -30,6 +32,7 @@ public class GebruikerDetailsView extends MasterView<Gebruiker> implements Actio
 		else
 		{
 			this.setTitle("Gebruiker aanpassen");
+
 		}
 
 		String gap = "gapright 20,";
@@ -57,6 +60,12 @@ public class GebruikerDetailsView extends MasterView<Gebruiker> implements Actio
 		pnlContent.add(new JLabel("Gebruikersnaam"));
 		pnlContent.add(txtGebruikersnaam, wrap + span2);
 
+		// row 4
+		if (model.getGebruikerID() == 0)
+		{
+			pnlContent.add(new JLabel("Wachtwoord"));
+			pnlContent.add(txtWachtwoord, gap + span2);
+		}
 		pnlBotMenu.add(btnSave);
 		pnlBotMenu.add(btnCancel);
 
@@ -81,7 +90,7 @@ public class GebruikerDetailsView extends MasterView<Gebruiker> implements Actio
 			}
 			else
 			{
-				runTask("Gebruiker", "gebruikerToevoegen", new Object[] { getEditedModel() });
+				runTask("Gebruiker", "gebruikerWijzigen", new Object[] { getEditedModel() });
 			}
 		}
 		else if (e.getSource() == btnCancel)
@@ -103,6 +112,14 @@ public class GebruikerDetailsView extends MasterView<Gebruiker> implements Actio
 
 	protected Gebruiker getEditedModel()
 	{
+		model.setAchternaam(txtAchternaam.getText());
+		model.setAfdeling(txtAfdeling.getText());
+		model.setGebruikersnaam(txtGebruikersnaam.getText());
+		model.setPersoneelnummer(Integer.parseInt(txtPersoneelnummer.getText()));
+		model.setTussenvoegsel(txtTussenvoegsel.getText());
+		model.setAchternaam(txtVoornaam.getText());
+		model.setVoornaam(txtVoornaam.getText());
+		model.setWachtworod(txtWachtwoord.getText());
 
 		return model;
 	}

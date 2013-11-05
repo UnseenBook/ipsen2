@@ -26,7 +26,8 @@ public class Voertuig extends Entity
 	
 	public Voertuig(){}
 	
-	public Voertuig(int voertuigID,String merk)
+	public Voertuig(int VoertuigID,String merk)
+
 	{
 		this.voertuigID = voertuigID;
 		this.merk = merk;
@@ -35,11 +36,6 @@ public class Voertuig extends Entity
 
 	public ArrayList<Onderhoud> getOnderhoud()
 	{
-                this.onderhoud.add(new Onderhoud(1, "Tanken"));
-                this.onderhoud.add(new Onderhoud(2, "Linkerdeur repareren"));
-                this.onderhoud.add(new Onderhoud(3, "Ramen zemen"));
-                this.onderhoud.add(new Onderhoud(4, "Olie vervangen"));
-                
 		return this.onderhoud;
 	}
 

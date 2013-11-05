@@ -1,4 +1,3 @@
-
 package leen.meij.controllers;
 
 import java.util.*;
@@ -10,7 +9,7 @@ import leen.meij.*;
 public class GebruikerController extends Controller
 {
 	private GebruikerDataAccess gebruikerDataAccess = new GebruikerDataAccess();
-	
+
 	public View inloggenTask()
 	{
 		return new LoginView(new Gebruiker());
@@ -25,28 +24,26 @@ public class GebruikerController extends Controller
 	{
 		return new TemporaryDefaultView();
 		/*
-		GebruikerDataAccess gebruikerDataAccess = new GebruikerDataAccess();
-		
-		
-		
-		Gebruiker gebruiker = gebruikerDataAccess.select(gebruikersnaam, wachtwoord);
-		if(gebruiker != null)
-		{
-			return new ReserveringView(new ArrayList<Reservering>());
-		} 
-	
-		gebruiker = new Gebruiker();
-		gebruiker.setGebruikersnaam(gebruikersnaam);
-		gebruiker.getErrors().add("Gebruikersnaam of wachtwoord klopt niet.");
-		
-		return new LoginView(gebruiker);*/
+		 * GebruikerDataAccess gebruikerDataAccess = new GebruikerDataAccess();
+		 * 
+		 * 
+		 * 
+		 * Gebruiker gebruiker = gebruikerDataAccess.select(gebruikersnaam,
+		 * wachtwoord); if(gebruiker != null) { return new ReserveringView(new
+		 * ArrayList<Reservering>()); }
+		 * 
+		 * gebruiker = new Gebruiker();
+		 * gebruiker.setGebruikersnaam(gebruikersnaam);
+		 * gebruiker.getErrors().add
+		 * ("Gebruikersnaam of wachtwoord klopt niet.");
+		 * 
+		 * return new LoginView(gebruiker);
+		 */
 	}
 
 	public View gebruikersOverzichtRaadplegenTask()
 	{
-		ArrayList<Gebruiker> gebruikers = new ArrayList<Gebruiker>();
-		gebruikers = gebruikerDataAccess.selectAll();
-		return new GebruikerView(gebruikers);
+		return new GebruikerView(gebruikerDataAccess.selectAll());
 	}
 
 	public View gebruikerToevoegenTask()
@@ -60,8 +57,15 @@ public class GebruikerController extends Controller
 	 */
 	public View gebruikerToevoegenTask(Gebruiker gebruiker)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		gebruiker.validateFields();
+		if (gebruiker.isValid())
+		{
+			gebruiker = gebruikerDataAccess.add(gebruiker);
+			
+			return gebruikersOverzichtRaadplegenTask();
+		}
+		
+		return new GebruikerDetailsView(gebruiker);
 	}
 
 	/**
@@ -70,8 +74,7 @@ public class GebruikerController extends Controller
 	 */
 	public View gebruikerWijzigenTask(Integer gebruikerID)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		return new GebruikerDetailsView(gebruikerDataAccess.select(gebruikerID));
 	}
 
 	/**
@@ -80,8 +83,15 @@ public class GebruikerController extends Controller
 	 */
 	public View gebruikerWijzigenTask(Gebruiker gebruiker)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		gebruiker.validateFields();
+		
+		if(gebruiker.isValid()){
+			gebruikerDataAccess.edit(gebruiker);
+			
+			return gebruikersOverzichtRaadplegenTask();
+		}
+		
+		return new GebruikerDetailsView(gebruiker);
 	}
 
 	/**
@@ -90,8 +100,10 @@ public class GebruikerController extends Controller
 	 */
 	public View gebruikerVerwijderenTask(Integer gebruikerID)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		gebruikerDataAccess.delete(gebruikerID);
+		
+		
+		return gebruikersOverzichtRaadplegenTask();
 	}
 
 }

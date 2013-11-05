@@ -12,11 +12,11 @@ public class VoertuigDataAccess extends DataAccess
         private Voertuig buildVoertuigModel(ResultSet resultSet) throws SQLException
         {
                 Voertuig voertuig = new Voertuig();
-                voertuig.setBeschrijving(resultSet.getString("beschrijving"));
-                voertuig.setCategorie(resultSet.getString("categorie"));
-                voertuig.setKleur(resultSet.getString("kleur"));
-                voertuig.setMerk(resultSet.getString("merk"));
-                voertuig.setType(resultSet.getString("type"));
+                voertuig.setBeschrijving(resultSet.getString("categorie"));
+                voertuig.setCategorie(resultSet.getString("merk"));
+                voertuig.setKleur(resultSet.getString("type"));
+                voertuig.setMerk(resultSet.getString("kleur"));
+                voertuig.setType(resultSet.getString("beschrijving"));
                 
                 voertuig.setVoertuigID(resultSet.getInt("id"));
                 
@@ -83,7 +83,7 @@ public class VoertuigDataAccess extends DataAccess
                                 Voertuig voertuig = buildVoertuigModel(resultSet);
                                 voertuig.setOnderhoud(getOnderhoud(voertuigID));
                                 
-                                
+                                return voertuig;
                         }
                 } catch (SQLException sqle)
                 {
@@ -224,8 +224,8 @@ public class VoertuigDataAccess extends DataAccess
                 {
         
                         ps = connection.prepareStatement(
-                                        "INSERT INTO voertuig (categorie,merk,type,kleur,beschrijving,verhuurbaar,id) "+
-                                        "VALUES (?,?,?,?,?,?,?) RETURNING *");
+                                        "UPDATE voertuig SET categorie=?,merk=?,type=?,kleur=?,beschrijving=?,verhuurbaar=? "+
+                                        "WHERE id=? RETURNING *");
                         int index = this.fillVoertuigStatement(ps, voertuig);
                         ps.setInt(index++,voertuig.getVoertuigID());
                         resultSet = ps.executeQuery();
@@ -291,7 +291,7 @@ public class VoertuigDataAccess extends DataAccess
         private ArrayList<Onderhoud> getOnderhoud(int voertuigID)
         {
                 openConnection();
-                
+                ArrayList<Onderhoud> onderhouden = new ArrayList<Onderhoud>();
                 PreparedStatement ps = null;
                 ResultSet resultSet = null;
                 
@@ -304,12 +304,11 @@ public class VoertuigDataAccess extends DataAccess
                         ps.setInt(1, voertuigID);
                         
                         resultSet = ps.executeQuery();
-                        ArrayList<Onderhoud> onderhouden = new ArrayList<Onderhoud>();
+                        
                         while(resultSet.next())
                         {
                                 Onderhoud onderhoud = buildOnderhoud(resultSet);
                                 onderhouden.add(onderhoud);
-                                return onderhouden;
                         }
                 } catch (SQLException sqle)
                 {
@@ -320,7 +319,7 @@ public class VoertuigDataAccess extends DataAccess
                         closeConnection();
                 }
                 
-                return null;
+                return onderhouden;
         }
         
         

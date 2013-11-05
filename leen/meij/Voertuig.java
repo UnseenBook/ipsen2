@@ -26,8 +26,7 @@ public class Voertuig extends Entity
 	
 	public Voertuig(){}
 	
-	public Voertuig(int VoertuigID,String merk)
-
+	public Voertuig(int voertuigID,String merk)
 	{
 		this.voertuigID = voertuigID;
 		this.merk = merk;

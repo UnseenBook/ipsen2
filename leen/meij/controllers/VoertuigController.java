@@ -1,6 +1,9 @@
 
 package leen.meij.controllers;
 
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
 import leen.meij.dataAccess.VoertuigDataAccess;
 import leen.meij.utilities.*;
 import leen.meij.*;
@@ -83,8 +86,9 @@ public class VoertuigController extends Controller
 	 */
 	public View voertuigVerwijderenTask(Integer voertuigID)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		voertuigDataAccess.delete(voertuigID);
+		
+		return voertuigOverzichtRaadplegenTask();
 	}
 
 	/**

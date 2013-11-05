@@ -1,3 +1,4 @@
+
 package leen.meij;
 
 import java.util.ArrayList;
@@ -7,7 +8,7 @@ import leen.meij.utilities.*;
 public class Voertuig extends Entity
 {
 
-	private ArrayList<Onderhoud> onderhoud;
+	private ArrayList<Onderhoud> onderhoud = new ArrayList<Onderhoud>();
 
 	private int voertuigID;
 
@@ -22,19 +23,23 @@ public class Voertuig extends Entity
 	private String beschrijving;
 
 	private boolean verhuurbaar;
-
-	public Voertuig()
-	{
-	}
-
-	public Voertuig(int VoertuigID, String merk)
+	
+	public Voertuig(){}
+	
+	public Voertuig(int voertuigID,String merk)
 	{
 		this.voertuigID = voertuigID;
 		this.merk = merk;
 	}
+	
 
 	public ArrayList<Onderhoud> getOnderhoud()
 	{
+                this.onderhoud.add(new Onderhoud(1, "Tanken"));
+                this.onderhoud.add(new Onderhoud(2, "Linkerdeur repareren"));
+                this.onderhoud.add(new Onderhoud(3, "Ramen zemen"));
+                this.onderhoud.add(new Onderhoud(4, "Olie vervangen"));
+                
 		return this.onderhoud;
 	}
 
@@ -45,10 +50,6 @@ public class Voertuig extends Entity
 	public void setOnderhoud(ArrayList<Onderhoud> onderhoud)
 	{
 		this.onderhoud = onderhoud;
-		for (Onderhoud o : onderhoud)
-		{
-			o.setVoertuig(this);
-		}
 	}
 
 	public int getVoertuigID()
@@ -83,7 +84,8 @@ public class Voertuig extends Entity
 	{
 		return this.merk;
 	}
-
+	
+	
 	/**
 	 * 
 	 * @param merk
@@ -144,15 +146,16 @@ public class Voertuig extends Entity
 	 * 
 	 * @param verhuurbaar
 	 */
-	public void setVerhuurbaar(boolean verhuurbaar)
+	public void isVerhuurbaar(boolean verhuurbaar)
 	{
-		this.verhuurbaar = verhuurbaar;
+		// TODO - implement {class}.{operation}
+		throw new UnsupportedOperationException();
 	}
 
 	public void validateFields()
 	{
 		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		isValid = true;
 	}
 
 }

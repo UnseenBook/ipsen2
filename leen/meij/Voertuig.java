@@ -1,4 +1,3 @@
-
 package leen.meij;
 
 import java.util.ArrayList;
@@ -23,15 +22,16 @@ public class Voertuig extends Entity
 	private String beschrijving;
 
 	private boolean verhuurbaar;
-	
-	public Voertuig(){}
-	
-	public Voertuig(int VoertuigID,String merk)
+
+	public Voertuig()
+	{
+	}
+
+	public Voertuig(int VoertuigID, String merk)
 	{
 		this.voertuigID = voertuigID;
 		this.merk = merk;
 	}
-	
 
 	public ArrayList<Onderhoud> getOnderhoud()
 	{
@@ -45,6 +45,10 @@ public class Voertuig extends Entity
 	public void setOnderhoud(ArrayList<Onderhoud> onderhoud)
 	{
 		this.onderhoud = onderhoud;
+		for (Onderhoud o : onderhoud)
+		{
+			o.setVoertuig(this);
+		}
 	}
 
 	public int getVoertuigID()
@@ -79,8 +83,7 @@ public class Voertuig extends Entity
 	{
 		return this.merk;
 	}
-	
-	
+
 	/**
 	 * 
 	 * @param merk
@@ -141,10 +144,9 @@ public class Voertuig extends Entity
 	 * 
 	 * @param verhuurbaar
 	 */
-	public void isVerhuurbaar(boolean verhuurbaar)
+	public void setVerhuurbaar(boolean verhuurbaar)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		this.verhuurbaar = verhuurbaar;
 	}
 
 	public void validateFields()

@@ -17,6 +17,7 @@ public class Onderhoud extends Entity
 	private String handeling;
 
 	private boolean voldaan;
+private String beschrijving;
 
 	public Klant getKlant()
 	{
@@ -106,6 +107,23 @@ public class Onderhoud extends Entity
 	{
 		// TODO - implement {class}.{operation}
 		throw new UnsupportedOperationException();
+	}
+
+	public String getBeschrijving()
+	{
+		return beschrijving;
+	}
+
+	public void setBeschrijving(String beschrijving)
+	{
+		this.beschrijving = beschrijving;
+	}
+
+	public Integer getKlantID()
+	{
+		if(this.klant == null)
+			return null;
+		return this.klant.getKlantID();
 	}
 
 }

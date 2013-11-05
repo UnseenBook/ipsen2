@@ -4,6 +4,7 @@ package leen.meij.controllers;
 import leen.meij.dataAccess.VoertuigDataAccess;
 import leen.meij.utilities.*;
 import leen.meij.*;
+import leen.meij.views.VoertuigView;
 
 public class VoertuigController extends Controller
 {
@@ -13,7 +14,7 @@ public class VoertuigController extends Controller
 	public View voertuigOverzichtRaadplegenTask()
 	{
 		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		return new VoertuigView(voertuigDataAccess.selectAll());
 	}
 
 	public View voertuigToevoegenTask()

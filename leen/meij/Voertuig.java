@@ -26,7 +26,11 @@ public class Voertuig extends Entity
 	
 	public Voertuig(){}
 	
+<<<<<<< HEAD
 	public Voertuig(int voertuigID,String merk)
+=======
+	public Voertuig(int VoertuigID,String merk)
+>>>>>>> parent of ad8ca2e... implemented voertuigdataaccess
 	{
 		this.voertuigID = voertuigID;
 		this.merk = merk;

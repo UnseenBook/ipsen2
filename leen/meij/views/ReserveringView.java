@@ -51,7 +51,9 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 		btnVerwijderen.setEnabled(false);
 		
 		btnInleverlijst.addActionListener(this);
+		btnInleverlijst.setToolTipText("Inleverlijst");
 		btnHuurlijst.addActionListener(this);
+		btnHuurlijst.setToolTipText("Huurlijst");
 		btnToevoegen.addActionListener(this);
 		btnAanpassen.addActionListener(this);
 		btnVerwijderen.addActionListener(this);

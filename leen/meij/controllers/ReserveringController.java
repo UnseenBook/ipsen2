@@ -5,6 +5,8 @@ import leen.meij.Reservering;
 import leen.meij.dataAccess.ReserveringDataAccess;
 import leen.meij.utilities.Controller;
 import leen.meij.utilities.View;
+import leen.meij.views.HuurLijstView;
+import leen.meij.views.InleverLijstView;
 import leen.meij.views.ReserveringDetailsView;
 import leen.meij.views.ReserveringView;
 
@@ -98,12 +100,12 @@ public class ReserveringController extends Controller
 
 	public View huurlijstOverzichtRaadplegenTask()
 	{
-		return new ReserveringView(reserveringDataAccess.selectAll());
+		return new HuurLijstView(reserveringDataAccess.selectAll());
 	}
 
 	public View inleverlijstRaadplegenTask()
 	{	
-		return new ReserveringView(reserveringDataAccess.selectAll());
+		return new InleverLijstView(reserveringDataAccess.selectAll());
 	}
 
 }

@@ -38,7 +38,6 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 	private ArrayList<Voertuig> tempListvoertuig;
 	private KlantDataAccess klantDataAccess = new KlantDataAccess();
 	private VoertuigDataAccess voertuigDataAccess = new VoertuigDataAccess();
-	Voertuig voertuig;
 	
 	private JButton btnSave = new JButton("Opslaan");
 	private JButton btnCancel = new JButton("Annuleren");
@@ -63,12 +62,17 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 		String span2 = "spanx 2,";
 		txtBeginDatum.setColumns(15);
 		txtEindDatum.setColumns(15);
-		
+		//int i = 0;
 		//temporary list
+		//Klant[] klanten = new Klant[tempList.size()];
 		for(Klant klant: tempList)
 		{
-			cbKlant.addItem(klant.getVolledigeNaam());
+			//klant.setName("" + i);
+			//klanten[i++] = klant; 
+			cbKlant.addItem(klant);
+			//cbKlant.addItem(klant.getVolledigeNaam());
 		}
+		//cbKlant = new JComboBox(klanten);
 		
 		//temporary list 2
 		for(Voertuig voertuig: tempListvoertuig)
@@ -143,7 +147,7 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 	private void loadModelData()
 	{
 
-		cbKlant.setSelectedIndex(model.getKlantID());
+		cbKlant.setSelectedItem(model.getKlant());
 		cbVoertuig.setSelectedIndex(model.getVoertuigID());
 		calBeginDatum.setDate(model.getBeginDatum());
 		calEindDatum.setDate(model.getEindDatum());
@@ -152,11 +156,8 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 	
 	protected Reservering getEditedModel()
 	{
+		model.setKlant((Klant)cbKlant.getSelectedItem());
 		//model.setKlant((Klant) cbKlant.getSelectedItem());
-		int index = cbVoertuig.getSelectedIndex();
-		int klantindex = cbKlant.getSelectedIndex();
-		model.setKlant(tempList.get(klantindex));
-		model.setVoertuig(tempListvoertuig.get(index));
 		model.setBeginDatum(calBeginDatum.getDate());
 		model.setEindDatum(calEindDatum.getDate());
 		model.setKilometer(Integer.parseInt(txtKilometer.getText()));

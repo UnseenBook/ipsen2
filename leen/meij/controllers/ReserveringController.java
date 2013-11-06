@@ -42,7 +42,7 @@ public class ReserveringController extends Controller
 		
 		if(reservering.isValid())
 		{
-			//reservering = reserveringDataAccess.add(reservering);
+			reservering = reserveringDataAccess.add(reservering);
 			return reserveringOverzichtRaadplegenTask();
 		}
 		return new ReserveringDetailsView(reservering);
@@ -81,7 +81,7 @@ public class ReserveringController extends Controller
 	 */
 	public View reserveringVerwijderenTask(Integer reserveringID)
 	{
-//		reserveringDataAccess.delete(reserveringID);
+		reserveringDataAccess.delete(reserveringID);
 		
 		return reserveringOverzichtRaadplegenTask();
 	}

@@ -146,7 +146,7 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 		{
 			dm.addRow(new Object[]{
 					reservering.getKlantID(),
-					reservering.getKlant().getVolledigeNaam(),
+					reservering.getKlant().getVoornaam(),
 					reservering.getVoertuig().getMerk(),
 					reservering.getBeginDatum(),
 					reservering.getEindDatum()

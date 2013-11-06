@@ -35,23 +35,24 @@ public class ReserveringDataAccess extends DataAccess
 		
 		reservering.setKlant(klantDataAccess.select(resultSet.getInt("klantenid")));
 		reservering.setKlantID(resultSet.getInt("klantenid"));
-		reservering.setVoertuig(voertuigDataAccess.select(resultSet.getInt("voertuigid")));
-		reservering.setVoertuigID(resultSet.getInt("voertuigid"));
+	//	reservering.setKlant(klantDataAccess.select(resultSet.getString("voornaam")));
+		reservering.setVoertuig(voertuigDataAccess.select(resultSet.getInt("voertuigenid")));
+		reservering.setVoertuigID(resultSet.getInt("voertuigenid"));
 		reservering.setBeginDatum(resultSet.getDate("begindatum"));
 		reservering.setEindDatum(resultSet.getDate("einddatum"));
-		reservering.setKilometer(resultSet.getInt("kilometer"));
-		reservering.setBedrag(resultSet.getDouble("bedrag"));
+//		reservering.setKilometer(resultSet.getInt("kilometer"));
+//		reservering.setBedrag(resultSet.getDouble("bedrag"));
 		
 		return reservering;
 		
 	}
 	
-	private void fillStatement(PreparedStatement preparedStatement, Klant klant, Reservering reservering, Voertuig voertuig) throws SQLException
+	private void fillStatement(PreparedStatement preparedStatement, Reservering reservering) throws SQLException
 	{
-		preparedStatement.setString(1, klant.getVolledigeNaam());
-		preparedStatement.setString(2, voertuig.getMerk());
-		//preparedStatement.setDate(3,  reservering.getBeginDatum());
-		//preparedStatement.setDate(4, reservering.getEindDatum());
+		preparedStatement.setInt(1, reservering.getKlantID());
+		preparedStatement.setInt(2, reservering.getVoertuigID());
+//		preparedStatement.setDate(3,  (java.sql.Date) reservering.getBeginDatum());
+	//	preparedStatement.setDate(4, (java.sql.Date) reservering.getEindDatum());
 		preparedStatement.setDouble(5, reservering.getBedrag());
 		preparedStatement.setInt(6, reservering.getKilometer());
 
@@ -165,17 +166,17 @@ public class ReserveringDataAccess extends DataAccess
 	 * 
 	 * @param reservering
 	 */
-	public Reservering add(Klant klant, Reservering reservering, Voertuig voertuig)
+	public Reservering add(Reservering reservering)
 	{
 //		tempData.add(reservering);
 		openConnection();
 		try
 		{
 			preparedStatement = connection
-					.prepareStatement("INSERT INTO reservering (klantid,voertuigid,begindatum,einddatum,kilometer,bedrag) VALUES (?,?,?,?,?,?,1) RETURNING *");// /////////////////////////////
-																																															// Hardcoded
-																																															// afdeling
-			fillStatement(preparedStatement, klant, reservering, voertuig);
+					.prepareStatement("INSERT INTO reservering (klantenid,voertuigenid,begindatum,einddatum,kilometer,bedrag) VALUES (?,?,?,?,?,?,1) RETURNING *");
+																																															
+																																				
+			fillStatement(preparedStatement,reservering);
 			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next())
@@ -214,21 +215,42 @@ public class ReserveringDataAccess extends DataAccess
 	 * 
 	 * @param klantID
 	 */
-//	public void delete(int reserveringID)
-//	{
-//		Reservering toRemove = null;
-//		for (Reservering reservering : tempData)
-//		{
-//			if (reservering.getKlantID() == reserveringID)
-//			{
-//				toRemove = reservering;
-//			}
-//		}
-//		if (toRemove != null)
-//		{
-//			tempData.remove(toRemove);
-//		}
-//	}
+	public void delete(int reserveringID)
+	{
+		openConnection();
+		PreparedStatement ps = null;
+		ResultSet resultSet = null;
+		try
+		{
+
+			ps = connection.prepareStatement("DELETE FROM reservering WHERE id = ?");
+
+			ps.setInt(1, reserveringID);
+			ps.execute();
+		}
+		catch (SQLException sqle)
+		{
+			sqle.printStackTrace();
+		}
+		finally
+		{
+			if (resultSet != null) try
+			{
+				resultSet.close();
+			}
+			catch (SQLException negeer)
+			{
+			}
+			if (ps != null) try
+			{
+				ps.close();
+			}
+			catch (SQLException negeer)
+			{
+			}
+			closeConnection();
+		}
+	}
 
 	/**
 	 * 

@@ -38,6 +38,7 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 	private ArrayList<Voertuig> tempListvoertuig;
 	private KlantDataAccess klantDataAccess = new KlantDataAccess();
 	private VoertuigDataAccess voertuigDataAccess = new VoertuigDataAccess();
+	Voertuig voertuig;
 	
 	private JButton btnSave = new JButton("Opslaan");
 	private JButton btnCancel = new JButton("Annuleren");
@@ -140,18 +141,20 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 	
 	private void loadModelData()
 	{
-
 		cbKlant.setSelectedIndex(model.getKlantID());
 		cbVoertuig.setSelectedIndex(model.getVoertuigID());
 		calBeginDatum.setDate(model.getBeginDatum());
 		calEindDatum.setDate(model.getEindDatum());
 		txtKilometer.setText(Integer.toString(model.getKilometer()));
-		
 	}
 	
 	protected Reservering getEditedModel()
 	{
-		model.setKlant((Klant) cbKlant.getSelectedItem());
+		//model.setKlant((Klant) cbKlant.getSelectedItem());
+		int index = cbVoertuig.getSelectedIndex();
+		int klantindex = cbKlant.getSelectedIndex();
+		model.setKlant(tempList.get(klantindex));
+		model.setVoertuig(tempListvoertuig.get(index));
 		model.setBeginDatum(calBeginDatum.getDate());
 		model.setEindDatum(calEindDatum.getDate());
 		model.setKilometer(Integer.parseInt(txtKilometer.getText()));

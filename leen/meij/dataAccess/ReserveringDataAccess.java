@@ -42,12 +42,13 @@ public class ReserveringDataAccess extends DataAccess
 	
 	private void fillStatement(PreparedStatement preparedStatement, Reservering reservering) throws SQLException
 	{
-		preparedStatement.setInt(1, reservering.getKlantID());
-		preparedStatement.setInt(2, reservering.getVoertuigID());
-//		preparedStatement.setDate(3,  (java.sql.Date) reservering.getBeginDatum());
-	//	preparedStatement.setDate(4, (java.sql.Date) reservering.getEindDatum());
-		preparedStatement.setDouble(5, reservering.getBedrag());
-		preparedStatement.setInt(6, reservering.getKilometer());
+		preparedStatement.setInt(1, reservering.getKlant().getKlantID());
+		preparedStatement.setInt(2, reservering.getVoertuig().getVoertuigID());
+		preparedStatement.setDate(3,  new java.sql.Date(reservering.getBeginDatum().getTime()));
+		preparedStatement.setDate(4, new java.sql.Date(reservering.getEindDatum().getTime()));
+		preparedStatement.setInt(5, reservering.getKilometer());
+		preparedStatement.setDouble(6, reservering.getBedrag());
+		preparedStatement.setString(7, "Alles goed");
 
 	}
 
@@ -160,7 +161,7 @@ public class ReserveringDataAccess extends DataAccess
 		openConnection();
 		try
 		{
-			preparedStatement = connection.prepareStatement("INSERT INTO reservering (klantenid,voertuigenid,begindatum,einddatum,kilometer,bedrag) VALUES (?,?,?,?,?,?,1) RETURNING *");
+			preparedStatement = connection.prepareStatement("INSERT INTO reservering (klantenid,voertuigenid,begindatum,einddatum,kilometer,bedrag,status) VALUES (?,?,?,?,?,?,?) RETURNING *");
 																																															
 																																				
 			fillStatement(preparedStatement,reservering);

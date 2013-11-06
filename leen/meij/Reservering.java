@@ -142,6 +142,11 @@ public class Reservering extends Entity
 		return this.bedrag;
 	}
 
+	public boolean isValid()
+	{
+		return true;
+	}
+
 	/**
 	 * 
 	 * @param bedrag

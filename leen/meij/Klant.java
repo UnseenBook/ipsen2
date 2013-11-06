@@ -45,6 +45,10 @@ public class Klant extends Entity
 
 	private byte[] kopieRijbewijs;
 
+	public String toString(){
+		return voornaam + " " + achternaam;
+	}
+
 	public Klant()
 	{
 	}

@@ -39,7 +39,7 @@ public class Klant extends Entity
 
 	private String emailadres;
 
-	private java.sql.Date geboorteDatum;
+	private java.util.Date geboorteDatum;
 
 	private byte[] kopiePaspoort;
 
@@ -279,18 +279,18 @@ public class Klant extends Entity
 		this.emailadres = emailadres;
 	}
 
-	public java.sql.Date getGeboorteDatum()
+	public java.util.Date getGeboorteDatum()
 	{
 		return this.geboorteDatum;
 	}
 
 	/**
 	 * 
-	 * @param geboorteDatum
+	 * @param date
 	 */
-	public void setGeboorteDatum(java.sql.Date geboorteDatum)
+	public void setGeboorteDatum(Date date)
 	{
-		this.geboorteDatum = geboorteDatum;
+		this.geboorteDatum = date;
 	}
 
 	public byte[] getKopiePaspoort()

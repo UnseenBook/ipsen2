@@ -8,6 +8,7 @@ import javax.swing.table.*;
 import leen.meij.Onderhoud;
 
 import leen.meij.Voertuig;
+import leen.meij.utilities.View;
 
 public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionListener {
 
@@ -63,13 +64,14 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
 
         btnSave.addActionListener(this);
         btnCancel.addActionListener(this);
-
+        btnOnderhoudToevoegen.addActionListener(this);
+        
         setErrorMessages(model.getErrors());
         loadModelData();
     }
 
     protected Voertuig getEditedModel() {
-        // TODO - implement {class}.{operation}
+
 
         model.setType(txtType.getText());
         model.setCategorie(txtCategorie.getText());
@@ -112,18 +114,33 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
 		{
 			runTask("Voertuig", "voertuigOverzichtRaadplegen");
 		}
+		else if(e.getSource() == btnOnderhoudToevoegen)
+		{
+			
+			OnderhoudDetailsView view = new OnderhoudDetailsView(new Onderhoud());
+			
+			int value = JOptionPane.showConfirmDialog(this,view,"Onderhoud toevoegen",JOptionPane.OK_CANCEL_OPTION);
+			
+			if(value == JOptionPane.OK_OPTION)
+			{
+				Onderhoud onderhoud = view.getEditedModel();
+				onderhoud.setVoertuig(model);
+				runTask("Voertuig","onderhoudToevoegen", new Object[]{onderhoud});
+			}
+			
+		}
     }
     
     private JTable createOnderhoudTable(ArrayList<Onderhoud> onderhoudLijst) {
         
         DefaultTableModel dtm = new DefaultTableModel();
         dtm.addColumn("Nummer");
-        dtm.addColumn("Klant");
+        dtm.addColumn("Beschrijving");
         dtm.addColumn("Locatie");
         dtm.addColumn("Handeling");
 
         for (Onderhoud onderhoud : onderhoudLijst) {
-            dtm.addRow(new Object[]{onderhoud.getOnderhoudID(), onderhoud.getKlant(), onderhoud.getLocatie(), onderhoud.getHandeling()});
+            dtm.addRow(new Object[]{onderhoud.getOnderhoudID(),onderhoud.getBeschrijving(), onderhoud.getLocatie(), onderhoud.getHandeling()});
         }
 
         TableColumnModel tcm = new DefaultTableColumnModel();
@@ -133,7 +150,7 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
         tcm.addColumn(new TableColumn(3, 200));
 
         tcm.getColumn(0).setHeaderValue("Nummer");
-        tcm.getColumn(1).setHeaderValue("Klant");
+        tcm.getColumn(1).setHeaderValue("Beschrijving");
         tcm.getColumn(2).setHeaderValue("Locatie");
         tcm.getColumn(3).setHeaderValue("Handeling");
 
@@ -146,6 +163,7 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
             }
         ;
         };
+        
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // let only
         // one
         // row

@@ -18,7 +18,7 @@ public class Onderhoud extends Entity
         private boolean voldaan;
 
         private String beschrijving;
-
+        
         public Klant getKlant()
         {
                 return this.klant;
@@ -108,21 +108,27 @@ public class Onderhoud extends Entity
                 isValid = true;
         }
 
-        public String getBeschrijving()
-        {
-                return beschrijving;
-        }
-
-        public void setBeschrijving(String beschrijving)
-        {
-                this.beschrijving = beschrijving;
-        }
-
         public Integer getKlantID()
         {
                 if(this.klant == null)
                         return null;
                 return this.klant.getKlantID();
         }
+
+		/**
+		 * @return the beschrijving
+		 */
+		public String getBeschrijving()
+		{
+			return beschrijving;
+		}
+
+		/**
+		 * @param beschrijving the beschrijving to set
+		 */
+		public void setBeschrijving(String beschrijving)
+		{
+			this.beschrijving = beschrijving;
+		}
 
 }

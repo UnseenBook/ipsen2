@@ -30,7 +30,7 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 	private JButton btnToevoegen = new JButton("Nieuw reservering");
 	private JButton btnHuurlijst = new JButton("Huurlijst");
 	private JButton btnInleverlijst = new JButton("Inleverlijst");
-	private String title = "Reserveringen";
+
 	private Reservering selectedReservering;
 	private SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 	
@@ -42,7 +42,7 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 	public ReserveringView(ArrayList<Reservering> model)
 	{
 		super(model);
-		this.setTitle(title);
+		this.setTitle("Reserveringen");
 		
 		
 		tblReserveringen = createReserveringOverviewTable();
@@ -82,19 +82,16 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 		
 		if (e.getSource() == btnInleverlijst)
 		{
-			this.setTitle("Inleverlijst");
 			runTask("Reservering","inleverlijstRaadplegen");
 			
 		}
 		if (e.getSource() == btnHuurlijst)
 		{
-			this.setTitle("Huurlijst");
 			runTask("Reservering","huurlijstOverzichtRaadplegen");
 			
 		}
 		if(e.getSource() == btnToevoegen)
 		{
-			this.setTitle("Reservering toevoegen");
 			runTask("Reservering", "reserveringToevoegen");
 			
 		}

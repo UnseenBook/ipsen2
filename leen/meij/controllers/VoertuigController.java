@@ -91,15 +91,6 @@ public class VoertuigController extends Controller
 		return voertuigOverzichtRaadplegenTask();
 	}
 
-	/**
-	 * 
-	 * @param voertuigID
-	 */
-	public View onderhoudToevoegenTask(Integer voertuigID)
-	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
-	}
 
 	/**
 	 * 
@@ -107,8 +98,9 @@ public class VoertuigController extends Controller
 	 */
 	public View onderhoudToevoegenTask(Onderhoud onderhoud)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		onderhoud = voertuigDataAccess.addOnderhoud(onderhoud);
+		
+		return new VoertuigDetailsView(voertuigDataAccess.select(onderhoud.getVoertuig().getVoertuigID()));
 	}
 
 }

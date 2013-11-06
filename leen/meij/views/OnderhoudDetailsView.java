@@ -2,27 +2,61 @@
 package leen.meij.views;
 
 import javax.swing.*;
-import leen.meij.Onderhoud;
 
-public class OnderhoudDetailsView extends MasterView<Onderhoud>
+import net.miginfocom.swing.MigLayout;
+
+import leen.meij.Onderhoud;
+import leen.meij.utilities.View;
+
+public class OnderhoudDetailsView extends View<Onderhoud>
 {
 
-	private JTextField txtLocatie;
+	private JTextField txtLocatie = new JTextField(15);
 
-	private JTextField txtHandeling;
+	private JTextField txtHandeling= new JTextField(15);
+	
+	private JTextField txtBeschrijving= new JTextField(15);	
 
-	private JCheckBox cbVerhuurbaar;
+	private JCheckBox cbVerhuurbaar= new JCheckBox();
 
 	public OnderhoudDetailsView(Onderhoud model)
 	{
 		super(model);
-		// TODO Auto-generated constructor stub
+		
+		String wrap = "wrap";
+		setLayout(new MigLayout());
+        add(new JLabel("Locatie"));
+        add(txtLocatie, wrap);
+
+        add(new JLabel("Handeling"));
+        add(txtHandeling, wrap);
+        
+        add(new JLabel("Beschrijving"));
+        add(txtBeschrijving, wrap);
+
+        add(new JLabel("Verhuurbaar"));
+        add(cbVerhuurbaar, wrap);
+		
+		loadModelData();
 	}
 
+	private void loadModelData()
+	{
+		
+		txtLocatie.setText(model.getLocatie());
+		txtHandeling.setText(model.getHandeling());
+		cbVerhuurbaar.setSelected(model.isVoldaan());
+		txtBeschrijving.setText(model.getBeschrijving());
+		
+	}
+	
 	protected Onderhoud getEditedModel()
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		model.setLocatie(txtLocatie.getText());
+		model.setHandeling(txtHandeling.getText());
+		model.setVoldaan(cbVerhuurbaar.isSelected());
+		model.setBeschrijving(txtBeschrijving.getText());
+		return model;
 	}
 
 }

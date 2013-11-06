@@ -263,17 +263,18 @@ public class VoertuigDataAccess extends DataAccess
                 {
         
                         ps = connection.prepareStatement(
-                                        "INSERT INTO onderhoud (beschrijving,handeling,locatie,voldaan,klantenid,voertuigenid) "+
+                                        "INSERT INTO onderhoud (beschijving,handeling,locatie,voldaan,klantenid,voertuigenid) "+
                                         "VALUES (?,?,?,?,?,?) RETURNING *");
                         int index = this.fillOnderhoudStatement(ps, onderhoud);
-                        ps.setInt(index++, onderhoud.getKlantID());
+                        ps.setObject(index++, onderhoud.getKlantID());
                         ps.setInt(index++,onderhoud.getVoertuig().getVoertuigID());
                         resultSet = ps.executeQuery();
                         
                         if(resultSet.next())
                         {
                                 onderhoud = buildOnderhoud(resultSet);
-                                
+                                onderhoud.setVoertuig(new Voertuig());
+                                onderhoud.getVoertuig().setVoertuigID(resultSet.getInt("voertuigenid"));
                                 
                         }
                 } catch (SQLException sqle)

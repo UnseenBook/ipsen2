@@ -20,7 +20,7 @@ public class VoertuigView extends MasterView<ArrayList<Voertuig>> implements Lis
     public VoertuigView(ArrayList<Voertuig> model) {
         super(model);
         // TODO Auto-generated constructor stub
-        this.setTitle("Klanten");
+        this.setTitle("Voertuigen");
 
         // content panel
 

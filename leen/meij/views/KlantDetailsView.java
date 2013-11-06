@@ -4,9 +4,14 @@ import java.awt.Image;
 import java.awt.event.*;
 import java.io.*;
 import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 import javax.imageio.*;
 import javax.swing.*;
+import javax.swing.text.DateFormatter;
 
 import leen.meij.Klant;
 
@@ -206,9 +211,10 @@ public class KlantDetailsView extends MasterView<Klant> implements
 		model.setEmailadres(txtEmailadres.getText());
 		try
 		{
-			model.setGeboorteDatum(Date.valueOf(txtGeboorteDatum.getText()));
+			
+			model.setGeboorteDatum(new SimpleDateFormat("yyyy-MM-dd").parse(txtGeboorteDatum.getText()));
 		}
-		catch (IllegalArgumentException ex)
+		catch (ParseException ex)
 		{
 			model.setGeboorteDatum(null);
 		}
@@ -290,9 +296,9 @@ public class KlantDetailsView extends MasterView<Klant> implements
 				iiPaspoort.setImage(ImageIO.read(stream).getScaledInstance(350,
 						300, Image.SCALE_SMOOTH));
 			}
-			catch (IOException e)
+			catch (Exception e)
 			{
-				throw new RuntimeException(e);
+				this.setErrorMessages(new ArrayList<String>(Arrays.asList(new String[]{"Kies a.u.b. een afbeelding."})));
 			}
 		}
 		byte[] rijbewijs = this.model.getKopieRijbewijs();
@@ -304,10 +310,12 @@ public class KlantDetailsView extends MasterView<Klant> implements
 				iiRijbewijs.setImage(ImageIO.read(stream).getScaledInstance(350,
 						300, Image.SCALE_SMOOTH));
 			}
-			catch (IOException e)
+			catch (Exception e)
 			{
-				throw new RuntimeException(e);
+				this.setErrorMessages(new ArrayList<String>(Arrays.asList(new String[]{"Kies a.u.b. een afbeelding."})));
 			}
 		}
+		
+		
 	}
 }

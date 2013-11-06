@@ -31,7 +31,7 @@ public abstract class DataAccess
 		try {
 			this.username = "postgres";
 			this.password = "1234";
-			this.url = "jdbc:postgresql://82.161.137.213:5555/leenmeij";
+			this.url = "jdbc:postgresql://145.101.93.154:5555/leenmeij";
 			
 			connection = DriverManager.getConnection(url, username, password);
 			DatabaseMetaData dbmd = connection.getMetaData();

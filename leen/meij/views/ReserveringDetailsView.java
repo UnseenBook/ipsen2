@@ -1,14 +1,14 @@
 package leen.meij.views;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.sql.Date;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
-import java.util.Calendar;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
@@ -19,9 +19,13 @@ import leen.meij.Voertuig;
 import leen.meij.dataAccess.KlantDataAccess;
 import leen.meij.dataAccess.VoertuigDataAccess;
 
+import com.toedter.calendar.JDateChooser;
+
 public class ReserveringDetailsView extends MasterView<Reservering> implements ActionListener
 {
-
+	
+	private JDateChooser calBeginDatum = new JDateChooser();
+	private JDateChooser calEindDatum = new JDateChooser();
 
 	private JComboBox cbKlant = new JComboBox();
 	private JComboBox cbVoertuig = new JComboBox();
@@ -79,12 +83,16 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 		pnlContent.add(cbVoertuig, wrap + span2);
 		
 		pnlContent.add(new JLabel("Begin datum"));
-		pnlContent.add(txtBeginDatum,wrap +  gapTop + span2);
+		//pnlContent.add(txtBeginDatum,wrap +  gapTop + span2);
+		pnlContent.add(calBeginDatum,wrap +  gapTop + span2);
+		
 		
 		
 		//row 3
 		pnlContent.add(new JLabel("Eind datum"));
-		pnlContent.add(txtEindDatum,wrap +   gapTop + span2);
+		pnlContent.add(calEindDatum,wrap +   gapTop + span2);
+		//pnlContent.add(txtEindDatum,wrap +   gapTop + span2);
+		
 		
 		//row 4
 		pnlContent.add(new JLabel("Kilometers"));
@@ -95,7 +103,7 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 		pnlContent.add(txtBedrag, wrap + gapTop + span2);
 		
 		
-
+		
 		btnSave.addActionListener(this);
 		btnCancel.addActionListener(this);
 		pnlBotMenu.add(btnSave);
@@ -114,7 +122,7 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 		{
 			runTask("Reservering", "reserveringOverzichtRaadplegen");
 		}
-		if(e.getSource() == btnSave)
+		else if(e.getSource() == btnSave)
 		{
 			if (model.getKlantID() == 0)
 			{
@@ -135,17 +143,17 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 
 		cbKlant.setSelectedIndex(model.getKlantID());
 		cbVoertuig.setSelectedIndex(model.getVoertuigID());
-		txtBeginDatum.setValue(model.getBeginDatum());
-		txtEindDatum.setValue(model.getEindDatum());
-		txtKilometer.setText(Integer.toString(model.getKilometer()) + " KM");
+		calBeginDatum.setDate(model.getBeginDatum());
+		calEindDatum.setDate(model.getEindDatum());
+		txtKilometer.setText(Integer.toString(model.getKilometer()));
 		
 	}
 	
 	protected Reservering getEditedModel()
 	{
 		model.setKlant((Klant) cbKlant.getSelectedItem());
-		model.setBeginDatum((java.util.Date) txtBeginDatum.getValue());
-		model.setEindDatum((java.util.Date) txtEindDatum.getValue());
+		model.setBeginDatum(calBeginDatum.getDate());
+		model.setEindDatum(calEindDatum.getDate());
 		model.setKilometer(Integer.parseInt(txtKilometer.getText()));
 		return this.model;
 	}

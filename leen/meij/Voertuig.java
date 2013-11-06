@@ -144,7 +144,7 @@ public class Voertuig extends Entity
 	public void isVerhuurbaar(boolean verhuurbaar)
 	{
 		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		this.verhuurbaar = verhuurbaar;
 	}
 
 	public void validateFields()

@@ -17,6 +17,7 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
     private JTextField txtMerk = new JTextField(15);
     private JTextField txtKleur = new JTextField(15);
     private JTextField txtBeschrijving = new JTextField(15);
+    private JCheckBox cbVerhuurbaar= new JCheckBox();
     private JTable tblOnderhoud = new JTable();
     
     private JButton btnOnderhoudToevoegen = new JButton("Onderhoud Toevoegen");
@@ -54,6 +55,11 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
 
         pnlContent.add(new JLabel("Beschrijving"));
         pnlContent.add(txtBeschrijving, wrap);
+        
+        pnlContent.add(new JLabel("Verhuurbaar"));
+        pnlContent.add(cbVerhuurbaar, wrap);
+        
+        
 
         this.pnlContent.add(this.tblOnderhoud.getTableHeader(), span2 + wrap);
         this.pnlContent.add(this.tblOnderhoud, span2 + wrap);
@@ -79,6 +85,7 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
         model.setMerk(txtMerk.getText());
         model.setKleur(txtKleur.getText());
         model.setBeschrijving(txtBeschrijving.getText());
+        model.isVerhuurbaar(cbVerhuurbaar.isSelected());
         
         return this.model;
     }
@@ -90,6 +97,7 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
         txtMerk.setText(model.getMerk());
         txtKleur.setText(model.getKleur());
         txtBeschrijving.setText(model.getBeschrijving());
+        cbVerhuurbaar.setSelected(model.getVerhuurbaar());
     }
 
     @Override

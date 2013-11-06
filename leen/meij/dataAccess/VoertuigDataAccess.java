@@ -17,6 +17,7 @@ public class VoertuigDataAccess extends DataAccess
 		voertuig.setKleur(resultSet.getString("type"));
 		voertuig.setMerk(resultSet.getString("kleur"));
 		voertuig.setType(resultSet.getString("beschrijving"));
+                voertuig.isVerhuurbaar(resultSet.getBoolean("verhuurbaar"));
 
 		voertuig.setVoertuigID(resultSet.getInt("id"));
 

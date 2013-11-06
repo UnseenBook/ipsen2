@@ -147,9 +147,10 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
         dtm.addColumn("Beschrijving");
         dtm.addColumn("Locatie");
         dtm.addColumn("Handeling");
+        dtm.addColumn("Voldaan");
 
         for (Onderhoud onderhoud : onderhoudLijst) {
-            dtm.addRow(new Object[]{onderhoud.getOnderhoudID(),onderhoud.getBeschrijving(), onderhoud.getLocatie(), onderhoud.getHandeling()});
+            dtm.addRow(new Object[]{onderhoud.getOnderhoudID(),onderhoud.getBeschrijving(), onderhoud.getLocatie(), onderhoud.getHandeling(), onderhoud.isVoldaan()});
         }
 
         TableColumnModel tcm = new DefaultTableColumnModel();
@@ -157,11 +158,13 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
         tcm.addColumn(new TableColumn(1, 200));
         tcm.addColumn(new TableColumn(2, 200));
         tcm.addColumn(new TableColumn(3, 200));
+        tcm.addColumn(new TableColumn(4, 200));
 
         tcm.getColumn(0).setHeaderValue("Nummer");
         tcm.getColumn(1).setHeaderValue("Beschrijving");
         tcm.getColumn(2).setHeaderValue("Locatie");
         tcm.getColumn(3).setHeaderValue("Handeling");
+        tcm.getColumn(4).setHeaderValue("Voldaan");
 
 
         JTable table = new JTable(dtm, tcm) {

@@ -102,7 +102,7 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 			if(e.getSource() == btnAanpassen)
 				{
 					this.setTitle("Reservering aanpassen");
-					runTask("Reservering","reserveringWijzigen", new Object[]{new Integer(selectedReservering.getKlantID()) });
+					runTask("Reservering","reserveringWijzigen", new Object[]{new Integer(selectedReservering.getReserveringID()) });
 				}
 		if(e.getSource() == btnVerwijderen)
 		{
@@ -110,13 +110,14 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 					"Reservering verwijderen?", JOptionPane.YES_NO_OPTION);
 			if (result == JOptionPane.YES_OPTION)
 			{
-				runTask("Reservering", "reserveringVerwijderen", new Object[] { new Integer(selectedReservering.getKlantID()) });
+				runTask("Reservering", "reserveringVerwijderen", new Object[] { new Integer(selectedReservering.getReserveringID()) });
 			}
 			
 		}
 		}
 	}
 	
+	@Override
 	public void valueChanged(ListSelectionEvent e)
 	{
 		int index = tblReserveringen.getSelectedRow();

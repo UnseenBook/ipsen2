@@ -145,6 +145,7 @@ public class GebruikerDataAccess extends DataAccess
 			{
 				gebruikerList.add(buildModel(resultSet));
 			}
+			return gebruikerList;
 		}
 		catch (SQLException sqle)
 		{
@@ -168,7 +169,7 @@ public class GebruikerDataAccess extends DataAccess
 			}
 			closeConnection();
 		}
-		return gebruikerList;
+		return null;
 	}
 
 	/**

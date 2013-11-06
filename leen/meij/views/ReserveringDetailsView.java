@@ -47,13 +47,14 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 		super(model);
 		this.tempList = klantDataAccess.selectAll();
 		this.tempListvoertuig = voertuigDataAccess.selectAll();
-		if(model.getKlantID() == 0)
+
+		if(model.getReserveringID() == 0)
 		{
 			this.setTitle("Reservering toevoegen");
 		}
 		else
 		{
-			this.setTitle("Klant aanpassen");
+			this.setTitle("Reservering aanpassen");
 		}
 		String gapRight = "gapright 20,";
 		String gapTop = "gaptop 10, ";
@@ -140,7 +141,8 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 	
 	private void loadModelData()
 	{
-
+		System.out.println(cbKlant.getSelectedIndex());
+		
 		cbKlant.setSelectedIndex(model.getKlantID());
 		cbVoertuig.setSelectedIndex(model.getVoertuigID());
 		calBeginDatum.setDate(model.getBeginDatum());

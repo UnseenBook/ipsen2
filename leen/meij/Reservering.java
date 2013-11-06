@@ -14,7 +14,8 @@ import leen.meij.utilities.Entity;
 
 public class Reservering extends Entity
 {
-
+	
+	private int reserveringID;
 	private int klantID;
 	private int voertuigID;
 	private Klant klant;
@@ -40,6 +41,16 @@ public class Reservering extends Entity
 		this.eindDatum = eind;
 	}
 
+	
+	public int getReserveringID()
+	{
+		return this.reserveringID;
+	}
+	
+	public void setReserveringID(int reserveringID)
+	{
+		this.reserveringID = reserveringID;
+	}
 
 	public Klant getKlant()
 	{

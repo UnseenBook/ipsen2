@@ -57,8 +57,9 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
 
         this.pnlContent.add(this.tblOnderhoud.getTableHeader(), span2 + wrap);
         this.pnlContent.add(this.tblOnderhoud, span2 + wrap);
-        
+        if (model.getVoertuigID() != 0){
         pnlBotMenu.add(btnOnderhoudToevoegen);
+        }
         pnlBotMenu.add(btnSave);
         pnlBotMenu.add(btnCancel);
 

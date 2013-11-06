@@ -117,7 +117,6 @@ public class GebruikerDetailsView extends MasterView<Gebruiker> implements Actio
 		model.setGebruikersnaam(txtGebruikersnaam.getText());
 		model.setPersoneelnummer(Integer.parseInt(txtPersoneelnummer.getText()));
 		model.setTussenvoegsel(txtTussenvoegsel.getText());
-		model.setAchternaam(txtVoornaam.getText());
 		model.setVoornaam(txtVoornaam.getText());
 		model.setWachtworod(txtWachtwoord.getText());
 

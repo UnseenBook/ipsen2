@@ -26,7 +26,7 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 
 {
 	private JButton btnVerwijderen = new JButton("Verwijderen");
-	private JButton btnAanpassen = new JButton("Aanpassen");
+	private JButton btnAanpassen = new JButton("Wijzigen");
 	private JButton btnToevoegen = new JButton("Nieuw reservering");
 	private JButton btnHuurlijst = new JButton("Huurlijst");
 	private JButton btnInleverlijst = new JButton("Inleverlijst");

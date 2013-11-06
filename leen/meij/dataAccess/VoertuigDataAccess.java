@@ -40,6 +40,7 @@ public class VoertuigDataAccess extends DataAccess
 	{
 		Onderhoud onderhoud = new Onderhoud();
 		onderhoud.setHandeling(resultSet.getString("handeling"));
+                onderhoud.setBeschrijving(resultSet.getString("beschrijving"));
 		onderhoud.setLocatie(resultSet.getString("locatie"));
 		onderhoud.setOnderhoudID(resultSet.getInt("id"));
 		onderhoud.setVoldaan(resultSet.getBoolean("voldaan"));
@@ -329,7 +330,7 @@ public class VoertuigDataAccess extends DataAccess
 		try
 		{
 
-			ps = connection.prepareStatement("INSERT INTO onderhoud (beschijving,handeling,locatie,voldaan,klantenid,voertuigenid) "
+			ps = connection.prepareStatement("INSERT INTO onderhoud (beschrijving,handeling,locatie,voldaan,klantenid,voertuigenid) "
 					+ "VALUES (?,?,?,?,?,?) RETURNING *");
 			int index = this.fillOnderhoudStatement(ps, onderhoud);
 			ps.setObject(index++, onderhoud.getKlantID());

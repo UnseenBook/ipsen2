@@ -115,7 +115,7 @@ public abstract class MasterView<T> extends View<T> implements ActionListener
 		}
 		else if (e.getSource() == btnManagement)
 		{
-			runTask("Reservering","huurlijstOverzichtRaadplegen");
+			runTask("Reservering","reserveringRapportOverzichtRaadPlegen");
 		}
 		else if (e.getSource() == btnAfsluiten)
 		{

@@ -7,6 +7,7 @@ import leen.meij.utilities.Controller;
 import leen.meij.utilities.View;
 import leen.meij.views.HuurLijstView;
 import leen.meij.views.InleverLijstView;
+import leen.meij.views.RapportView;
 import leen.meij.views.ReserveringDetailsView;
 import leen.meij.views.ReserveringView;
 
@@ -27,6 +28,12 @@ public class ReserveringController extends Controller
 		
 		return new ReserveringView(reserveringDataAccess.selectAll());
 	}
+	
+	public View reserveringRapportOverzichtRaadPlegenTask()
+	{
+		return new RapportView(reserveringDataAccess.selectAll());
+	}
+	
 
 	public View reserveringToevoegenTask()
 	{

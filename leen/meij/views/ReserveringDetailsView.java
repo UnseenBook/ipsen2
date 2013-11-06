@@ -66,7 +66,8 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 		//temporary list
 		for(Klant klant: tempList)
 		{
-			cbKlant.addItem(klant.getVolledigeNaam());
+			cbKlant.addItem(klant);
+			//cbKlant.addItem(klant.getVolledigeNaam());
 		}
 		
 		//temporary list 2
@@ -141,7 +142,6 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 	
 	private void loadModelData()
 	{
-		System.out.println(cbKlant.getSelectedIndex());
 		
 		cbKlant.setSelectedIndex(model.getKlantID());
 		cbVoertuig.setSelectedIndex(model.getVoertuigID());

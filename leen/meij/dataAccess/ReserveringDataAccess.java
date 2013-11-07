@@ -24,8 +24,7 @@ public class ReserveringDataAccess extends DataAccess
 		reservering = new Reservering();
 		
 		reservering.setReserveringID(resultSet.getInt("reservering_id"));
-		Klant tempKlant = klantDataAccess.buildModel(resultSet);
-		reservering.setKlant(tempKlant);
+		reservering.setKlant(klantDataAccess.buildModel(resultSet));
 		reservering.setKlantID(resultSet.getInt("klantenid"));
 		reservering.setVoertuig(voertuigDataAccess.select(resultSet.getInt("voertuigenid")));
 		reservering.setVoertuigID(resultSet.getInt("voertuigenid"));

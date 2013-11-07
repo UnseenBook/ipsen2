@@ -21,7 +21,7 @@ public class KlantDataAccess extends DataAccess
 			
 		} catch (SQLException sqle)
 		{
-			sqle.printStackTrace();
+			String negeren = sqle.getMessage();
 			try
 			{
 				klant.setKlantID(resultSet.getInt("klant_id"));

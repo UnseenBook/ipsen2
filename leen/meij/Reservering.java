@@ -4,7 +4,7 @@ import java.util.Date;
 
 
 
-/****
+/*****
  * 
  * @author Jovanny Martis
  * 
@@ -25,6 +25,7 @@ public class Reservering extends Entity
 	private Date eindDatum;
 	private int kilometer;
 	private double bedrag;
+	private String status;
 	
 	/**
 	 * @author Jovanny
@@ -32,13 +33,16 @@ public class Reservering extends Entity
 	
 	
 	public Reservering(){};
-	public Reservering(int klantID,Klant klant, Voertuig voertuig, Date begin, Date eind)
+	public Reservering(int klantID,Klant klant, Voertuig voertuig,Date begin, Date eind,int kilometer,double bedrag,String status)
 	{
 		this.klantID = klantID;
 		this.klant = klant;
 		this.voertuig = voertuig;
 		this.beginDatum = begin;
 		this.eindDatum = eind;
+		this.kilometer = kilometer;
+		this.bedrag = bedrag;
+		this.status = status;
 	}
 
 	
@@ -178,7 +182,20 @@ public class Reservering extends Entity
 	{
 		this.beginDatum = beginDatum;
 	}
-
+	
+	
+	//debug set STATUS
+	public void setStatus(String status)
+	{
+		this.status = status;
+	}
+	
+	//debug get STATUS
+	public String getStatus()
+	{
+		return status;
+	}
+	
 	/**
 	 * 
 	 * @param eindDatum

@@ -12,11 +12,10 @@ public class GebruikerDataAccess extends DataAccess
 {
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
-	private Gebruiker gebruiker = null;
 
 	private Gebruiker buildModel(ResultSet resultSet) throws SQLException
 	{
-		gebruiker = new Gebruiker();
+		Gebruiker gebruiker = new Gebruiker();
 
 		gebruiker.setGebruikerID(resultSet.getInt("id"));
 		gebruiker.setPersoneelnummer(resultSet.getInt("personeelnummer"));
@@ -31,7 +30,7 @@ public class GebruikerDataAccess extends DataAccess
 		return gebruiker;
 	}
 
-	private void fillStatement(PreparedStatement preparedStatement, Gebruiker gebruiker) throws SQLException
+	private void fillStatement(Gebruiker gebruiker) throws SQLException
 	{
 		preparedStatement.setInt(1, gebruiker.getPersoneelnummer());
 		preparedStatement.setString(2, gebruiker.getGebruikersnaam());
@@ -49,6 +48,9 @@ public class GebruikerDataAccess extends DataAccess
 	public Gebruiker select(int gebruikerID)
 	{
 		openConnection();
+		
+		Gebruiker gebruiker = null;
+		
 		try
 		{
 			preparedStatement = connection.prepareStatement("SELECT * FROM gebruiker WHERE id = ?");
@@ -94,6 +96,9 @@ public class GebruikerDataAccess extends DataAccess
 	public Gebruiker select(String gebruikersNaam, String wachtwoord)
 	{
 		openConnection();
+		
+		Gebruiker gebruiker = null;
+		
 		try
 		{
 			preparedStatement = connection.prepareStatement("SELECT * FROM gebruiker WHERE gebruikersnaam = ? AND wachtwoord = ?");
@@ -185,7 +190,7 @@ public class GebruikerDataAccess extends DataAccess
 					.prepareStatement("INSERT INTO gebruiker (personeelnummer,gebruikersnaam,wachtwoord,voornaam,tussenvoegsel,achternaam,afdelingid) VALUES (?,?,?,?,?,?,1) RETURNING *");// /////////////////////////////
 																																															// Hardcoded
 																																															// afdeling
-			fillStatement(preparedStatement, gebruiker);
+			fillStatement(gebruiker);
 			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next())
@@ -271,7 +276,7 @@ public class GebruikerDataAccess extends DataAccess
 					.prepareStatement("UPDATE gebruiker SET personeelnummer = ?, gebruikersnaam = ?, wachtwoord = ?, voornaam = ?, tussenvoegsel = ?, achternaam = ? WHERE id = ? RETURNING *");// /////////////////////////////
 																																																// Hardcoded
 																																																// afdeling
-			fillStatement(preparedStatement, gebruiker);
+			fillStatement(gebruiker);
 			preparedStatement.setInt(7, gebruiker.getGebruikerID());
 			resultSet = preparedStatement.executeQuery();
 

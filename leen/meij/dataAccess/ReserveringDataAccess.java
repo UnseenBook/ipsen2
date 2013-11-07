@@ -17,11 +17,10 @@ public class ReserveringDataAccess extends DataAccess
 	
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
-	private Reservering reservering = null;
 	
 	private Reservering buildReserveringModel() throws SQLException
 	{
-		reservering = new Reservering();
+		Reservering reservering = new Reservering();
 		
 		reservering.setReserveringID(resultSet.getInt("reservering_id"));
 		reservering.setKlant(klantDataAccess.buildModel(resultSet));
@@ -62,6 +61,8 @@ public class ReserveringDataAccess extends DataAccess
 	public Reservering select(int reserveringID)
 	{
 		openConnection();
+		
+		Reservering reservering;
 
 		try
 		{
@@ -147,8 +148,6 @@ public class ReserveringDataAccess extends DataAccess
 		{
 			preparedStatement = connection.prepareStatement(builder.toString());
 
-//			preparedStatement = connection.prepareStatement("SELECT R.id,R.klantenid,R.voertuigenid,R.voertuigenid,R.reserveerdatum,R.begindatum,R.einddatum,K.achternaam,K.bedrijfsnaam,K.emailadres,K.geboortedatum,K.huisnummer,K.id,K.klantnummer,K.kopiePaspoort,K.kopierijbewijs,K.kvknummer,K.land,K.mobielnummer,K.postcode,K.provincie,K.straat,K.telefoonnummer,K.tussenvoegsel,K.voornaam,K.woonplaats FROM reservering AS R, klant AS K WHERE R.klantenid = K.id ORDER BY R.id");
-
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next())
@@ -191,7 +190,6 @@ public class ReserveringDataAccess extends DataAccess
 	{
 
 		openConnection();
-		
 		
 		try
 		{

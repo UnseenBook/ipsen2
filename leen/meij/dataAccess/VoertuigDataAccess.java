@@ -8,8 +8,10 @@ import leen.meij.*;
 
 public class VoertuigDataAccess extends DataAccess
 {
+	private PreparedStatement preparedStatement = null;
+	private ResultSet resultSet = null;
 
-	private Voertuig buildVoertuigModel(ResultSet resultSet) throws SQLException
+	public Voertuig buildVoertuigModel(ResultSet resultSet) throws SQLException
 	{
 		Voertuig voertuig = new Voertuig();
 		voertuig.setBeschrijving(resultSet.getString("categorie"));
@@ -17,22 +19,22 @@ public class VoertuigDataAccess extends DataAccess
 		voertuig.setKleur(resultSet.getString("type"));
 		voertuig.setMerk(resultSet.getString("kleur"));
 		voertuig.setType(resultSet.getString("beschrijving"));
-                voertuig.isVerhuurbaar(resultSet.getBoolean("verhuurbaar"));
+		voertuig.isVerhuurbaar(resultSet.getBoolean("verhuurbaar"));
 
 		voertuig.setVoertuigID(resultSet.getInt("id"));
 
 		return voertuig;
 	}
 
-	private int fillVoertuigStatement(PreparedStatement ps, Voertuig voertuig) throws SQLException
+	private int fillVoertuigStatement(Voertuig voertuig) throws SQLException
 	{
 		int i = 1;
-		ps.setString(i++, voertuig.getBeschrijving());
-		ps.setString(i++, voertuig.getCategorie());
-		ps.setString(i++, voertuig.getKleur());
-		ps.setString(i++, voertuig.getMerk());
-		ps.setString(i++, voertuig.getType());
-		ps.setBoolean(i++, voertuig.getVerhuurbaar());
+		preparedStatement.setString(i++, voertuig.getBeschrijving());
+		preparedStatement.setString(i++, voertuig.getCategorie());
+		preparedStatement.setString(i++, voertuig.getKleur());
+		preparedStatement.setString(i++, voertuig.getMerk());
+		preparedStatement.setString(i++, voertuig.getType());
+		preparedStatement.setBoolean(i++, voertuig.getVerhuurbaar());
 
 		return i;
 	}
@@ -41,7 +43,7 @@ public class VoertuigDataAccess extends DataAccess
 	{
 		Onderhoud onderhoud = new Onderhoud();
 		onderhoud.setHandeling(resultSet.getString("handeling"));
-                onderhoud.setBeschrijving(resultSet.getString("beschrijving"));
+		onderhoud.setBeschrijving(resultSet.getString("beschrijving"));
 		onderhoud.setLocatie(resultSet.getString("locatie"));
 		onderhoud.setOnderhoudID(resultSet.getInt("id"));
 		onderhoud.setVoldaan(resultSet.getBoolean("voldaan"));
@@ -49,13 +51,13 @@ public class VoertuigDataAccess extends DataAccess
 		return onderhoud;
 	}
 
-	private int fillOnderhoudStatement(PreparedStatement ps, Onderhoud onderhoud) throws SQLException
+	private int fillOnderhoudStatement(Onderhoud onderhoud) throws SQLException
 	{
 		int i = 1;
-		ps.setString(i++, onderhoud.getBeschrijving());
-		ps.setString(i++, onderhoud.getHandeling());
-		ps.setString(i++, onderhoud.getLocatie());
-		ps.setBoolean(i++, onderhoud.isVoldaan());
+		preparedStatement.setString(i++, onderhoud.getBeschrijving());
+		preparedStatement.setString(i++, onderhoud.getHandeling());
+		preparedStatement.setString(i++, onderhoud.getLocatie());
+		preparedStatement.setBoolean(i++, onderhoud.isVoldaan());
 
 		return i;
 	}
@@ -68,15 +70,13 @@ public class VoertuigDataAccess extends DataAccess
 	{
 		openConnection();
 
-		PreparedStatement ps = null;
-		ResultSet resultSet = null;
 		try
 		{
 
-			ps = connection.prepareStatement("SELECT * FROM voertuig WHERE id = ?");
+			preparedStatement = connection.prepareStatement("SELECT * FROM voertuig WHERE id = ?");
 
-			ps.setInt(1, voertuigID);
-			resultSet = ps.executeQuery();
+			preparedStatement.setInt(1, voertuigID);
+			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next())
 			{
@@ -99,9 +99,9 @@ public class VoertuigDataAccess extends DataAccess
 			catch (SQLException negeer)
 			{
 			}
-			if (ps != null) try
+			if (preparedStatement != null) try
 			{
-				ps.close();
+				preparedStatement.close();
 			}
 			catch (SQLException negeer)
 			{
@@ -116,14 +116,14 @@ public class VoertuigDataAccess extends DataAccess
 	{
 		openConnection();
 
-		PreparedStatement ps = null;
+		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try
 		{
 			ArrayList<Voertuig> voertuigen = new ArrayList<Voertuig>();
-			ps = connection.prepareStatement("SELECT * FROM voertuig");
+			preparedStatement = connection.prepareStatement("SELECT * FROM voertuig");
 
-			resultSet = ps.executeQuery();
+			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next())
 			{
@@ -146,9 +146,9 @@ public class VoertuigDataAccess extends DataAccess
 			catch (SQLException negeer)
 			{
 			}
-			if (ps != null) try
+			if (preparedStatement != null) try
 			{
-				ps.close();
+				preparedStatement.close();
 			}
 			catch (SQLException negeer)
 			{
@@ -167,17 +167,15 @@ public class VoertuigDataAccess extends DataAccess
 	{
 		openConnection();
 
-		PreparedStatement ps = null;
-		ResultSet resultSet = null;
 		Voertuig addedVoertuig = null;
 		try
 		{
 
-			ps = connection.prepareStatement("INSERT INTO voertuig (categorie,merk,type,kleur,beschrijving,verhuurbaar) "
+			preparedStatement = connection.prepareStatement("INSERT INTO voertuig (categorie,merk,type,kleur,beschrijving,verhuurbaar) "
 					+ "VALUES (?,?,?,?,?,?) RETURNING *");
-			this.fillVoertuigStatement(ps, voertuig);
+			this.fillVoertuigStatement(voertuig);
 
-			resultSet = ps.executeQuery();
+			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next())
 			{
@@ -205,9 +203,9 @@ public class VoertuigDataAccess extends DataAccess
 			catch (SQLException negeer)
 			{
 			}
-			if (ps != null) try
+			if (preparedStatement != null) try
 			{
-				ps.close();
+				preparedStatement.close();
 			}
 			catch (SQLException negeer)
 			{
@@ -226,18 +224,16 @@ public class VoertuigDataAccess extends DataAccess
 	{
 		openConnection();
 
-		PreparedStatement ps = null;
-		ResultSet resultSet = null;
 		Voertuig addedVoertuig = null;
 		try
 		{
 
-			ps = connection.prepareStatement("BEGIN TRANSACTION;" + "DELETE FROM onderhoud WHERE voertuigenid = ?;"
+			preparedStatement = connection.prepareStatement("BEGIN TRANSACTION;" + "DELETE FROM onderhoud WHERE voertuigenid = ?;"
 					+ "DELETE FROM voertuig WHERE id = ?;" + "COMMIT;");
-			ps.setInt(1, voertuigID);
-			ps.setInt(2, voertuigID);
+			preparedStatement.setInt(1, voertuigID);
+			preparedStatement.setInt(2, voertuigID);
 
-			ps.execute();
+			preparedStatement.execute();
 
 		}
 		catch (SQLException sqle)
@@ -253,9 +249,9 @@ public class VoertuigDataAccess extends DataAccess
 			catch (SQLException negeer)
 			{
 			}
-			if (ps != null) try
+			if (preparedStatement != null) try
 			{
-				ps.close();
+				preparedStatement.close();
 			}
 			catch (SQLException negeer)
 			{
@@ -273,17 +269,15 @@ public class VoertuigDataAccess extends DataAccess
 	{
 		openConnection();
 
-		PreparedStatement ps = null;
-		ResultSet resultSet = null;
 		Voertuig edited = null;
 		try
 		{
 
-			ps = connection.prepareStatement("UPDATE voertuig SET categorie=?,merk=?,type=?,kleur=?,beschrijving=?,verhuurbaar=? "
+			preparedStatement = connection.prepareStatement("UPDATE voertuig SET categorie=?,merk=?,type=?,kleur=?,beschrijving=?,verhuurbaar=? "
 					+ "WHERE id=? RETURNING *");
-			int index = this.fillVoertuigStatement(ps, voertuig);
-			ps.setInt(index++, voertuig.getVoertuigID());
-			resultSet = ps.executeQuery();
+			int index = this.fillVoertuigStatement(voertuig);
+			preparedStatement.setInt(index++, voertuig.getVoertuigID());
+			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next())
 			{
@@ -304,9 +298,9 @@ public class VoertuigDataAccess extends DataAccess
 			catch (SQLException negeer)
 			{
 			}
-			if (ps != null) try
+			if (preparedStatement != null) try
 			{
-				ps.close();
+				preparedStatement.close();
 			}
 			catch (SQLException negeer)
 			{
@@ -325,18 +319,15 @@ public class VoertuigDataAccess extends DataAccess
 	{
 		openConnection();
 
-		PreparedStatement ps = null;
-		ResultSet resultSet = null;
-
 		try
 		{
 
-			ps = connection.prepareStatement("INSERT INTO onderhoud (beschrijving,handeling,locatie,voldaan,klantenid,voertuigenid) "
+			preparedStatement = connection.prepareStatement("INSERT INTO onderhoud (beschrijving,handeling,locatie,voldaan,klantenid,voertuigenid) "
 					+ "VALUES (?,?,?,?,?,?) RETURNING *");
-			int index = this.fillOnderhoudStatement(ps, onderhoud);
-			ps.setObject(index++, onderhoud.getKlantID());
-			ps.setInt(index++, onderhoud.getVoertuig().getVoertuigID());
-			resultSet = ps.executeQuery();
+			int index = this.fillOnderhoudStatement(onderhoud);
+			preparedStatement.setObject(index++, onderhoud.getKlantID());
+			preparedStatement.setInt(index++, onderhoud.getVoertuig().getVoertuigID());
+			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next())
 			{
@@ -359,9 +350,9 @@ public class VoertuigDataAccess extends DataAccess
 			catch (SQLException negeer)
 			{
 			}
-			if (ps != null) try
+			if (preparedStatement != null) try
 			{
-				ps.close();
+				preparedStatement.close();
 			}
 			catch (SQLException negeer)
 			{
@@ -376,17 +367,15 @@ public class VoertuigDataAccess extends DataAccess
 	{
 		openConnection();
 		ArrayList<Onderhoud> onderhouden = new ArrayList<Onderhoud>();
-		PreparedStatement ps = null;
-		ResultSet resultSet = null;
 
 		try
 		{
 
-			ps = connection.prepareStatement("SELECT * FROM onderhoud WHERE voertuigenid=?");
+			preparedStatement = connection.prepareStatement("SELECT * FROM onderhoud WHERE voertuigenid=?");
 
-			ps.setInt(1, voertuigID);
+			preparedStatement.setInt(1, voertuigID);
 
-			resultSet = ps.executeQuery();
+			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next())
 			{
@@ -407,9 +396,9 @@ public class VoertuigDataAccess extends DataAccess
 			catch (SQLException negeer)
 			{
 			}
-			if (ps != null) try
+			if (preparedStatement != null) try
 			{
-				ps.close();
+				preparedStatement.close();
 			}
 			catch (SQLException negeer)
 			{

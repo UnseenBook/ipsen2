@@ -33,22 +33,29 @@ public class ReserveringDataAccess extends DataAccess
 		reservering.setReserveerDatum(resultSet.getDate("reserveerdatum"));
 		reservering.setBeginDatum(resultSet.getDate("begindatum"));
 		reservering.setEindDatum(resultSet.getDate("einddatum"));
-//		reservering.setKilometer(resultSet.getInt("kilometer"));
-//		reservering.setBedrag(resultSet.getDouble("bedrag"));
+
 		
 		return reservering;
 		
 	}
 	
-	private void fillStatement(PreparedStatement preparedStatement, Reservering reservering) throws SQLException
+	private int fillStatement(PreparedStatement preparedStatement, Reservering reservering) throws SQLException
 	{
-		preparedStatement.setInt(1, reservering.getKlantID());
-		preparedStatement.setInt(2, reservering.getVoertuigID());
-//		preparedStatement.setDate(3,  (java.sql.Date) reservering.getBeginDatum());
-	//	preparedStatement.setDate(4, (java.sql.Date) reservering.getEindDatum());
-		preparedStatement.setDouble(5, reservering.getBedrag());
-		preparedStatement.setInt(6, reservering.getKilometer());
 
+
+		int i = 1;
+		
+	
+		preparedStatement.setInt(i++, reservering.getKlant().getKlantID());
+		preparedStatement.setInt(i++, reservering.getVoertuig().getVoertuigID());
+		preparedStatement.setDate(i++, new java.sql.Date(reservering.getReserveerDatum().getTime()));
+		preparedStatement.setDate(i++,  new java.sql.Date(reservering.getBeginDatum().getTime()));
+		preparedStatement.setDate(i++, new java.sql.Date(reservering.getEindDatum().getTime()));
+		preparedStatement.setInt(i++, reservering.getKilometer());
+		preparedStatement.setDouble(i++, reservering.getBedrag());
+		preparedStatement.setString(i++, reservering.getStatus());
+
+		return i;
 	}
 
 	
@@ -102,11 +109,6 @@ public class ReserveringDataAccess extends DataAccess
 		return null;
 	}
 
-//	public ArrayList<Reservering> selectAll()
-//	{
-//		return tempData;
-//	}
-//	
 	public ArrayList<Reservering> selectAll()
 	{
 		ArrayList<Reservering> reservering = new ArrayList<Reservering>();
@@ -156,16 +158,29 @@ public class ReserveringDataAccess extends DataAccess
 	 */
 	public Reservering add(Reservering reservering)
 	{
-//		tempData.add(reservering);
+
 		openConnection();
+		PreparedStatement ps = null;
+		ResultSet resultSet = null;
+		
 		try
 		{
-			preparedStatement = connection.prepareStatement("INSERT INTO reservering (klantenid,voertuigenid,begindatum,einddatum,kilometer,bedrag) VALUES (?,?,?,?,?,?,1) RETURNING *");
+			ps = connection.prepareStatement("INSERT INTO reservering (klantenid,voertuigenid,reserveerdatum,begindatum,einddatum,kilometer,bedrag,status) VALUES (?,?,?,?,?,?,?,?) RETURNING *");
 																																															
 																																				
-			fillStatement(preparedStatement,reservering);
-
-			resultSet = preparedStatement.executeQuery();
+			fillStatement(ps,reservering);
+			//debuggen
+			System.out.println(reservering.getKlantID());		
+			System.out.println(reservering.getVoertuigID());		
+			System.out.println(reservering.getBeginDatum());		
+			System.out.println(reservering.getEindDatum());	
+			System.out.println(reservering.getKilometer());		
+			System.out.println(reservering.getBedrag());
+			
+			Klant klant = new Klant();
+			System.out.println(klant.getKlantID());
+			
+			resultSet = ps.executeQuery();
 
 			if (resultSet.next())
 			{
@@ -185,9 +200,9 @@ public class ReserveringDataAccess extends DataAccess
 			catch (SQLException negeer)
 			{
 			}
-			if (preparedStatement != null) try
+			if (ps != null) try
 			{
-				preparedStatement.close();
+				ps.close();
 			}
 			catch (SQLException negeer)
 			{
@@ -240,17 +255,50 @@ public class ReserveringDataAccess extends DataAccess
 		}
 	}
 
-	/**
-	 * 
-	 * @param klant
-	 */
-	public Klant edit(Klant klant)
-	{
-		return klant;
-	}
 
 	public Reservering edit(Reservering reservering)
 	{
+		openConnection();
+		PreparedStatement ps = null;
+		ResultSet resultSet = null;
+		
+		try
+		{
+			ps = connection.prepareStatement("UPDATE reservering SET klantenid=?,voertuigenid=?,reserveerdatum=?,begindatum=?,einddatum=?,kilometer=?,bedrag=?,status=? "
+					+ "WHERE id = ? RETURNING *");
+
+			int index = this.fillStatement(ps, reservering);
+			ps.setInt(index++, reservering.getReserveringID());
+			resultSet = ps.executeQuery();
+			if(resultSet.next())
+			{
+				reservering = buildReserveringModel(resultSet);
+			}
+		}
+
+		
+		catch(SQLException sqle)
+		{
+			sqle.printStackTrace();
+		}
+		finally
+		{
+			if (resultSet != null) try
+			{
+				resultSet.close();
+			}
+			catch (SQLException negeer)
+			{
+			}
+			if (ps != null) try
+			{
+				ps.close();
+			}
+			catch (SQLException negeer)
+			{
+			}
+			closeConnection();	
+		}
 		return reservering;
 	}
 

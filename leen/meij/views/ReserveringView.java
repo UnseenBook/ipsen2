@@ -157,7 +157,7 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 		}
 		
 		TableColumnModel tcm = new DefaultTableColumnModel();
-		tcm.addColumn(new TableColumn(0, 100));
+		tcm.addColumn(new TableColumn(0, 50));
 		tcm.addColumn(new TableColumn(1, 150));
 		tcm.addColumn(new TableColumn(2, 150));
 		tcm.addColumn(new TableColumn(3, 150));

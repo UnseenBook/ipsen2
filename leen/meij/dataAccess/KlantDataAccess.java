@@ -10,28 +10,54 @@ import leen.meij.*;
 public class KlantDataAccess extends DataAccess
 {
 
-	private Klant buildModel(ResultSet resultSet) throws SQLException
+	public Klant buildModel(ResultSet resultSet)
 	{
 		Klant klant = new Klant();
-		klant.setAchternaam(resultSet.getString("achternaam"));
-		klant.setBedrijfsnaam(resultSet.getString("bedrijfsnaam"));
-		klant.setEmailadres(resultSet.getString("emailadres"));
-		klant.setGeboorteDatum(resultSet.getDate("geboortedatum"));
-		klant.setHuisNummer(resultSet.getString("huisnummer"));
-		klant.setKlantID(resultSet.getInt("id"));
-		klant.setKlantNummer(resultSet.getInt("klantnummer"));
-		klant.setKopiePaspoort(resultSet.getBytes("kopiePaspoort"));
-		klant.setKopieRijbewijs(resultSet.getBytes("kopierijbewijs"));
-		klant.setKvknummer(resultSet.getString("kvknummer"));
-		klant.setLand(resultSet.getString("land"));
-		klant.setMobielnummer(resultSet.getString("mobielnummer"));
-		klant.setPostcode(resultSet.getString("postcode"));
-		klant.setProvincie(resultSet.getString("provincie"));
-		klant.setStraat(resultSet.getString("straat"));
-		klant.setTelefoonnummer(resultSet.getString("telefoonnummer"));
-		klant.setTussenvoegsel(resultSet.getString("tussenvoegsel"));
-		klant.setVoornaam(resultSet.getString("voornaam"));
-		klant.setWoonplaats(resultSet.getString("woonplaats"));
+		try
+		{
+			int tempID = resultSet.getInt("id");
+			klant.setKlantID(tempID);
+
+			
+		} catch (SQLException sqle)
+		{
+			sqle.printStackTrace();
+			try
+			{
+				klant.setKlantID(resultSet.getInt("klant_id"));
+			} catch (SQLException sqle2)
+			{
+				sqle2.printStackTrace();
+			}
+				
+			
+		} finally 
+		{
+			try
+			{
+				klant.setAchternaam(resultSet.getString("achternaam"));
+				klant.setBedrijfsnaam(resultSet.getString("bedrijfsnaam"));
+				klant.setEmailadres(resultSet.getString("emailadres"));
+				klant.setGeboorteDatum(resultSet.getDate("geboortedatum"));
+				klant.setHuisNummer(resultSet.getString("huisnummer"));
+				klant.setKlantNummer(resultSet.getInt("klantnummer"));
+				klant.setKopiePaspoort(resultSet.getBytes("kopiePaspoort"));
+				klant.setKopieRijbewijs(resultSet.getBytes("kopierijbewijs"));
+				klant.setKvknummer(resultSet.getString("kvknummer"));
+				klant.setLand(resultSet.getString("land"));
+				klant.setMobielnummer(resultSet.getString("mobielnummer"));
+				klant.setPostcode(resultSet.getString("postcode"));
+				klant.setProvincie(resultSet.getString("provincie"));
+				klant.setStraat(resultSet.getString("straat"));
+				klant.setTelefoonnummer(resultSet.getString("telefoonnummer"));
+				klant.setTussenvoegsel(resultSet.getString("tussenvoegsel"));
+				klant.setVoornaam(resultSet.getString("voornaam"));
+				klant.setWoonplaats(resultSet.getString("woonplaats"));
+			} catch (SQLException sqle3)
+			{
+				sqle3.printStackTrace();
+			}
+		}
 		return klant;
 	}
 

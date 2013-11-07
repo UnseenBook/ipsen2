@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import leen.meij.Klant;
 import leen.meij.Reservering;
 import leen.meij.utilities.DataAccess;
 
@@ -22,21 +23,16 @@ public class ReserveringDataAccess extends DataAccess
 	{
 		reservering = new Reservering();
 		
-		//resultSet.getMetaData().getColumnClassName(column)
-		
+		reservering.setReserveringID(resultSet.getInt("reservering_id"));
+		Klant tempKlant = klantDataAccess.buildModel(resultSet);
+		reservering.setKlant(tempKlant);
+		reservering.setKlantID(resultSet.getInt("klantenid"));
+		reservering.setVoertuig(voertuigDataAccess.select(resultSet.getInt("voertuigenid")));
+		reservering.setVoertuigID(resultSet.getInt("voertuigenid"));
+		reservering.setReserveerDatum(resultSet.getDate("reserveerdatum"));
+		reservering.setBeginDatum(resultSet.getDate("begindatum"));
+		reservering.setEindDatum(resultSet.getDate("einddatum"));
 
-		reservering.setReserveringID(resultSet.getInt("R.id"));
-		//Klant tempKlant = KlantDataAccess.buildModelExtern(resultSet, "K");
-		//reservering.setKlant(tempKlant);
-		//reservering.setKlant(klantDataAccess.select(resultSet.getInt("klantenid")));
-		reservering.setKlantID(resultSet.getInt("R.klantenid"));
-		reservering.setVoertuig(voertuigDataAccess.select(resultSet.getInt("R.voertuigenid")));
-		reservering.setVoertuigID(resultSet.getInt("R.voertuigenid"));
-		reservering.setReserveerDatum(resultSet.getDate("R.reserveerdatum"));
-		reservering.setBeginDatum(resultSet.getDate("R.begindatum"));
-		reservering.setEindDatum(resultSet.getDate("R.einddatum"));
-
-		
 		return reservering;
 		
 	}
@@ -142,7 +138,7 @@ public class ReserveringDataAccess extends DataAccess
 		builder.append("K.telefoonnummer,");
 		builder.append("K.tussenvoegsel,");
 		builder.append("K.voornaam,");
-		builder.append("K.woonplaats,");
+		builder.append("K.woonplaats ");
 		builder.append("FROM reservering AS R,");
 		builder.append("klant AS K ");
 		builder.append("WHERE R.klantenid = K.id ");

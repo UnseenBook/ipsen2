@@ -170,17 +170,11 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 	private void loadModelData()
 	{
 		cbKlant.setSelectedItem(model.getKlant());
-
-		cbVoertuig.setSelectedItem(model.getVoertuig());
-
-		//cbVoertuig.setSelectedIndex(model.getVoertuigID());
 		cbVoertuig.setSelectedItem(model.getVoertuig());
 		reserveerDatum.setDate(model.getReserveerDatum());
-
 		calBeginDatum.setDate(model.getBeginDatum());
 		calEindDatum.setDate(model.getEindDatum());
 		txtKilometer.setText(Integer.toString(model.getKilometer()));
-		System.out.println(model.getKilometer());
 		txtBedrag.setText(Double.toString(model.getBedrag()));
 		txtStatus.setText(model.getStatus());
 	}
@@ -188,9 +182,7 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 	protected Reservering getEditedModel()
 	{   
 	
-	
 		model.setKlant((Klant)cbKlant.getSelectedItem());
-		model.setVoertuig((Voertuig) cbVoertuig.getSelectedItem());
 		model.setVoertuig((Voertuig)cbVoertuig.getSelectedItem());
 		model.setReserveerDatum(reserveerDatum.getDate());
 		model.setBeginDatum(calBeginDatum.getDate());

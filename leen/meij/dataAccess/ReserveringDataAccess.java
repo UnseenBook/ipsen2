@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import leen.meij.Klant;
 import leen.meij.Reservering;
 import leen.meij.utilities.DataAccess;
 
@@ -19,25 +18,30 @@ public class ReserveringDataAccess extends DataAccess
 	private ResultSet resultSet = null;
 	private Reservering reservering = null;
 	
-	private Reservering buildReserveringModel(ResultSet resultSet) throws SQLException
+	private Reservering buildReserveringModel() throws SQLException
 	{
 		reservering = new Reservering();
 		
-		reservering.setReserveringID(resultSet.getInt("id"));
-		reservering.setKlant(klantDataAccess.select(resultSet.getInt("klantenid")));
-		reservering.setKlantID(resultSet.getInt("klantenid"));
-		reservering.setVoertuig(voertuigDataAccess.select(resultSet.getInt("voertuigenid")));
-		reservering.setVoertuigID(resultSet.getInt("voertuigenid"));
-		reservering.setReserveerDatum(resultSet.getDate("reserveerdatum"));
-		reservering.setBeginDatum(resultSet.getDate("begindatum"));
-		reservering.setEindDatum(resultSet.getDate("einddatum"));
+		//resultSet.getMetaData().getColumnClassName(column)
+		
+
+		reservering.setReserveringID(resultSet.getInt("R.id"));
+		//Klant tempKlant = KlantDataAccess.buildModelExtern(resultSet, "K");
+		//reservering.setKlant(tempKlant);
+		//reservering.setKlant(klantDataAccess.select(resultSet.getInt("klantenid")));
+		reservering.setKlantID(resultSet.getInt("R.klantenid"));
+		reservering.setVoertuig(voertuigDataAccess.select(resultSet.getInt("R.voertuigenid")));
+		reservering.setVoertuigID(resultSet.getInt("R.voertuigenid"));
+		reservering.setReserveerDatum(resultSet.getDate("R.reserveerdatum"));
+		reservering.setBeginDatum(resultSet.getDate("R.begindatum"));
+		reservering.setEindDatum(resultSet.getDate("R.einddatum"));
 
 		
 		return reservering;
 		
 	}
 	
-	private int fillStatement(PreparedStatement preparedStatement, Reservering reservering) throws SQLException
+	private int fillStatement(Reservering reservering) throws SQLException
 	{
 		int i = 1;
 		
@@ -67,6 +71,8 @@ public class ReserveringDataAccess extends DataAccess
 		try
 		{
 
+			preparedStatement = connection.prepareStatement("SELECT R.*, K.* FROM reservering R, klant K WHERE id = ? AND R.klantid = K.id");
+
 			preparedStatement = connection.prepareStatement("SELECT * FROM reservering WHERE id = ?");
 
 			preparedStatement.setInt(1, reserveringID);
@@ -74,7 +80,7 @@ public class ReserveringDataAccess extends DataAccess
 
 			if (resultSet.next())
 			{
-				reservering = buildReserveringModel(resultSet);
+				reservering = buildReserveringModel();
 				
 				return reservering;
 			}
@@ -110,15 +116,49 @@ public class ReserveringDataAccess extends DataAccess
 		ArrayList<Reservering> reservering = new ArrayList<Reservering>();
 		openConnection();
 
+		StringBuilder builder = new StringBuilder("SELECT ");
+		builder.append("R.id AS reservering_id,");
+		builder.append("R.klantenid,");
+		builder.append("R.voertuigenid,");
+		builder.append("R.voertuigenid,");
+		builder.append("R.reserveerdatum,");
+		builder.append("R.begindatum,");
+		builder.append("R.einddatum,");
+		builder.append("K.achternaam,");
+		builder.append("K.bedrijfsnaam,");
+		builder.append("K.emailadres,");
+		builder.append("K.geboortedatum,");
+		builder.append("K.huisnummer,");
+		builder.append("K.id AS klant_id,");
+		builder.append("K.klantnummer,");
+		builder.append("K.kopiePaspoort,");
+		builder.append("K.kopierijbewijs,");
+		builder.append("K.kvknummer,");
+		builder.append("K.land,");
+		builder.append("K.mobielnummer,");
+		builder.append("K.postcode,");
+		builder.append("K.provincie,");
+		builder.append("K.straat,");
+		builder.append("K.telefoonnummer,");
+		builder.append("K.tussenvoegsel,");
+		builder.append("K.voornaam,");
+		builder.append("K.woonplaats,");
+		builder.append("FROM reservering AS R,");
+		builder.append("klant AS K ");
+		builder.append("WHERE R.klantenid = K.id ");
+		builder.append("ORDER BY R.id");
+
 		try
 		{
-			preparedStatement = connection.prepareStatement("SELECT * FROM reservering ORDER BY id");
+			preparedStatement = connection.prepareStatement(builder.toString());
+
+//			preparedStatement = connection.prepareStatement("SELECT R.id,R.klantenid,R.voertuigenid,R.voertuigenid,R.reserveerdatum,R.begindatum,R.einddatum,K.achternaam,K.bedrijfsnaam,K.emailadres,K.geboortedatum,K.huisnummer,K.id,K.klantnummer,K.kopiePaspoort,K.kopierijbewijs,K.kvknummer,K.land,K.mobielnummer,K.postcode,K.provincie,K.straat,K.telefoonnummer,K.tussenvoegsel,K.voornaam,K.woonplaats FROM reservering AS R, klant AS K WHERE R.klantenid = K.id ORDER BY R.id");
 
 			resultSet = preparedStatement.executeQuery();
 
 			while (resultSet.next())
 			{
-				reservering.add(buildReserveringModel(resultSet));
+				reservering.add(buildReserveringModel());
 			}
 			return reservering;
 			
@@ -156,21 +196,20 @@ public class ReserveringDataAccess extends DataAccess
 	{
 
 		openConnection();
-		PreparedStatement ps = null;
-		ResultSet resultSet = null;
+		
 		
 		try
 		{
 
-			ps = connection.prepareStatement("INSERT INTO reservering (klantenid,voertuigenid,reserveerdatum,begindatum,einddatum,kilometer,bedrag,status) VALUES (?,?,?,?,?,?,?,?) RETURNING *");
+			preparedStatement = connection.prepareStatement("INSERT INTO reservering (klantenid,voertuigenid,reserveerdatum,begindatum,einddatum,kilometer,bedrag,status) VALUES (?,?,?,?,?,?,?,?) RETURNING *");
 																															
 																																				
-			fillStatement(ps,reservering);
-			resultSet = ps.executeQuery();
+			fillStatement(reservering);
+			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next())
 			{
-				reservering = buildReserveringModel(resultSet);
+				reservering = buildReserveringModel();
 			}
 		}
 		catch (SQLException sqle)
@@ -186,9 +225,9 @@ public class ReserveringDataAccess extends DataAccess
 			catch (SQLException negeer)
 			{
 			}
-			if (ps != null) try
+			if (preparedStatement != null) try
 			{
-				ps.close();
+				preparedStatement.close();
 			}
 			catch (SQLException negeer)
 			{
@@ -207,15 +246,14 @@ public class ReserveringDataAccess extends DataAccess
 	public void delete(int reserveringID)
 	{
 		openConnection();
-		PreparedStatement ps = null;
-		ResultSet resultSet = null;
+		
 		try
 		{
 
-			ps = connection.prepareStatement("DELETE FROM reservering WHERE id = ?");
+			preparedStatement = connection.prepareStatement("DELETE FROM reservering WHERE id = ?");
 
-			ps.setInt(1, reserveringID);
-			ps.execute();
+			preparedStatement.setInt(1, reserveringID);
+			preparedStatement.execute();
 		}
 		catch (SQLException sqle)
 		{
@@ -230,9 +268,9 @@ public class ReserveringDataAccess extends DataAccess
 			catch (SQLException negeer)
 			{
 			}
-			if (ps != null) try
+			if (preparedStatement != null) try
 			{
-				ps.close();
+				preparedStatement.close();
 			}
 			catch (SQLException negeer)
 			{
@@ -245,20 +283,18 @@ public class ReserveringDataAccess extends DataAccess
 	public Reservering edit(Reservering reservering)
 	{
 		openConnection();
-		PreparedStatement ps = null;
-		ResultSet resultSet = null;
 		
 		try
 		{
-			ps = connection.prepareStatement("UPDATE reservering SET klantenid=?,voertuigenid=?,reserveerdatum=?,begindatum=?,einddatum=?,kilometer=?,bedrag=?,status=? "
+			preparedStatement = connection.prepareStatement("UPDATE reservering SET klantenid=?,voertuigenid=?,reserveerdatum=?,begindatum=?,einddatum=?,kilometer=?,bedrag=?,status=? "
 					+ "WHERE id = ? RETURNING *");
 
-			int index = this.fillStatement(ps, reservering);
-			ps.setInt(index++, reservering.getReserveringID());
-			resultSet = ps.executeQuery();
+			int index = this.fillStatement(reservering);
+			preparedStatement.setInt(index++, reservering.getReserveringID());
+			resultSet = preparedStatement.executeQuery();
 			if(resultSet.next())
 			{
-				reservering = buildReserveringModel(resultSet);
+				reservering = buildReserveringModel();
 			}
 		}
 
@@ -276,9 +312,9 @@ public class ReserveringDataAccess extends DataAccess
 			catch (SQLException negeer)
 			{
 			}
-			if (ps != null) try
+			if (preparedStatement != null) try
 			{
-				ps.close();
+				preparedStatement.close();
 			}
 			catch (SQLException negeer)
 			{

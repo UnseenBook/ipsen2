@@ -30,6 +30,12 @@ public class Voertuig extends Entity
 		return temp;
 	}
 	
+	public String toString()
+	{
+		String temp = merk + " " + type;
+		return temp;
+	}
+	
 	public Voertuig(){}
 	
 	public Voertuig(int voertuigID,String merk)

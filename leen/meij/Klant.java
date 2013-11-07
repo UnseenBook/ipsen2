@@ -343,5 +343,6 @@ public class Klant extends Entity
 		}
 		return naam;
 	}
+	
 
 }

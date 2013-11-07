@@ -3,7 +3,6 @@ package leen.meij.views;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -17,7 +16,6 @@ import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
-import javax.swing.text.DateFormatter;
 
 import leen.meij.Klant;
 import leen.meij.Reservering;
@@ -157,7 +155,7 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 		}
 		
 		TableColumnModel tcm = new DefaultTableColumnModel();
-		tcm.addColumn(new TableColumn(0, 100));
+		tcm.addColumn(new TableColumn(0, 50));
 		tcm.addColumn(new TableColumn(1, 150));
 		tcm.addColumn(new TableColumn(2, 150));
 		tcm.addColumn(new TableColumn(3, 150));

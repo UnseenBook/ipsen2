@@ -9,6 +9,30 @@ import leen.meij.*;
 
 public class KlantDataAccess extends DataAccess
 {
+	public static Klant buildModelExtern(ResultSet resultSet, String tableName) throws SQLException
+	{
+		Klant klant = new Klant();
+		klant.setAchternaam(resultSet.getString(tableName + ".achternaam"));
+		klant.setBedrijfsnaam(resultSet.getString(tableName + ".bedrijfsnaam"));
+		klant.setEmailadres(resultSet.getString(tableName + ".emailadres"));
+		klant.setGeboorteDatum(resultSet.getDate(tableName + ".geboortedatum"));
+		klant.setHuisNummer(resultSet.getString(tableName + ".huisnummer"));
+		klant.setKlantID(resultSet.getInt(tableName + ".id"));
+		klant.setKlantNummer(resultSet.getInt(tableName + ".klantnummer"));
+		klant.setKopiePaspoort(resultSet.getBytes(tableName + ".kopiePaspoort"));
+		klant.setKopieRijbewijs(resultSet.getBytes(tableName + ".kopierijbewijs"));
+		klant.setKvknummer(resultSet.getString(tableName + ".kvknummer"));
+		klant.setLand(resultSet.getString(tableName + ".land"));
+		klant.setMobielnummer(resultSet.getString(tableName + ".mobielnummer"));
+		klant.setPostcode(resultSet.getString(tableName + ".postcode"));
+		klant.setProvincie(resultSet.getString(tableName + ".provincie"));
+		klant.setStraat(resultSet.getString(tableName + ".straat"));
+		klant.setTelefoonnummer(resultSet.getString(tableName + ".telefoonnummer"));
+		klant.setTussenvoegsel(resultSet.getString(tableName + ".tussenvoegsel"));
+		klant.setVoornaam(resultSet.getString(tableName + ".voornaam"));
+		klant.setWoonplaats(resultSet.getString(tableName + ".woonplaats"));
+		return klant;
+	}
 
 	private Klant buildModel(ResultSet resultSet) throws SQLException
 	{

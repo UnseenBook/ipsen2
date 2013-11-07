@@ -3,13 +3,11 @@ package leen.meij.dataAccess;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 
-import leen.meij.utilities.*;
-import leen.meij.*;
+import leen.meij.Klant;
+import leen.meij.Reservering;
+import leen.meij.utilities.DataAccess;
 
 public class ReserveringDataAccess extends DataAccess
 {

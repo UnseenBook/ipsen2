@@ -42,7 +42,7 @@ public class ReserveringController extends Controller
 
 	/**
 	 * 
-	 * @param reservering
+	 * @param reservering.
 	 */
 	public View reserveringToevoegenTask(Reservering reservering)
 	{

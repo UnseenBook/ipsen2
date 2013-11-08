@@ -33,7 +33,12 @@ public class Reservering extends Entity
 	 * **/
 	
 	
-	public Reservering(){};
+	public Reservering()
+	{
+		this.klant = null;
+		this.voertuig = null;
+		this.gebruiker = null;
+	}
 	public Reservering(int klantID,Klant klant, Voertuig voertuig,Date begin, Date eind,int kilometer,double bedrag,String status)
 	{
 		this.klantID = klantID;

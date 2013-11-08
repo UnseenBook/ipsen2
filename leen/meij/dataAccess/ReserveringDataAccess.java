@@ -26,15 +26,32 @@ public class ReserveringDataAccess extends DataAccess
 	private Reservering buildReserveringModel() throws SQLException
 	{
 		Reservering reservering = new Reservering();
-		
-		reservering.setReserveringID(resultSet.getInt("reservering_id"));
-		reservering.setKlant(klantDataAccess.buildModel(resultSet));
-		reservering.setKlantID(resultSet.getInt("klantenid"));
-		reservering.setVoertuig(voertuigDataAccess.select(resultSet.getInt("voertuigenid")));
-		reservering.setVoertuigID(resultSet.getInt("voertuigenid"));
-		reservering.setReserveerDatum(resultSet.getDate("reserveerdatum"));
-		reservering.setBeginDatum(resultSet.getDate("begindatum"));
-		reservering.setEindDatum(resultSet.getDate("einddatum"));
+		try
+		{
+			reservering.setReserveringID(resultSet.getInt("id"));
+		} catch (SQLException sqle)
+		{
+			String negeren = sqle.getMessage();
+			reservering.setReserveringID(resultSet.getInt("reservering_id"));
+		} finally
+		{
+			try 
+			{
+				String test = resultSet.getString("klant_id");
+				reservering.setKlant(klantDataAccess.buildModel(resultSet));
+			} catch (SQLException sqle2)
+			{
+				String negeren = sqle2.getMessage();
+			} finally
+			{
+				reservering.setKlantID(resultSet.getInt("klantenid"));
+				reservering.setVoertuig(voertuigDataAccess.select(resultSet.getInt("voertuigenid")));
+				reservering.setVoertuigID(resultSet.getInt("voertuigenid"));
+				reservering.setReserveerDatum(resultSet.getDate("reserveerdatum"));
+				reservering.setBeginDatum(resultSet.getDate("begindatum"));
+				reservering.setEindDatum(resultSet.getDate("einddatum"));
+			}
+		}
 
 		return reservering;
 		
@@ -84,12 +101,46 @@ public class ReserveringDataAccess extends DataAccess
 		
 		Reservering reservering;
 
+		StringBuilder builder = new StringBuilder("SELECT ");
+		builder.append("R.id AS reservering_id,");
+		builder.append("klantenid,");
+		builder.append("voertuigenid,");
+		builder.append("voertuigenid,");
+		builder.append("reserveerdatum,");
+		builder.append("begindatum,");
+		builder.append("einddatum,");
+		builder.append("achternaam,");
+		builder.append("bedrijfsnaam,");
+		builder.append("emailadres,");
+		builder.append("geboortedatum,");
+		builder.append("huisnummer,");
+		builder.append("K.id AS klant_id,");
+		builder.append("klantnummer,");
+		builder.append("kopiePaspoort,");
+		builder.append("kopierijbewijs,");
+		builder.append("kvknummer,");
+		builder.append("land,");
+		builder.append("mobielnummer,");
+		builder.append("postcode,");
+		builder.append("provincie,");
+		builder.append("straat,");
+		builder.append("telefoonnummer,");
+		builder.append("tussenvoegsel,");
+		builder.append("voornaam,");
+		builder.append("woonplaats ");
+		builder.append("FROM reservering AS R,");
+		builder.append("klant AS K ");
+		builder.append("WHERE klantenid = K.id ");
+		builder.append("AND R.id = ?");
+		builder.append("ORDER BY R.id");
+
+
 		try
 		{
 
-			preparedStatement = connection.prepareStatement("SELECT R.*, K.* FROM reservering R, klant K WHERE id = ? AND R.klantid = K.id");
+			preparedStatement = connection.prepareStatement(builder.toString());
 
-			preparedStatement = connection.prepareStatement("SELECT * FROM reservering WHERE id = ?");
+			//preparedStatement = connection.prepareStatement("SELECT * FROM reservering WHERE id = ?");
 
 			preparedStatement.setInt(1, reserveringID);
 			resultSet = preparedStatement.executeQuery();
@@ -182,34 +233,34 @@ public class ReserveringDataAccess extends DataAccess
 
 		StringBuilder builder = new StringBuilder("SELECT ");
 		builder.append("R.id AS reservering_id,");
-		builder.append("R.klantenid,");
-		builder.append("R.voertuigenid,");
-		builder.append("R.voertuigenid,");
-		builder.append("R.reserveerdatum,");
-		builder.append("R.begindatum,");
-		builder.append("R.einddatum,");
-		builder.append("K.achternaam,");
-		builder.append("K.bedrijfsnaam,");
-		builder.append("K.emailadres,");
-		builder.append("K.geboortedatum,");
-		builder.append("K.huisnummer,");
+		builder.append("klantenid,");
+		builder.append("voertuigenid,");
+		builder.append("voertuigenid,");
+		builder.append("reserveerdatum,");
+		builder.append("begindatum,");
+		builder.append("einddatum,");
+		builder.append("achternaam,");
+		builder.append("bedrijfsnaam,");
+		builder.append("emailadres,");
+		builder.append("geboortedatum,");
+		builder.append("huisnummer,");
 		builder.append("K.id AS klant_id,");
-		builder.append("K.klantnummer,");
-		builder.append("K.kopiePaspoort,");
-		builder.append("K.kopierijbewijs,");
-		builder.append("K.kvknummer,");
-		builder.append("K.land,");
-		builder.append("K.mobielnummer,");
-		builder.append("K.postcode,");
-		builder.append("K.provincie,");
-		builder.append("K.straat,");
-		builder.append("K.telefoonnummer,");
-		builder.append("K.tussenvoegsel,");
-		builder.append("K.voornaam,");
-		builder.append("K.woonplaats ");
+		builder.append("klantnummer,");
+		builder.append("kopiePaspoort,");
+		builder.append("kopierijbewijs,");
+		builder.append("kvknummer,");
+		builder.append("land,");
+		builder.append("mobielnummer,");
+		builder.append("postcode,");
+		builder.append("provincie,");
+		builder.append("straat,");
+		builder.append("telefoonnummer,");
+		builder.append("tussenvoegsel,");
+		builder.append("voornaam,");
+		builder.append("woonplaats ");
 		builder.append("FROM reservering AS R,");
 		builder.append("klant AS K ");
-		builder.append("WHERE R.klantenid = K.id ");
+		builder.append("WHERE klantenid = K.id ");
 		builder.append("ORDER BY R.id");
 
 		try
@@ -259,6 +310,8 @@ public class ReserveringDataAccess extends DataAccess
 
 		openConnection();
 		
+		Reservering tempReservering;
+
 		try
 		{
 
@@ -270,7 +323,12 @@ public class ReserveringDataAccess extends DataAccess
 
 			if (resultSet.next())
 			{
-				reservering = buildReserveringModel();
+				tempReservering = buildReserveringModel();
+				if (tempReservering.getKlant() == null)
+				{
+					tempReservering.setKlant(reservering.getKlant());
+				}
+				reservering = tempReservering;
 			}
 		}
 		catch (SQLException sqle)
@@ -344,6 +402,8 @@ public class ReserveringDataAccess extends DataAccess
 	public Reservering edit(Reservering reservering)
 	{
 		openConnection();
+
+		Reservering tempReservering;
 		
 		try
 		{
@@ -355,7 +415,12 @@ public class ReserveringDataAccess extends DataAccess
 			resultSet = preparedStatement.executeQuery();
 			if(resultSet.next())
 			{
-				reservering = buildReserveringModel();
+				tempReservering = buildReserveringModel();
+				if (tempReservering.getKlant() == null)
+				{
+					tempReservering.setKlant(reservering.getKlant());
+				}
+				reservering = tempReservering;
 			}
 		}
 

@@ -17,10 +17,7 @@ public class KlantDataAccess extends DataAccess
 		Klant klant = new Klant();
 		try
 		{
-			int tempID = resultSet.getInt("id");
-			klant.setKlantID(tempID);
-
-			
+			klant.setKlantID(resultSet.getInt("id"));
 		} catch (SQLException sqle)
 		{
 			String negeren = sqle.getMessage();

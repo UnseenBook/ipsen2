@@ -28,7 +28,8 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 	private JButton btnToevoegen = new JButton("Nieuw reservering");
 	private JButton btnHuurlijst = new JButton("Huurlijst");
 	private JButton btnInleverlijst = new JButton("Inleverlijst");
-
+	private String begindatumformatted;
+	private String einddatumformatted;
 	private Reservering selectedReservering;
 	private SimpleDateFormat formatter = new SimpleDateFormat("MM/dd/yyyy");
 	
@@ -145,12 +146,17 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 		
 		for(Reservering reservering : model)
 		{
+			begindatumformatted = String.format("%1$td-%1$tm-%1$tY", reservering.getBeginDatum());
+			einddatumformatted = String.format("%1$td-%1$tm-%1$tY", reservering.getEindDatum());
+			
+			
+			
 			dm.addRow(new Object[]{
 					reservering.getKlantID(),
 					reservering.getKlant().getVoornaam(),
 					reservering.getVoertuig().getMerk(),
-					reservering.getBeginDatum(),
-					reservering.getEindDatum()
+					begindatumformatted,
+					einddatumformatted
 			});
 		}
 		
@@ -160,7 +166,7 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 		tcm.addColumn(new TableColumn(2, 150));
 		tcm.addColumn(new TableColumn(3, 150));
 		tcm.addColumn(new TableColumn(4, 150));
-		tcm.getColumn(0).setHeaderValue("Klantnummer");
+		tcm.getColumn(0).setHeaderValue("Klant#");
 		tcm.getColumn(1).setHeaderValue("Naam");
 		tcm.getColumn(2).setHeaderValue("Voertuig");
 		tcm.getColumn(3).setHeaderValue("Begindatum");

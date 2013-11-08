@@ -4,6 +4,8 @@ package leen.meij.utilities;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 
 public abstract class DataAccess
@@ -25,6 +27,20 @@ public abstract class DataAccess
 			System.out.println(cnfe);
 		}
 	}*/
+
+	protected boolean heeftKolom(ResultSet resultSet, String kolom) throws SQLException
+	{
+		ResultSetMetaData rsmd = resultSet.getMetaData();
+		int kolommen = rsmd.getColumnCount();
+		for (int i = 1; i <= kolommen; i++)
+		{
+			if (kolom.equals(rsmd.getColumnName(i)))
+			{
+				return true;
+			}
+		}
+		return false;
+	}
 
 	protected void openConnection()
 	{

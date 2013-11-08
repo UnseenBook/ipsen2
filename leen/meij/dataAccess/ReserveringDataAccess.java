@@ -2,11 +2,11 @@ package leen.meij.dataAccess;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 import leen.meij.Factuur;
-import leen.meij.Klant;
 import leen.meij.Reservering;
 import leen.meij.utilities.DataAccess;
 
@@ -18,50 +18,39 @@ public class ReserveringDataAccess extends DataAccess
 	
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
-
-	private Reservering reservering = null;
-	private Factuur factuur = null;
-
 	
 	private Reservering buildReserveringModel() throws SQLException
 	{
 		Reservering reservering = new Reservering();
-		try
+		
+		if (heeftKolom(resultSet, "id"))
 		{
 			reservering.setReserveringID(resultSet.getInt("id"));
-		} catch (SQLException sqle)
+		} else
 		{
-			String negeren = sqle.getMessage();
 			reservering.setReserveringID(resultSet.getInt("reservering_id"));
-		} finally
-		{
-			try 
-			{
-				String test = resultSet.getString("klant_id");
-				reservering.setKlant(klantDataAccess.buildModel(resultSet));
-			} catch (SQLException sqle2)
-			{
-				String negeren = sqle2.getMessage();
-			} finally
-			{
-				reservering.setKlantID(resultSet.getInt("klantenid"));
-				reservering.setVoertuig(voertuigDataAccess.select(resultSet.getInt("voertuigenid")));
-				reservering.setVoertuigID(resultSet.getInt("voertuigenid"));
-				reservering.setReserveerDatum(resultSet.getDate("reserveerdatum"));
-				reservering.setBeginDatum(resultSet.getDate("begindatum"));
-				reservering.setEindDatum(resultSet.getDate("einddatum"));
-			}
 		}
+		if (heeftKolom(resultSet, "klant_id"))
+		{
+			reservering.setKlant(klantDataAccess.buildModel(resultSet));
+		} else
+		{
+			reservering.setKlant(null);
+		}
+		reservering.setKlantID(resultSet.getInt("klantenid"));
+		reservering.setVoertuig(voertuigDataAccess.select(resultSet.getInt("voertuigenid")));
+		reservering.setVoertuigID(resultSet.getInt("voertuigenid"));
+		reservering.setReserveerDatum(resultSet.getDate("reserveerdatum"));
+		reservering.setBeginDatum(resultSet.getDate("begindatum"));
+		reservering.setEindDatum(resultSet.getDate("einddatum"));
 
 		return reservering;
-		
 	}
 	
 	private int fillStatement(Reservering reservering) throws SQLException
 	{
 		int i = 1;
-		
-	
+
 		preparedStatement.setInt(i++, reservering.getKlant().getKlantID());
 		preparedStatement.setInt(i++, reservering.getVoertuig().getVoertuigID());
 		preparedStatement.setDate(i++, new java.sql.Date(reservering.getReserveerDatum().getTime()));
@@ -75,9 +64,9 @@ public class ReserveringDataAccess extends DataAccess
 	}
 	
 	
-	private Factuur buildFactuurModel(ResultSet resultSet) throws SQLException
+	private Factuur buildFactuurModel() throws SQLException
 	{
-		factuur = new Factuur();
+		Factuur factuur = new Factuur();
 		
 		factuur.setReserveringID(resultSet.getInt("id"));
 		factuur.setFactuurID(resultSet.getInt("id"));
@@ -104,7 +93,6 @@ public class ReserveringDataAccess extends DataAccess
 		StringBuilder builder = new StringBuilder("SELECT ");
 		builder.append("R.id AS reservering_id,");
 		builder.append("klantenid,");
-		builder.append("voertuigenid,");
 		builder.append("voertuigenid,");
 		builder.append("reserveerdatum,");
 		builder.append("begindatum,");
@@ -183,6 +171,8 @@ public class ReserveringDataAccess extends DataAccess
 	public Factuur selectFactuur(int reserveringID)
 	{
 		openConnection();
+		
+		Factuur factuur;
 
 		try
 		{
@@ -194,7 +184,7 @@ public class ReserveringDataAccess extends DataAccess
 
 			if (resultSet.next())
 			{
-				factuur = buildFactuurModel(resultSet);
+				factuur = buildFactuurModel();
 				
 				return factuur;
 			}
@@ -234,7 +224,6 @@ public class ReserveringDataAccess extends DataAccess
 		StringBuilder builder = new StringBuilder("SELECT ");
 		builder.append("R.id AS reservering_id,");
 		builder.append("klantenid,");
-		builder.append("voertuigenid,");
 		builder.append("voertuigenid,");
 		builder.append("reserveerdatum,");
 		builder.append("begindatum,");
@@ -312,11 +301,22 @@ public class ReserveringDataAccess extends DataAccess
 		
 		Reservering tempReservering;
 
+		StringBuilder builder = new StringBuilder("INSERT INTO reservering (");
+
+		builder.append("klantenid,");
+		builder.append("voertuigenid,");
+		builder.append("reserveerdatum,");
+		builder.append("begindatum,");
+		builder.append("einddatum,");
+		builder.append("kilometer,");
+		builder.append("bedrag,");
+		builder.append("status) ");
+		builder.append("VALUES (?,?,?,?,?,?,?,?)");
+		builder.append("RETURNING *");
+
 		try
 		{
-
-			preparedStatement = connection.prepareStatement("INSERT INTO reservering (klantenid,voertuigenid,reserveerdatum,begindatum,einddatum,kilometer,bedrag,status) VALUES (?,?,?,?,?,?,?,?) RETURNING *");
-																															
+			preparedStatement = connection.prepareStatement(builder.toString());
 																																				
 			fillStatement(reservering);
 			resultSet = preparedStatement.executeQuery();
@@ -405,10 +405,24 @@ public class ReserveringDataAccess extends DataAccess
 
 		Reservering tempReservering;
 		
+		StringBuilder builder = new StringBuilder("UPDATE reservering SET ");
+
+		builder.append("klantenid=?,");
+		builder.append("voertuigenid=?,");
+		builder.append("reserveerdatum=?,");
+		builder.append("begindatum=?,");
+		builder.append("einddatum=?,");
+		builder.append("kilometer=?,");
+		builder.append("bedrag=?,");
+		builder.append("status=? ");
+		builder.append("WHERE id = ? ");
+		builder.append("RETURNING *");
+
 		try
 		{
-			preparedStatement = connection.prepareStatement("UPDATE reservering SET klantenid=?,voertuigenid=?,reserveerdatum=?,begindatum=?,einddatum=?,kilometer=?,bedrag=?,status=? "
-					+ "WHERE id = ? RETURNING *");
+			preparedStatement = connection.prepareStatement(builder.toString());
+			//preparedStatement = connection.prepareStatement("UPDATE reservering SET klantenid=?,voertuigenid=?,reserveerdatum=?,begindatum=?,einddatum=?,kilometer=?,bedrag=?,status=? "
+			//		+ "WHERE id = ? RETURNING *");
 
 			int index = this.fillStatement(reservering);
 			preparedStatement.setInt(index++, reservering.getReserveringID());

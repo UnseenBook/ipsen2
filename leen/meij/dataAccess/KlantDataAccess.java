@@ -12,7 +12,7 @@ public class KlantDataAccess extends DataAccess
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
 
-	public Klant buildModel(ResultSet resultSet)
+	public Klant buildModel(ResultSet resultSet) throws SQLException
 	{
 		Klant klant = new Klant();
 		try
@@ -21,41 +21,27 @@ public class KlantDataAccess extends DataAccess
 		} catch (SQLException sqle)
 		{
 			String negeren = sqle.getMessage();
-			try
-			{
-				klant.setKlantID(resultSet.getInt("klant_id"));
-			} catch (SQLException sqle2)
-			{
-				sqle2.printStackTrace();
-			}
-				
-			
+			klant.setKlantID(resultSet.getInt("klant_id"));
 		} finally 
 		{
-			try
-			{
-				klant.setAchternaam(resultSet.getString("achternaam"));
-				klant.setBedrijfsnaam(resultSet.getString("bedrijfsnaam"));
-				klant.setEmailadres(resultSet.getString("emailadres"));
-				klant.setGeboorteDatum(resultSet.getDate("geboortedatum"));
-				klant.setHuisNummer(resultSet.getString("huisnummer"));
-				klant.setKlantNummer(resultSet.getInt("klantnummer"));
-				klant.setKopiePaspoort(resultSet.getBytes("kopiePaspoort"));
-				klant.setKopieRijbewijs(resultSet.getBytes("kopierijbewijs"));
-				klant.setKvknummer(resultSet.getString("kvknummer"));
-				klant.setLand(resultSet.getString("land"));
-				klant.setMobielnummer(resultSet.getString("mobielnummer"));
-				klant.setPostcode(resultSet.getString("postcode"));
-				klant.setProvincie(resultSet.getString("provincie"));
-				klant.setStraat(resultSet.getString("straat"));
-				klant.setTelefoonnummer(resultSet.getString("telefoonnummer"));
-				klant.setTussenvoegsel(resultSet.getString("tussenvoegsel"));
-				klant.setVoornaam(resultSet.getString("voornaam"));
-				klant.setWoonplaats(resultSet.getString("woonplaats"));
-			} catch (SQLException sqle3)
-			{
-				sqle3.printStackTrace();
-			}
+			klant.setAchternaam(resultSet.getString("achternaam"));
+			klant.setBedrijfsnaam(resultSet.getString("bedrijfsnaam"));
+			klant.setEmailadres(resultSet.getString("emailadres"));
+			klant.setGeboorteDatum(resultSet.getDate("geboortedatum"));
+			klant.setHuisNummer(resultSet.getString("huisnummer"));
+			klant.setKlantNummer(resultSet.getInt("klantnummer"));
+			klant.setKopiePaspoort(resultSet.getBytes("kopiePaspoort"));
+			klant.setKopieRijbewijs(resultSet.getBytes("kopierijbewijs"));
+			klant.setKvknummer(resultSet.getString("kvknummer"));
+			klant.setLand(resultSet.getString("land"));
+			klant.setMobielnummer(resultSet.getString("mobielnummer"));
+			klant.setPostcode(resultSet.getString("postcode"));
+			klant.setProvincie(resultSet.getString("provincie"));
+			klant.setStraat(resultSet.getString("straat"));
+			klant.setTelefoonnummer(resultSet.getString("telefoonnummer"));
+			klant.setTussenvoegsel(resultSet.getString("tussenvoegsel"));
+			klant.setVoornaam(resultSet.getString("voornaam"));
+			klant.setWoonplaats(resultSet.getString("woonplaats"));
 		}
 		return klant;
 	}

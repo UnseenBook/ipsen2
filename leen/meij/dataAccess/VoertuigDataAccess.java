@@ -93,7 +93,7 @@ public class VoertuigDataAccess extends DataAccess
 			if (resultSet.next())
 			{
 				Voertuig voertuig = buildVoertuigModel();
-				voertuig.setOnderhoud(getOnderhoud(voertuigID));
+				voertuig.setOnderhoud(getOnderhoud(voertuigID)); //hierin wordt resultSet gesloten.TODO: onderhoud toevoegen in select query 
 
 				return voertuig;
 			}
@@ -127,8 +127,10 @@ public class VoertuigDataAccess extends DataAccess
 	public ArrayList<Voertuig> selectAll()
 	{
 		openConnection();
+		
+		Voertuig voertuig;
 
-		ResultSet resultSet = null;
+//		ResultSet resultSet = null;
 		try
 		{
 			ArrayList<Voertuig> voertuigen = new ArrayList<Voertuig>();
@@ -138,7 +140,7 @@ public class VoertuigDataAccess extends DataAccess
 
 			while (resultSet.next())
 			{
-				Voertuig voertuig = buildVoertuigModel();
+				voertuig = buildVoertuigModel();
 				voertuig.setOnderhoud(getOnderhoud(voertuig.getVoertuigID()));
 				voertuigen.add(voertuig);
 			}
@@ -179,11 +181,24 @@ public class VoertuigDataAccess extends DataAccess
 		openConnection();
 
 		Voertuig addedVoertuig = null;
+
+		StringBuilder builder = new StringBuilder("INSERT INTO voertuig (");
+
+		builder.append("categorie,");
+		builder.append("merk,");
+		builder.append("type,");
+		builder.append("kleur,");
+		builder.append("beschrijving,");
+		builder.append("verhuurbaar) ");
+		builder.append("VALUES (?,?,?,?,?,?) ");
+		builder.append("RETURNING *");
+
 		try
 		{
 
-			preparedStatement = connection.prepareStatement("INSERT INTO voertuig (categorie,merk,type,kleur,beschrijving,verhuurbaar) "
-					+ "VALUES (?,?,?,?,?,?) RETURNING *");
+//			preparedStatement = connection.prepareStatement("INSERT INTO voertuig (categorie,merk,type,kleur,beschrijving,verhuurbaar) "
+//					+ "VALUES (?,?,?,?,?,?) RETURNING *");
+			preparedStatement = connection.prepareStatement(builder.toString());
 			this.fillVoertuigStatement(voertuig);
 
 			resultSet = preparedStatement.executeQuery();

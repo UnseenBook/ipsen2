@@ -124,11 +124,20 @@ public class ReserveringDataAccess extends DataAccess
 		builder.append("telefoonnummer,");
 		builder.append("tussenvoegsel,");
 		builder.append("voornaam,");
-		builder.append("woonplaats ");
+		builder.append("woonplaats, ");
+		builder.append("V.id AS voertuig_id, ");
+		builder.append("categorie,");
+		builder.append("merk,");
+		builder.append("type,");
+		builder.append("kleur,");
+		builder.append("beschrijving,");
+		builder.append("verhuurbaar ");
 		builder.append("FROM reservering AS R,");
-		builder.append("klant AS K ");
+		builder.append("klant AS K, ");
+		builder.append("voertuig AS V ");
 		builder.append("WHERE klantenid = K.id ");
-		builder.append("AND R.id = ?");
+		builder.append("AND voertuigenid = V.id ");
+		builder.append("AND R.id = ? ");
 		builder.append("ORDER BY R.id");
 
 
@@ -255,10 +264,19 @@ public class ReserveringDataAccess extends DataAccess
 		builder.append("telefoonnummer,");
 		builder.append("tussenvoegsel,");
 		builder.append("voornaam,");
-		builder.append("woonplaats ");
+		builder.append("woonplaats, ");
+		builder.append("V.id AS voertuig_id, ");
+		builder.append("categorie,");
+		builder.append("merk,");
+		builder.append("type,");
+		builder.append("kleur,");
+		builder.append("beschrijving,");
+		builder.append("verhuurbaar ");
 		builder.append("FROM reservering AS R,");
-		builder.append("klant AS K ");
+		builder.append("klant AS K, ");
+		builder.append("voertuig AS V ");
 		builder.append("WHERE klantenid = K.id ");
+		builder.append("AND voertuigenid = V.id ");
 		builder.append("ORDER BY R.id");
 
 		try

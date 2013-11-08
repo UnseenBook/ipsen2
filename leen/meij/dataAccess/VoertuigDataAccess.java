@@ -13,15 +13,27 @@ public class VoertuigDataAccess extends DataAccess
 
 	public Voertuig buildVoertuigModel(ResultSet resultSet) throws SQLException
 	{
+		this.resultSet = resultSet;
+		return buildVoertuigModel();
+	}
+
+	private Voertuig buildVoertuigModel() throws SQLException
+	{
 		Voertuig voertuig = new Voertuig();
+
+		if (heeftKolom(resultSet, "id"))
+		{
+			voertuig.setVoertuigID(resultSet.getInt("id"));
+		} else
+		{
+			voertuig.setVoertuigID(resultSet.getInt("voertuig_id"));
+		}
 		voertuig.setBeschrijving(resultSet.getString("categorie"));
 		voertuig.setCategorie(resultSet.getString("merk"));
 		voertuig.setKleur(resultSet.getString("type"));
 		voertuig.setMerk(resultSet.getString("kleur"));
 		voertuig.setType(resultSet.getString("beschrijving"));
 		voertuig.isVerhuurbaar(resultSet.getBoolean("verhuurbaar"));
-
-		voertuig.setVoertuigID(resultSet.getInt("id"));
 
 		return voertuig;
 	}
@@ -39,7 +51,7 @@ public class VoertuigDataAccess extends DataAccess
 		return i;
 	}
 
-	private Onderhoud buildOnderhoud(ResultSet resultSet) throws SQLException
+	private Onderhoud buildOnderhoud() throws SQLException
 	{
 		Onderhoud onderhoud = new Onderhoud();
 		onderhoud.setHandeling(resultSet.getString("handeling"));
@@ -80,7 +92,7 @@ public class VoertuigDataAccess extends DataAccess
 
 			if (resultSet.next())
 			{
-				Voertuig voertuig = buildVoertuigModel(resultSet);
+				Voertuig voertuig = buildVoertuigModel();
 				voertuig.setOnderhoud(getOnderhoud(voertuigID));
 
 				return voertuig;
@@ -116,7 +128,6 @@ public class VoertuigDataAccess extends DataAccess
 	{
 		openConnection();
 
-		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		try
 		{
@@ -127,7 +138,7 @@ public class VoertuigDataAccess extends DataAccess
 
 			while (resultSet.next())
 			{
-				Voertuig voertuig = buildVoertuigModel(resultSet);
+				Voertuig voertuig = buildVoertuigModel();
 				voertuig.setOnderhoud(getOnderhoud(voertuig.getVoertuigID()));
 				voertuigen.add(voertuig);
 			}
@@ -179,7 +190,7 @@ public class VoertuigDataAccess extends DataAccess
 
 			if (resultSet.next())
 			{
-				addedVoertuig = buildVoertuigModel(resultSet);
+				addedVoertuig = buildVoertuigModel();
 
 				for (Onderhoud onderhoud : voertuig.getOnderhoud())
 				{
@@ -281,7 +292,7 @@ public class VoertuigDataAccess extends DataAccess
 
 			if (resultSet.next())
 			{
-				voertuig = buildVoertuigModel(resultSet);
+				voertuig = buildVoertuigModel();
 
 			}
 		}
@@ -331,7 +342,7 @@ public class VoertuigDataAccess extends DataAccess
 
 			if (resultSet.next())
 			{
-				onderhoud = buildOnderhoud(resultSet);
+				onderhoud = buildOnderhoud();
 				onderhoud.setVoertuig(new Voertuig());
 				onderhoud.getVoertuig().setVoertuigID(resultSet.getInt("voertuigenid"));
 
@@ -379,7 +390,7 @@ public class VoertuigDataAccess extends DataAccess
 
 			while (resultSet.next())
 			{
-				Onderhoud onderhoud = buildOnderhoud(resultSet);
+				Onderhoud onderhoud = buildOnderhoud();
 				onderhouden.add(onderhoud);
 			}
 		}

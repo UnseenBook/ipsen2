@@ -30,6 +30,7 @@ public class ReserveringDataAccess extends DataAccess
 		{
 			reservering.setReserveringID(resultSet.getInt("reservering_id"));
 		}
+
 		if (heeftKolom(resultSet, "klant_id"))
 		{
 			reservering.setKlant(klantDataAccess.buildModel(resultSet));
@@ -37,8 +38,16 @@ public class ReserveringDataAccess extends DataAccess
 		{
 			reservering.setKlant(null);
 		}
+
+		if (heeftKolom(resultSet, "voertuig_id"))
+		{
+			reservering.setVoertuig(voertuigDataAccess.buildVoertuigModel(resultSet));
+		} else
+		{
+			reservering.setVoertuig(null);
+		}
+
 		reservering.setKlantID(resultSet.getInt("klantenid"));
-		reservering.setVoertuig(voertuigDataAccess.select(resultSet.getInt("voertuigenid")));
 		reservering.setVoertuigID(resultSet.getInt("voertuigenid"));
 		reservering.setReserveerDatum(resultSet.getDate("reserveerdatum"));
 		reservering.setBeginDatum(resultSet.getDate("begindatum"));
@@ -324,9 +333,13 @@ public class ReserveringDataAccess extends DataAccess
 			if (resultSet.next())
 			{
 				tempReservering = buildReserveringModel();
-				if (tempReservering.getKlant() == null)
+				if (tempReservering.getKlant() == null && tempReservering.getVoertuig() == null)
 				{
 					tempReservering.setKlant(reservering.getKlant());
+					tempReservering.setVoertuig(reservering.getVoertuig());
+				} else if (tempReservering.getKlant() == null ^ tempReservering.getVoertuig() == null)
+				{
+					System.out.println("Het gaat anders dan je dacht Daan");
 				}
 				reservering = tempReservering;
 			}
@@ -430,9 +443,13 @@ public class ReserveringDataAccess extends DataAccess
 			if(resultSet.next())
 			{
 				tempReservering = buildReserveringModel();
-				if (tempReservering.getKlant() == null)
+				if (tempReservering.getKlant() == null && tempReservering.getVoertuig() == null)
 				{
 					tempReservering.setKlant(reservering.getKlant());
+					tempReservering.setVoertuig(reservering.getVoertuig());
+				} else if (tempReservering.getKlant() == null ^ tempReservering.getVoertuig() == null)
+				{
+					System.out.println("Het gaat anders dan je dacht Daan");
 				}
 				reservering = tempReservering;
 			}

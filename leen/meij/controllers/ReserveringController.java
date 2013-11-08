@@ -1,10 +1,12 @@
 
 package leen.meij.controllers;
 
+import leen.meij.Factuur;
 import leen.meij.Reservering;
 import leen.meij.dataAccess.ReserveringDataAccess;
 import leen.meij.utilities.Controller;
 import leen.meij.utilities.View;
+import leen.meij.views.FactuurView;
 import leen.meij.views.HuurLijstView;
 import leen.meij.views.InleverLijstView;
 import leen.meij.views.RapportView;
@@ -101,9 +103,10 @@ public class ReserveringController extends Controller
 	 */
 	public View factuurOpmakenTask(Integer reserveringID)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		Reservering reservering = reserveringDataAccess.select(reserveringID);
+		return new FactuurView(reservering);
 	}
+	
 
 	public View huurlijstOverzichtRaadplegenTask()
 	{

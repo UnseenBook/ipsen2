@@ -5,6 +5,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import leen.meij.Factuur;
 import leen.meij.Klant;
 import leen.meij.Reservering;
 import leen.meij.utilities.DataAccess;
@@ -18,6 +19,7 @@ public class ReserveringDataAccess extends DataAccess
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
 	private Reservering reservering = null;
+	private Factuur factuur = null;
 	
 	private Reservering buildReserveringModel(ResultSet resultSet) throws SQLException
 	{
@@ -52,6 +54,21 @@ public class ReserveringDataAccess extends DataAccess
 		preparedStatement.setString(i++, reservering.getStatus());
 
 		return i;
+	}
+	
+	
+	private Factuur buildFactuurModel(ResultSet resultSet) throws SQLException
+	{
+		factuur = new Factuur();
+		
+		factuur.setReserveringID(resultSet.getInt("id"));
+		factuur.setFactuurID(resultSet.getInt("id"));
+		factuur.setFactuurnummer(resultSet.getInt("factuurnummer"));
+		factuur.setDatum(resultSet.getString("datum"));
+		factuur.setReden(resultSet.getString("reden"));
+		
+		return factuur;
+		
 	}
 
 	
@@ -104,6 +121,54 @@ public class ReserveringDataAccess extends DataAccess
 
 		return null;
 	}
+	
+	
+	//temporary Factuur select
+	public Factuur selectFactuur(int reserveringID)
+	{
+		openConnection();
+
+		try
+		{
+
+			preparedStatement = connection.prepareStatement("SELECT * FROM factuur WHERE id = ?");
+
+			preparedStatement.setInt(1, reserveringID);
+			resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+			{
+				factuur = buildFactuurModel(resultSet);
+				
+				return factuur;
+			}
+		}
+		catch (SQLException sqle)
+		{
+			sqle.printStackTrace();
+		}
+		finally
+		{
+			if (resultSet != null) try
+			{
+				resultSet.close();
+			}
+			catch (SQLException negeer)
+			{
+			}
+			if (preparedStatement != null) try
+			{
+				preparedStatement.close();
+			}
+			catch (SQLException negeer)
+			{
+			}
+			closeConnection();
+		}
+
+		return null;
+	}
+	
 
 	public ArrayList<Reservering> selectAll()
 	{

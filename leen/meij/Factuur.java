@@ -20,14 +20,16 @@ public class Factuur extends Entity
 
 	private String reden;
 
+	
+	public Factuur(){}
+	
 	/**
 	 * 
 	 * @param factuurID
 	 */
 	public Factuur(int factuurID)
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		this.factuurID = factuurID;
 	}
 
 	public Reservering getReservering()

@@ -20,6 +20,7 @@ public class Reservering extends Entity
 	private int voertuigID;
 	private Klant klant;
 	private Voertuig voertuig;
+	private Gebruiker gebruiker; //dit is tijdelijk (bij inleverlijst [gereserveerd door: gebruiker x]
 	private Date reserveerDatum;
 	private Date beginDatum;
 	private Date eindDatum;
@@ -82,6 +83,15 @@ public class Reservering extends Entity
 	public void setVoertuig(Voertuig voertuig)
 	{
 		this.voertuig = voertuig;
+	}
+	
+	public Gebruiker getGebruiker()
+	{
+		return gebruiker;
+	}
+	public void setGebruiker(Gebruiker gebruiker)
+	{
+		this.gebruiker = gebruiker;
 	}
 
 	public int getKlantID()

@@ -13,6 +13,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
@@ -37,6 +38,9 @@ public class RapportView extends MasterView<ArrayList<Reservering>> implements A
 	private KlantDataAccess klantDataAccess = new KlantDataAccess();
 	private VoertuigDataAccess voertuigDataAccess = new VoertuigDataAccess();
 	private ReserveringDataAccess reserveringDataAccess = new ReserveringDataAccess();
+	private String gapTop = "gaptop 10, ";
+	private String wrap = "wrap,";
+	private String span2 = "spanx 2,";
 	
 	public RapportView(ArrayList<Reservering> model)
 	{
@@ -45,10 +49,6 @@ public class RapportView extends MasterView<ArrayList<Reservering>> implements A
 		this.klantLijst = klantDataAccess.selectAll();
 		this.voertuigLijst = voertuigDataAccess.selectAll();
 		this.reserveringLijst = reserveringDataAccess.selectAll();
-		String gapTop = "gaptop 10, ";
-		String wrap = "wrap,";
-		String span2 = "spanx 2,";
-
 		//+----------+
 		//| Optional |
 		//+----------+
@@ -70,10 +70,9 @@ public class RapportView extends MasterView<ArrayList<Reservering>> implements A
 			{
 				cbSelectie.addItem(select[i]);
 			}
-	
-		//Default tabel aangeven
-		tblManagement = createVoertuigManagementTable();
-		
+				
+			tblManagement = createVoertuigManagementTable();
+			
 		//Tabel veranderen door selectie
 		pnlContent.add(new JLabel("Overzicht selecteren"), wrap + span2);
 		cbSelectie.addActionListener(this);
@@ -97,21 +96,70 @@ public class RapportView extends MasterView<ArrayList<Reservering>> implements A
 		
 
 	}
+	
+	public void setTable(JTable table)
+	{
+		this.tblManagement = table;
+		pnlContent.revalidate();
+		pnlContent.repaint();
+	}
+	public JTable getTable()
+	{
+		return tblManagement;
+	}
 
 	public void actionPerformed(ActionEvent e)
 	{
 		super.actionPerformed(e);
 		if(cbSelectie.getSelectedItem().toString() == "Voertuigen")
 		{
+			this.setTitle("Management - Voertuigen overzicht");
+			pnlContent.remove(tblManagement);
+			pnlContent.remove(tblManagement.getTableHeader());
+			pnlContent.remove(createGebruikerManagementTable());
+			pnlContent.remove(createVoertuigManagementTable());
+			pnlContent.remove(createReserveringManagementTable());
+			tblManagement.removeAll();
+			tblManagement.setTableHeader(null);
+			tblManagement.setTableHeader(createVoertuigManagementTable().getTableHeader());
 			tblManagement = createVoertuigManagementTable();
+			pnlContent.add(tblManagement.getTableHeader(),wrap + gapTop + span2);
+			pnlContent.add(tblManagement);
+			pnlContent.revalidate();
+			pnlContent.repaint();
 		}
 		else if(cbSelectie.getSelectedItem().toString() == "Reserveringen")
 		{
-			tblManagement = createReseveringManagementTable();
+			this.setTitle("Management - Reserveringen overzicht");
+			pnlContent.remove(tblManagement);
+			pnlContent.remove(tblManagement.getTableHeader());
+			pnlContent.remove(createGebruikerManagementTable());
+			pnlContent.remove(createVoertuigManagementTable());
+			pnlContent.remove(createReserveringManagementTable());
+			tblManagement.removeAll();
+			tblManagement.setTableHeader(null);
+			tblManagement.setTableHeader(createReserveringManagementTable().getTableHeader());
+			pnlContent.add(tblManagement.getTableHeader(),wrap + gapTop + span2);
+			pnlContent.add(tblManagement);
+			pnlContent.revalidate();
+			pnlContent.repaint();
+	
 		}
 		else if(cbSelectie.getSelectedItem().toString() == "Gebruikers")
 		{
-			tblManagement = createGebruikerManagementTable();
+			this.setTitle("Management - Gebruikers overzicht");
+			pnlContent.remove(tblManagement);
+			pnlContent.remove(tblManagement.getTableHeader());
+			pnlContent.remove(createGebruikerManagementTable());
+			pnlContent.remove(createVoertuigManagementTable());
+			pnlContent.remove(createReserveringManagementTable());
+			tblManagement.setTableHeader(null);
+			tblManagement.setTableHeader(createGebruikerManagementTable().getTableHeader());
+			tblManagement.revalidate();
+			pnlContent.add(tblManagement.getTableHeader(),wrap + gapTop + span2);
+			pnlContent.add(tblManagement);
+			pnlContent.revalidate();
+			pnlContent.repaint();
 		}
 	}
 	
@@ -185,8 +233,7 @@ public class RapportView extends MasterView<ArrayList<Reservering>> implements A
 				voertuig.getVerhuurbaar()
 			});
 		}
-				
-		TableColumnModel tcm = new DefaultTableColumnModel();
+		TableColumnModel tcm = new DefaultTableColumnModel();			
 		tcm.addColumn(new TableColumn(0, 50));
 		tcm.addColumn(new TableColumn(1, 150));
 		tcm.addColumn(new TableColumn(2, 150));
@@ -209,14 +256,14 @@ public class RapportView extends MasterView<ArrayList<Reservering>> implements A
 		return table;
 	}
 	
-	public JTable createReseveringManagementTable()
+	public JTable createReserveringManagementTable()
 	{
 		DefaultTableModel dm = new DefaultTableModel();
-		dm.addColumn("id");
-		dm.addColumn("categorie");
-		dm.addColumn("type");
-		dm.addColumn("merk");
-		dm.addColumn("verhuurbaar");
+		dm.addColumn("z");
+		dm.addColumn("ce");
+		dm.addColumn("t");
+		dm.addColumn("m");
+		dm.addColumn("v");
 		
 		for(Voertuig voertuig : voertuigLijst )
 		{
@@ -235,11 +282,11 @@ public class RapportView extends MasterView<ArrayList<Reservering>> implements A
 		tcm.addColumn(new TableColumn(2, 150));
 		tcm.addColumn(new TableColumn(3, 150));
 		tcm.addColumn(new TableColumn(4, 150));
-		tcm.getColumn(0).setHeaderValue("Voertuig#");
-		tcm.getColumn(1).setHeaderValue("Categorie");
-		tcm.getColumn(2).setHeaderValue("Type");
-		tcm.getColumn(3).setHeaderValue("Merk");
-		tcm.getColumn(4).setHeaderValue("Verhuurbaar");
+		tcm.getColumn(0).setHeaderValue("Voasdg#");
+		tcm.getColumn(1).setHeaderValue("LALA");
+		tcm.getColumn(2).setHeaderValue("Tfe");
+		tcm.getColumn(3).setHeaderValue("Mak");
+		tcm.getColumn(4).setHeaderValue("Vefsrbaar");
 		
 		JTable table = new JTable(dm,tcm)
 		{

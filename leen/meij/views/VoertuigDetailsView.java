@@ -289,17 +289,12 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
 		btnWijzigen.setEnabled(inRange);
 	}
 
-	private int toInt(String string, int defaultValue)
-	{
-		try
-		{
-			return Integer.parseInt(string);
-		}
-		catch (NumberFormatException ex)
-		{
-			return defaultValue;
-		}
-	}
+
+	/**
+	 * Parses a string to an int, when it fails it returns the default int value.
+	 * @param string The string to parse.
+	 * @return The parsed int value.
+	 */
 	private int toInt(String string)
 	{
 		try
@@ -311,17 +306,12 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
 			return 0;
 		}
 	}
-	private double toDouble(String string, double defaultValue)
-	{
-		try
-		{
-			return Double.parseDouble(string);
-		}
-		catch (NumberFormatException ex)
-		{
-			return defaultValue;
-		}
-	}
+	
+	/**
+	 * Parses a string to a double, when it fails it returns the default double value.
+	 * @param string The string to parse.
+	 * @return The parsed double value.
+	 */
 	private double toDouble(String string)
 	{
 		try

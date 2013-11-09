@@ -47,6 +47,16 @@ public class VoertuigDataAccess extends DataAccess
 		preparedStatement.setString(i++, voertuig.getMerk());
 		preparedStatement.setString(i++, voertuig.getType());
 		preparedStatement.setBoolean(i++, voertuig.getVerhuurbaar());
+		preparedStatement.setString(i++, voertuig.getKentaken());
+		preparedStatement.setInt(i++, voertuig.getBouwJaar());
+		preparedStatement.setInt(i++, voertuig.getKilometerStand());
+		preparedStatement.setString(i++, voertuig.getBrandstof());
+		preparedStatement.setBoolean(i++, voertuig.getAirco());
+		preparedStatement.setDouble(i++, voertuig.getStation());
+		preparedStatement.setDouble(i++, voertuig.getDagPrijs());
+		preparedStatement.setDouble(i++, voertuig.getBrandstofPrijs());
+		preparedStatement.setDouble(i++, voertuig.getKilometerPrijs());
+		preparedStatement.setDouble(i++, voertuig.getBorgPrijs());
 
 		return i;
 	}
@@ -188,8 +198,18 @@ public class VoertuigDataAccess extends DataAccess
 		builder.append("type,");
 		builder.append("kleur,");
 		builder.append("beschrijving,");
-		builder.append("verhuurbaar) ");
-		builder.append("VALUES (?,?,?,?,?,?) ");
+		builder.append("verhuurbaar, ");
+		builder.append("kentaken, ");
+		builder.append("bouwJaar, ");
+		builder.append("kilometerStand, ");
+		builder.append("brandstof, ");
+		builder.append("airco, ");
+		builder.append("station, ");
+		builder.append("dagPrijs, ");
+		builder.append("brandstofPrijs, ");
+		builder.append("kilometerPrijs, ");
+		builder.append("borgPrijs) ");
+		builder.append("VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
 		builder.append("RETURNING *");
 
 		try
@@ -247,6 +267,7 @@ public class VoertuigDataAccess extends DataAccess
 		openConnection();
 
 		Voertuig addedVoertuig = null;
+
 		try
 		{
 
@@ -292,11 +313,32 @@ public class VoertuigDataAccess extends DataAccess
 		openConnection();
 
 		Voertuig edited = null;
+
+		StringBuilder builer = new StringBuilder("UPDATE voertuig SET ");
+
+		builder.append("(categorie=?, ");
+		builder.append("merk=?, ");
+		builder.append("type=?, ");
+		builder.append("kleur=?, ");
+		builder.append("beschrijving=?, ");
+		builder.append("verhuurbaar=?,  ");
+		builder.append("kentaken=?, ");
+		builder.append("bouwJaar=?, ");
+		builder.append("kilometerStand=?, ");
+		builder.append("brandstof=?, ");
+		builder.append("airco=?, ");
+		builder.append("station=?, ");
+		builder.append("dagPrijs=?, ");
+		builder.append("brandstofPrijs=?, ");
+		builder.append("kilometerPrijs=?, ");
+		builder.append("borgPrijs=?) ");
+		builder.append("WHERE id=?  ");
+		builder.append("RETURNING * ");
+
 		try
 		{
 
-			preparedStatement = connection.prepareStatement("UPDATE voertuig SET categorie=?,merk=?,type=?,kleur=?,beschrijving=?,verhuurbaar=? "
-					+ "WHERE id=? RETURNING *");
+			preparedStatement = connection.prepareStatement(builder.toString());
 			int index = this.fillVoertuigStatement(voertuig);
 			preparedStatement.setInt(index++, voertuig.getVoertuigID());
 			resultSet = preparedStatement.executeQuery();
@@ -342,6 +384,17 @@ public class VoertuigDataAccess extends DataAccess
 		openConnection();
 
 		ResultSet onderhoudResultSet = null;
+
+		StringBuilder builder = new StringBuilder("INSERT INTO onderhoud (");
+
+		builder.append("beschrijving,");
+		builder.append("handeling,");
+		builder.append("locatie,");
+		builder.append("voldaan,");
+		builder.append("klantenid,");
+		builder.append("voertuigenid) ");
+		builder.append("VALUES (?,?,?,?,?,?) ");
+		builder.append("RETURNING *");
 
 		try
 		{

@@ -34,6 +34,8 @@ public class Voertuig extends Entity
 
 	private boolean airco;
 
+	private double station;
+
 	private double dagPrijs;
 
 	private double brandstofPrijs;
@@ -41,8 +43,6 @@ public class Voertuig extends Entity
 	private double kilometerPrijs;
 
 	private double borgPrijs;
-
-	private double 
 	
 	public String toString()
 	{
@@ -70,6 +70,88 @@ public class Voertuig extends Entity
 	public void setOnderhoud(ArrayList<Onderhoud> onderhoud)
 	{
 		this.onderhoud = onderhoud;
+	}
+
+	public void setKentaken (String kentaken)
+	{
+		this.kentaken = kentaken;
+	}
+	public void setBouwJaar (int bouwJaar)
+	{
+		this.bouwJaar = bouwJaar;
+	}
+	public void setKilometerStand (int kilometerStand)
+	{
+		this.kilometerStand = kilometerStand;
+	}
+	public void setBrandstof (String brandstof)
+	{
+		this.brandstof = brandstof;
+	}
+	public void setAirco (boolean airco)
+	{
+		this.airco = airco;
+	}
+	public void setStation (boolean station)
+	{
+		this.station = station;
+	}
+	public void setDagPrijs (double dagPrijs)
+	{
+		this.dagPrijs = dagPrijs;
+	}
+	public void setBrandstofPrijs (double brandstofPrijs)
+	{
+		this.brandstofPrijs = brandstofPrijs;
+	}
+	public void setKilometerPrijs (double kilometerPrijs)
+	{
+		this.kilometerPrijs = kilometerPrijs;
+	}
+	public void setBorgPrijs (double borgPrijs)
+	{
+		this.borgPrijs = borgPrijs;
+	}
+
+	public String getKentaken()
+	{
+		return this.kentaken;
+	}
+	public int getBouwJaar()
+	{
+		return this.bouwJaar;
+	}
+	public int getKilometerStand()
+	{
+		return this.kilometerStand;
+	}
+	public String getBrandstof()
+	{
+		return this.brandstof;
+	}
+	public boolean getAirco()
+	{
+		return this.airco;
+	}
+	public boolean getStation()
+	{
+		return this.station;
+	}
+	public double getDagPrijs()
+	{
+		return this.dagPrijs;
+	}
+	public double getBrandstofPrijs()
+	{
+		return this.brandstofPrijs;
+	}
+	public double getKilometerPrijs()
+	{
+		return this.kilometerPrijs;
+	}
+	public double getBorgPrijs()
+	{
+		return this.borgPrijs;
 	}
 
 	public int getVoertuigID()

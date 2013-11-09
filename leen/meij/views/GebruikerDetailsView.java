@@ -102,7 +102,7 @@ public class GebruikerDetailsView extends MasterView<Gebruiker> implements Actio
 	private void loadModelData()
 	{
 		txtAchternaam.setText(model.getAchternaam());
-		txtAfdeling.setText(model.getAfdeling());
+		txtAfdeling.setText(model.getAfdeling().getAfdelingNaam());
 		txtGebruikersnaam.setText(model.getGebruikersnaam());
 		txtPersoneelnummer.setText(String.valueOf(model.getPersoneelnummer()));
 		txtTussenvoegsel.setText(model.getTussenvoegsel());
@@ -113,7 +113,7 @@ public class GebruikerDetailsView extends MasterView<Gebruiker> implements Actio
 	protected Gebruiker getEditedModel()
 	{
 		model.setAchternaam(txtAchternaam.getText());
-		model.setAfdeling(txtAfdeling.getText());
+		model.getAfdeling().setAfdelingNaam(txtAfdeling.getText());
 		model.setGebruikersnaam(txtGebruikersnaam.getText());
 		model.setPersoneelnummer(Integer.parseInt(txtPersoneelnummer.getText()));
 		model.setTussenvoegsel(txtTussenvoegsel.getText());

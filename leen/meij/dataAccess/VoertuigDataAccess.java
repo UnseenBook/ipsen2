@@ -316,22 +316,22 @@ public class VoertuigDataAccess extends DataAccess
 
 		StringBuilder builder = new StringBuilder("UPDATE voertuig SET ");
 
-		builder.append("(categorie=?, ");
+		builder.append("categorie=?, ");
 		builder.append("merk=?, ");
 		builder.append("type=?, ");
 		builder.append("kleur=?, ");
 		builder.append("beschrijving=?, ");
 		builder.append("verhuurbaar=?,  ");
 		builder.append("kenteken=?, ");
-		builder.append("bouwJaar=?, ");
-		builder.append("kilometerStand=?, ");
+		builder.append("bouwjaar=?, ");
+		builder.append("kilometerstand=?, ");
 		builder.append("brandstof=?, ");
 		builder.append("airco=?, ");
 		builder.append("station=?, ");
-		builder.append("dagPrijs=?, ");
-		builder.append("brandstofPrijs=?, ");
-		builder.append("kilometerPrijs=?, ");
-		builder.append("borgPrijs=?) ");
+		builder.append("dagprijs=?, ");
+		builder.append("brandstofprijs=?, ");
+		builder.append("kilometerprijs=?, ");
+		builder.append("borgprijs=? ");
 		builder.append("WHERE id=?  ");
 		builder.append("RETURNING * ");
 

@@ -23,11 +23,30 @@ public class Voertuig extends Entity
 	private String beschrijving;
 
 	private boolean verhuurbaar;
+
+	private String kentaken;
+
+	private int bouwJaar;
+
+	private int kilometerStand;
+
+	private String brandstof;
+
+	private boolean airco;
+
+	private double dagPrijs;
+
+	private double brandstofPrijs;
+
+	private double kilometerPrijs;
+
+	private double borgPrijs;
+
+	private double 
 	
 	public String toString()
 	{
-		String temp = merk + " " + type;
-		return temp;
+		return merk + " " + type;
 	}
 	
 	public Voertuig(){}

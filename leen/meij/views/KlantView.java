@@ -47,6 +47,8 @@ public class KlantView extends MasterView<ArrayList<Klant>> implements ListSelec
 		btnWijzigen.addActionListener(this);
 		btnVerwijderen.addActionListener(this);
 		btnToevoegen.addActionListener(this);
+		
+		this.pnlBotMenu.setVisible(Rechten.heeftRecht(Rechten.Klanten));
 	}
 
 	protected ArrayList<Klant> getEditedModel()

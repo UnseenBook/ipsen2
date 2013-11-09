@@ -18,6 +18,7 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import leen.meij.Klant;
+import leen.meij.Rechten;
 import leen.meij.Reservering;
 
 public class ReserveringView extends MasterView<ArrayList<Reservering>> implements ListSelectionListener,ActionListener
@@ -66,7 +67,12 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 		this.pnlContent.add(this.tblReserveringen);
 		
 		
+		btnVerwijderen.setVisible(Rechten.heeftRecht(Rechten.Reserveringen));
+		btnAanpassen.setVisible(Rechten.heeftRecht(Rechten.Reserveringen));
+		btnToevoegen.setVisible(Rechten.heeftRecht(Rechten.Reserveringen));
 		
+		btnHuurlijst.setVisible(Rechten.heeftRecht(Rechten.Huurlijst));
+		btnInleverlijst.setVisible(Rechten.heeftRecht(Rechten.Inleverlijst));
 	}
 
 	protected ArrayList<Reservering> getEditedModel()

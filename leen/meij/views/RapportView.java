@@ -294,7 +294,7 @@ public class RapportView extends MasterView<ArrayList<Reservering>> implements A
 					gebruiker.getGebruikerID(),
 					gebruiker.getPersoneelnummer(),
 					gebruiker.getGebruikersnaam(),
-					gebruiker.getWachtworod(),
+					gebruiker.getWachtwoord(),
 					
 			});
 		}

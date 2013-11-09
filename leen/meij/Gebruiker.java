@@ -12,15 +12,27 @@ public class Gebruiker extends Entity
 
 	private String gebruikersnaam;
 
-	private String wachtworod;
+	private String wachtwoord;
 
-	private String afdeling;
+	private int afdelingID;
+
+	private Afdeling afdeling;
 
 	private String voornaam;
 
 	private String tussenvoegsel;
 
 	private String achternaam;
+
+	public int getAfdelingID()
+	{
+		return this.afdelingID;
+	}
+
+	public void setAfdelingID(int afdelingID)
+	{
+		this.afdelingID = afdelingID;
+	}
 
 	public int getGebruikerID()
 	{
@@ -64,9 +76,9 @@ public class Gebruiker extends Entity
 		this.gebruikersnaam = gebruikersnaam;
 	}
 
-	public String getWachtworod()
+	public String getWachtwoord()
 	{
-		return this.wachtworod;
+		return this.wachtwoord;
 	}
 
 	/**
@@ -75,10 +87,10 @@ public class Gebruiker extends Entity
 	 */
 	public void setWachtworod(String wachtworod)
 	{
-		this.wachtworod = wachtworod;
+		this.wachtwoord = wachtworod;
 	}
 
-	public String getAfdeling()
+	public Afdeling getAfdeling()
 	{
 		return this.afdeling;
 	}
@@ -87,7 +99,7 @@ public class Gebruiker extends Entity
 	 * 
 	 * @param afdeling
 	 */
-	public void setAfdeling(String afdeling)
+	public void setAfdeling(Afdeling afdeling)
 	{
 		this.afdeling = afdeling;
 	}

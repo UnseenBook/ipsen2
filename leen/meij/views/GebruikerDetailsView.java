@@ -2,6 +2,9 @@ package leen.meij.views;
 
 import java.awt.event.*;
 import javax.swing.*;
+
+import net.miginfocom.swing.MigLayout;
+
 import leen.meij.*;
 
 public class GebruikerDetailsView extends MasterView<Gebruiker> implements ActionListener
@@ -9,16 +12,20 @@ public class GebruikerDetailsView extends MasterView<Gebruiker> implements Actio
 
 	private JTextField txtPersoneelnummer = new JTextField(15);
 	private JTextField txtGebruikersnaam = new JTextField(15);
-	private JTextField txtAfdeling = new JTextField(15);
+	private JComboBox<Afdeling> cbAfdeling = new JComboBox<Afdeling>(Afdeling.Afdelingen);
 	private JTextField txtVoornaam = new JTextField(15);
 	private JTextField txtTussenvoegsel = new JTextField(15);
 	private JTextField txtAchternaam = new JTextField(15);
 
 	private JTextField txtWachtwoord = new JTextField(15);
 
+	
+	
 	private JButton btnSave = new JButton("Opslaan");
 	private JButton btnCancel = new JButton("Annuleren");
 
+	private JButton btnChangePassword = new JButton("Wachtwoord veranderen");
+	
 	public GebruikerDetailsView(Gebruiker model)
 	{
 		super(model);
@@ -51,7 +58,7 @@ public class GebruikerDetailsView extends MasterView<Gebruiker> implements Actio
 		pnlContent.add(txtTussenvoegsel, gap + span2);
 
 		pnlContent.add(new JLabel("Afdeling"));
-		pnlContent.add(txtAfdeling, wrap + span2);
+		pnlContent.add(cbAfdeling, wrap + span2);
 
 		// row 3
 		pnlContent.add(new JLabel("Achternaam"));
@@ -61,16 +68,21 @@ public class GebruikerDetailsView extends MasterView<Gebruiker> implements Actio
 		pnlContent.add(txtGebruikersnaam, wrap + span2);
 
 		// row 4
+		if (model.getGebruikerID() == 0)
+		{		
+			pnlContent.add(new JLabel("Wachtwoord"));
+			pnlContent.add(txtWachtwoord, gap + span2);
+		}
 		
-		pnlContent.add(new JLabel("Wachtwoord"));
-		pnlContent.add(txtWachtwoord, gap + span2);
-	
+		pnlBotMenu.add(btnChangePassword);
 		pnlBotMenu.add(btnSave);
 		pnlBotMenu.add(btnCancel);
-
+		
+		
 		btnSave.addActionListener(this);
 		btnCancel.addActionListener(this);
-
+		btnChangePassword.addActionListener(this);
+		
 		setErrorMessages(model.getErrors());
 		loadModelData();
 	}
@@ -96,29 +108,48 @@ public class GebruikerDetailsView extends MasterView<Gebruiker> implements Actio
 		{
 			runTask("Gebruiker", "gebruikersOverzichtRaadplegen");
 		}
+		else if(e.getSource() == btnChangePassword)
+		{
+			JPanel view = new JPanel();
+			view.setLayout(new MigLayout());
+			JTextField wachtwoord = new JTextField(15);
+			view.add(new JLabel("Nieuw wachtwoord"));
+			view.add(wachtwoord);
+			
+			int value = JOptionPane.showConfirmDialog(this, view, "Wachtwoord veranderen", JOptionPane.OK_CANCEL_OPTION);
+
+			if (value == JOptionPane.OK_OPTION)
+			{
+				runTask("Gebruiker","wachtwoordVeranderen",new Object[]{model.getGebruikerID(),wachtwoord.getText()});
+			}
+		}
 	}
 
 	private void loadModelData()
 	{
 		txtAchternaam.setText(model.getAchternaam());
-		txtAfdeling.setText(model.getAfdeling());
+		
+		cbAfdeling.setSelectedItem(model.getAfdeling());
+		
 		txtGebruikersnaam.setText(model.getGebruikersnaam());
 		txtPersoneelnummer.setText(String.valueOf(model.getPersoneelnummer()));
 		txtTussenvoegsel.setText(model.getTussenvoegsel());
 		txtVoornaam.setText(model.getVoornaam());
-		txtWachtwoord.setText(model.getWachtworod());
+		txtWachtwoord.setText(model.getWachtwoord());
 	}
 
 	protected Gebruiker getEditedModel()
 	{
 		model.setAchternaam(txtAchternaam.getText());
-		model.setAfdeling(txtAfdeling.getText());
+		
 		model.setGebruikersnaam(txtGebruikersnaam.getText());
 		model.setPersoneelnummer(Integer.parseInt(txtPersoneelnummer.getText()));
 		model.setTussenvoegsel(txtTussenvoegsel.getText());
 		model.setVoornaam(txtVoornaam.getText());
 		model.setWachtworod(txtWachtwoord.getText());
 
+		model.setAfdeling(cbAfdeling.getItemAt(cbAfdeling.getSelectedIndex()));
+		
 		return model;
 	}
 

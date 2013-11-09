@@ -7,6 +7,8 @@ import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.*;
+
+import leen.meij.Rechten;
 import leen.meij.Voertuig;
 
 public class VoertuigView extends MasterView<ArrayList<Voertuig>> implements ListSelectionListener, ActionListener {
@@ -40,6 +42,8 @@ public class VoertuigView extends MasterView<ArrayList<Voertuig>> implements Lis
         btnWijzigen.addActionListener(this);
         btnVerwijderen.addActionListener(this);
         btnToevoegen.addActionListener(this);
+        
+        this.pnlBotMenu.setVisible(Rechten.heeftRecht(Rechten.Voertuigen));
     }
 
     protected ArrayList<Voertuig> getEditedModel() {

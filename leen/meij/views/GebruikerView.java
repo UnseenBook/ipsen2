@@ -41,6 +41,8 @@ public class GebruikerView extends MasterView<ArrayList<Gebruiker>> implements L
 		btnWijzigen.addActionListener(this);
 		btnVerwijderen.addActionListener(this);
 		btnToevoegen.addActionListener(this);
+		
+		this.pnlBotMenu.setVisible(Rechten.heeftRecht(Rechten.Gebruikers));
 	}
 
 	protected ArrayList<Gebruiker> getEditedModel()

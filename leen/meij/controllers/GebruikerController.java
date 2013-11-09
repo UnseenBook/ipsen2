@@ -26,7 +26,7 @@ public class GebruikerController extends Controller
 		
 		Gebruiker gebruiker = gebruikerDataAccess.select(gebruikersnaam, wachtwoord);
 		
-		if (gebruiker != null) 
+		if (gebruiker != null || true) // TODO: remove '|| true' 
 		{ 
 			Site.getInstance().setGebruiker(gebruiker);
 			
@@ -104,6 +104,13 @@ public class GebruikerController extends Controller
 		gebruikerDataAccess.delete(gebruikerID);
 
 		return gebruikersOverzichtRaadplegenTask();
+	}
+
+	public View wachtwoordVeranderenTask(Integer gebruikerID, String wachtwoord)
+	{
+		Gebruiker gebruiker = gebruikerDataAccess.editWachtwoord(gebruikerID,wachtwoord);
+
+		return new GebruikerDetailsView(gebruiker);
 	}
 
 }

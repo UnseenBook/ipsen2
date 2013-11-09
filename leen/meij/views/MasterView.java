@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import javax.swing.*;
 import net.miginfocom.swing.MigLayout;
+import leen.meij.Rechten;
 import leen.meij.utilities.*;
 
 public abstract class MasterView<T> extends View<T> implements ActionListener
@@ -73,7 +74,15 @@ public abstract class MasterView<T> extends View<T> implements ActionListener
 		btnManagement.addActionListener(this);
 		btnGebruikers.addActionListener(this);
 		btnReserveringen.addActionListener(this);
-		btnVoertuigen.addActionListener(this);
+		btnVoertuigen.addActionListener(this);		
+		
+		// set rechten
+		btnAfsluiten.setVisible(true);
+		btnKlanten.setVisible(Rechten.heeftRecht(Rechten.KlantenRaadplegen));
+		btnManagement.setVisible(Rechten.heeftRecht(Rechten.Management));
+		btnGebruikers.setVisible(Rechten.heeftRecht(Rechten.GebruikersRaadplegen));
+		btnReserveringen.setVisible(Rechten.heeftRecht(Rechten.ReserveringenRaadplegen) || Rechten.heeftRecht(Rechten.Huurlijst) || Rechten.heeftRecht(Rechten.Inleverlijst));
+		btnVoertuigen.setVisible(Rechten.heeftRecht(Rechten.VoertuigenRaadplegen));
 	}
 
 	public void setErrorMessages(ArrayList<String> errorMessages){

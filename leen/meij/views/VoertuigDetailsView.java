@@ -4,14 +4,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.*;
 import leen.meij.Onderhoud;
 
 import leen.meij.Voertuig;
 import leen.meij.utilities.View;
 
-public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionListener {
+public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionListener, ListSelectionListener {
 
+	private Onderhoud selectedOnderhoud;
+	
     private JTextField txtType = new JTextField(15);
     private JTextField txtCategorie = new JTextField(15);
     private JTextField txtMerk = new JTextField(15);
@@ -20,6 +24,7 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
     private JCheckBox cbVerhuurbaar= new JCheckBox();
     private JTable tblOnderhoud = new JTable();
     
+    private JButton btnWijzigen = new JButton("Wijzigen");
     private JButton btnOnderhoudToevoegen = new JButton("Onderhoud Toevoegen");
     private JButton btnSave = new JButton("Opslaan");
     private JButton btnCancel = new JButton("Annuleren");
@@ -63,15 +68,18 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
 
         this.pnlContent.add(this.tblOnderhoud.getTableHeader(), span2 + wrap);
         this.pnlContent.add(this.tblOnderhoud, span2 + wrap);
+        
         if (model.getVoertuigID() != 0){
-        pnlBotMenu.add(btnOnderhoudToevoegen);
+        	pnlBotMenu.add(btnWijzigen);
+        	pnlBotMenu.add(btnOnderhoudToevoegen);
         }
         pnlBotMenu.add(btnSave);
         pnlBotMenu.add(btnCancel);
-
+        
         btnSave.addActionListener(this);
         btnCancel.addActionListener(this);
         btnOnderhoudToevoegen.addActionListener(this);
+        btnWijzigen.addActionListener(this);
         
         setErrorMessages(model.getErrors());
         loadModelData();
@@ -137,6 +145,18 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
 				runTask("Voertuig","onderhoudToevoegen", new Object[]{onderhoud});
 			}
 			
+		} else if(e.getSource() == btnWijzigen && selectedOnderhoud != null)
+		{
+			OnderhoudDetailsView view = new OnderhoudDetailsView(selectedOnderhoud);
+			
+			int value = JOptionPane.showConfirmDialog(this,view,"Onderhoud wijzigen",JOptionPane.OK_CANCEL_OPTION);
+			
+			if(value == JOptionPane.OK_OPTION)
+			{
+				Onderhoud onderhoud = view.getEditedModel();
+				onderhoud.setVoertuig(model);
+				runTask("Voertuig","onderhoudWijzigen", new Object[]{onderhoud});
+			}
 		}
     }
     
@@ -175,7 +195,7 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
             }
         ;
         };
-        
+        table.getSelectionModel().addListSelectionListener(this);
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION); // let only
         // one
         // row
@@ -184,4 +204,18 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
         
         return table;
     }
+
+	@Override
+	public void valueChanged(ListSelectionEvent e)
+	{
+		int index = tblOnderhoud.getSelectedRow();
+		boolean inRange = index >= 0 && index < this.model.getOnderhoud().size();
+
+		if (inRange)
+		{
+			this.selectedOnderhoud = this.model.getOnderhoud().get(index);
+
+		}
+		btnWijzigen.setEnabled(inRange);
+	}
 }

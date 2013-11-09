@@ -5,130 +5,130 @@ import leen.meij.utilities.*;
 public class Onderhoud extends Entity
 {
 
-        private int onderhoudID;
+	private int onderhoudID;
 
-        private Klant klant;
+	private Klant klant;
 
-        private Voertuig voertuig;
+	private Voertuig voertuig;
 
-        private String locatie;
+	private String locatie;
 
-        private String handeling;
+	private String handeling;
 
-        private boolean voldaan;
+	private boolean voldaan;
 
-        private String beschrijving;
-        
-        public Klant getKlant()
-        {
-                return this.klant;
-        }
+	private String beschrijving;
 
-        /**
-         * 
-         * @param klant
-         */
-        public void setKlant(Klant klant)
-        {
-                this.klant = klant;
-        }
+	public Klant getKlant()
+	{
+		return this.klant;
+	}
 
-        public Voertuig getVoertuig()
-        {
-                return this.voertuig;
-        }
+	/**
+	 * 
+	 * @param klant
+	 */
+	public void setKlant(Klant klant)
+	{
+		this.klant = klant;
+	}
 
-        /**
-         * 
-         * @param voertuig
-         */
-        public void setVoertuig(Voertuig voertuig)
-        {
-                this.voertuig = voertuig;
-        }
+	public Voertuig getVoertuig()
+	{
+		return this.voertuig;
+	}
 
-        public int getOnderhoudID()
-        {
-                return this.onderhoudID;
-        }
+	/**
+	 * 
+	 * @param voertuig
+	 */
+	public void setVoertuig(Voertuig voertuig)
+	{
+		this.voertuig = voertuig;
+	}
 
-        /**
-         * 
-         * @param onderhoudID
-         */
-        public void setOnderhoudID(int onderhoudID)
-        {
-                this.onderhoudID = onderhoudID;
-        }
+	public int getOnderhoudID()
+	{
+		return this.onderhoudID;
+	}
 
-        public String getLocatie()
-        {
-                return this.locatie;
-        }
+	/**
+	 * 
+	 * @param onderhoudID
+	 */
+	public void setOnderhoudID(int onderhoudID)
+	{
+		this.onderhoudID = onderhoudID;
+	}
 
-        /**
-         * 
-         * @param locatie
-         */
-        public void setLocatie(String locatie)
-        {
-                this.locatie = locatie;
-        }
+	public String getLocatie()
+	{
+		return this.locatie;
+	}
 
-        public String getHandeling()
-        {
-                return this.handeling;
-        }
+	/**
+	 * 
+	 * @param locatie
+	 */
+	public void setLocatie(String locatie)
+	{
+		this.locatie = locatie;
+	}
 
-        /**
-         * 
-         * @param handeling
-         */
-        public void setHandeling(String handeling)
-        {
-                this.handeling = handeling;
-        }
+	public String getHandeling()
+	{
+		return this.handeling;
+	}
 
-        public boolean isVoldaan()
-        {
-                return this.voldaan;
-        }
+	/**
+	 * 
+	 * @param handeling
+	 */
+	public void setHandeling(String handeling)
+	{
+		this.handeling = handeling;
+	}
 
-        /**
-         * 
-         * @param voldaan
-         */
-        public void setVoldaan(boolean voldaan)
-        {
-                this.voldaan = voldaan;
-        }
+	public boolean isVoldaan()
+	{
+		return this.voldaan;
+	}
 
-        public void validateFields()
-        {
-                isValid = true;
-        }
+	/**
+	 * 
+	 * @param voldaan
+	 */
+	public void setVoldaan(boolean voldaan)
+	{
+		this.voldaan = voldaan;
+	}
 
-        public Integer getKlantID()
-        {
-                if(this.klant == null)
-                        return null;
-                return this.klant.getKlantID();
-        }
+	public void validateFields()
+	{
+		isValid = true;
+	}
 
-		/**
-		 * @return the beschrijving
-		 */
-		public String getBeschrijving()
-		{
-			return beschrijving;
-		}
+	public Integer getKlantID()
+	{
+		if (this.klant == null) return null;
+		return this.klant.getKlantID();
+	}
 
-		/**
-		 * @param beschrijving the beschrijving to set
-		 */
-		public void setBeschrijving(String beschrijving)
-		{
-			this.beschrijving = beschrijving;
-		}
+	/**
+	 * @return the beschrijving
+	 */
+	public String getBeschrijving()
+	{
+		return beschrijving;
+	}
+
+	/**
+	 * @param beschrijving
+	 *            the beschrijving to set
+	 */
+	public void setBeschrijving(String beschrijving)
+	{
+		this.beschrijving = beschrijving;
+	}
 
 }

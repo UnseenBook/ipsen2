@@ -14,6 +14,12 @@ public class KlantDataAccess extends DataAccess
 
 	public Klant buildModel(ResultSet resultSet) throws SQLException
 	{
+		this.resultSet = resultSet;
+		return buildModel();
+	}
+
+	private Klant buildModel() throws SQLException
+	{
 		Klant klant = new Klant();
 
 		if (heeftKolom(resultSet, "id"))
@@ -97,7 +103,7 @@ public class KlantDataAccess extends DataAccess
 			preparedStatement.setInt(1, klantID);
 			resultSet = preparedStatement.executeQuery();
 
-			if (resultSet.next()) { return buildModel(resultSet); }
+			if (resultSet.next()) { return buildModel(); }
 		}
 		catch (SQLException sqle)
 		{
@@ -138,7 +144,7 @@ public class KlantDataAccess extends DataAccess
 
 			while (resultSet.next())
 			{
-				klanten.add(buildModel(resultSet));
+				klanten.add(buildModel());
 			}
 			return klanten;
 		}
@@ -188,7 +194,7 @@ public class KlantDataAccess extends DataAccess
 
 			if (resultSet.next())
 			{
-				klant = buildModel(resultSet);
+				klant = buildModel();
 			}
 		}
 		catch (SQLException sqle)
@@ -277,7 +283,7 @@ public class KlantDataAccess extends DataAccess
 
 			if (resultSet.next())
 			{
-				klant = buildModel(resultSet);
+				klant = buildModel();
 			}
 		}
 		catch (SQLException sqle)

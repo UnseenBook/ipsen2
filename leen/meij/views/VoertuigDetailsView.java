@@ -235,7 +235,7 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
 		dtm.addColumn("Beschrijving");
 		dtm.addColumn("Locatie");
 		dtm.addColumn("Handeling");
-		dtm.addColumn("Voldaan");
+		dtm.addColumn("Verhuurbaar");
 
 		for (Onderhoud onderhoud : onderhoudLijst)
 		{
@@ -254,7 +254,7 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
 		tcm.getColumn(1).setHeaderValue("Beschrijving");
 		tcm.getColumn(2).setHeaderValue("Locatie");
 		tcm.getColumn(3).setHeaderValue("Handeling");
-		tcm.getColumn(4).setHeaderValue("Voldaan");
+		tcm.getColumn(4).setHeaderValue("Verhuurbaar");
 
 		JTable table = new JTable(dtm, tcm)
 		{

@@ -61,13 +61,15 @@ public class GebruikerDataAccess extends DataAccess
 		return gebruiker;
 	}
 
-	private int fillStatement(Gebruiker gebruiker) throws SQLException
+	private int fillStatement(Gebruiker gebruiker, boolean metWachtwoord) throws SQLException
 	{
-
 		int i = 1;
 		preparedStatement.setInt(i++, gebruiker.getPersoneelnummer());
 		preparedStatement.setString(i++, gebruiker.getGebruikersnaam());
-		preparedStatement.setString(i++, gebruiker.getWachtwoord());
+		
+		if(metWachtwoord)
+			preparedStatement.setString(i++, gebruiker.getWachtwoord());
+		
 		preparedStatement.setString(i++, gebruiker.getVoornaam());
 		preparedStatement.setString(i++, gebruiker.getTussenvoegsel());
 		preparedStatement.setString(i++, gebruiker.getAchternaam());
@@ -289,7 +291,7 @@ public class GebruikerDataAccess extends DataAccess
 			preparedStatement = connection.prepareStatement(builder.toString());
 
 
-			fillStatement(gebruiker);
+			fillStatement(gebruiker,true);
 			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next())
@@ -386,11 +388,11 @@ public class GebruikerDataAccess extends DataAccess
 		{
 			preparedStatement = connection
 
-					.prepareStatement("UPDATE gebruiker SET personeelnummer = ?, gebruikersnaam = ?, wachtwoord = MD5(?), voornaam = ?, tussenvoegsel = ?, achternaam = ?, afdelingid = ? WHERE id = ? RETURNING *");// /////////////////////////////
+					.prepareStatement("UPDATE gebruiker SET personeelnummer = ?, gebruikersnaam = ?, voornaam = ?, tussenvoegsel = ?, achternaam = ?, afdelingid = ? WHERE id = ? RETURNING *");// /////////////////////////////
 
 																																																// Hardcoded
 																																																// afdeling
-			int index = fillStatement(gebruiker);
+			int index = fillStatement(gebruiker,false);
 			preparedStatement.setInt(index, gebruiker.getGebruikerID());
 			resultSet = preparedStatement.executeQuery();
 

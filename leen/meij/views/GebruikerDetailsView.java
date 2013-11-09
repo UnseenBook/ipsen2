@@ -82,7 +82,7 @@ public class GebruikerDetailsView extends MasterView<Gebruiker> implements Actio
 		btnSave.addActionListener(this);
 		btnCancel.addActionListener(this);
 		btnChangePassword.addActionListener(this);
-		
+		btnChangePassword.setVisible(model.getGebruikerID() != 0);
 		setErrorMessages(model.getErrors());
 		loadModelData();
 	}

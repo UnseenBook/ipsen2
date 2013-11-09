@@ -148,7 +148,28 @@ public class Gebruiker extends Entity
 
 	public void validateFields()
 	{
-		isValid = true;
+		getErrors().clear();
+		if(gebruikersnaam.length() < 5)
+		{
+			getErrors().add("Vul a.u.b. een gebruikernaam is van minimaal 5 tekens");
+			isValid = false;
+		}
+		else if (afdelingID == 0 && (afdeling == null || afdeling.getAfdelingID() == 0))
+		{
+			getErrors().add("Kies a.u.b. een afdeling");
+			isValid = false;
+		}
+		else if(wachtwoord.length() < 5)
+		{
+			getErrors().add("Kies a.u.b. een wachtwoord is van minimaal 5 tekens");
+			isValid = false;
+		}
+		else
+		{
+			isValid = true;
+		}
+		
+		
 	}
 
 }

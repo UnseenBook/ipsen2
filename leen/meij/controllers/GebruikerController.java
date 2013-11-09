@@ -22,8 +22,6 @@ public class GebruikerController extends Controller
 	 */
 	public View inloggenTask(String gebruikersnaam, String wachtwoord)
 	{
-		
-		
 		Gebruiker gebruiker = gebruikerDataAccess.select(gebruikersnaam, wachtwoord);
 		
 		if (gebruiker != null || true) // TODO: remove '|| true' 
@@ -108,8 +106,16 @@ public class GebruikerController extends Controller
 
 	public View wachtwoordVeranderenTask(Integer gebruikerID, String wachtwoord)
 	{
-		Gebruiker gebruiker = gebruikerDataAccess.editWachtwoord(gebruikerID,wachtwoord);
-
+		Gebruiker gebruiker = gebruikerDataAccess.select(gebruikerID);
+		gebruiker.setWachtworod(wachtwoord);
+		
+		gebruiker.validateFields();
+		
+		if(gebruiker.isValid())
+		{
+			gebruiker = gebruikerDataAccess.editWachtwoord(gebruikerID,wachtwoord);
+			
+		}
 		return new GebruikerDetailsView(gebruiker);
 	}
 

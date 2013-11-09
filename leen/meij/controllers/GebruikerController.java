@@ -23,22 +23,23 @@ public class GebruikerController extends Controller
 	public View inloggenTask(String gebruikersnaam, String wachtwoord)
 	{
 		return new TemporaryDefaultView();
+
 		/*
-		 * GebruikerDataAccess gebruikerDataAccess = new GebruikerDataAccess();
-		 * 
-		 * 
-		 * 
-		 * Gebruiker gebruiker = gebruikerDataAccess.select(gebruikersnaam,
-		 * wachtwoord); if(gebruiker != null) { return new ReserveringView(new
-		 * ArrayList<Reservering>()); }
-		 * 
-		 * gebruiker = new Gebruiker();
-		 * gebruiker.setGebruikersnaam(gebruikersnaam);
-		 * gebruiker.getErrors().add
-		 * ("Gebruikersnaam of wachtwoord klopt niet.");
-		 * 
-		 * return new LoginView(gebruiker);
-		 */
+		Gebruiker gebruiker = gebruikerDataAccess.select(gebruikersnaam, wachtwoord);
+		
+		if (gebruiker != null) 
+		{ 
+			Site.getInstance().setGebruiker(gebruiker);
+			
+			return new TemporaryDefaultView(); 
+		}
+
+		gebruiker = new Gebruiker();
+		gebruiker.setGebruikersnaam(gebruikersnaam);
+		gebruiker.getErrors().add("Gebruikersnaam of wachtwoord klopt niet.");
+
+		return new LoginView(gebruiker);
+*/
 	}
 
 	public View gebruikersOverzichtRaadplegenTask()
@@ -61,10 +62,10 @@ public class GebruikerController extends Controller
 		if (gebruiker.isValid())
 		{
 			gebruiker = gebruikerDataAccess.add(gebruiker);
-			
+
 			return gebruikersOverzichtRaadplegenTask();
 		}
-		
+
 		return new GebruikerDetailsView(gebruiker);
 	}
 
@@ -84,13 +85,14 @@ public class GebruikerController extends Controller
 	public View gebruikerWijzigenTask(Gebruiker gebruiker)
 	{
 		gebruiker.validateFields();
-		
-		if(gebruiker.isValid()){
+
+		if (gebruiker.isValid())
+		{
 			gebruikerDataAccess.edit(gebruiker);
-			
+
 			return gebruikersOverzichtRaadplegenTask();
 		}
-		
+
 		return new GebruikerDetailsView(gebruiker);
 	}
 
@@ -101,8 +103,7 @@ public class GebruikerController extends Controller
 	public View gebruikerVerwijderenTask(Integer gebruikerID)
 	{
 		gebruikerDataAccess.delete(gebruikerID);
-		
-		
+
 		return gebruikersOverzichtRaadplegenTask();
 	}
 

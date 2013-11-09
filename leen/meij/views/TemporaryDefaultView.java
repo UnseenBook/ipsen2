@@ -6,6 +6,7 @@ public class TemporaryDefaultView extends MasterView<Object>
 	public TemporaryDefaultView()
 	{
 		super(new Object());
+		this.setTitle("");
 
 	}
 

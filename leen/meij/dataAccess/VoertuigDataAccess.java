@@ -412,6 +412,14 @@ public class VoertuigDataAccess extends DataAccess
 				onderhoud.getVoertuig().setVoertuigID(onderhoudResultSet.getInt("voertuigenid"));
 
 			}
+			
+			if(!onderhoud.isVoldaan())
+			{			
+				preparedStatement = connection.prepareStatement("UPDATE voertuig SET verhuurbaar=FALSE WHERE id=?");
+			
+				preparedStatement.setInt(1, onderhoud.getVoertuig().getVoertuigID());
+				preparedStatement.execute();
+			}
 		}
 		catch (SQLException sqle)
 		{
@@ -495,11 +503,14 @@ public class VoertuigDataAccess extends DataAccess
 		try
 		{
 			preparedStatement = connection.prepareStatement("UPDATE onderhoud SET beschrijving=?,handeling=?,locatie=?,voldaan=?,klantenid=? "
-					+ " WHERE id = ? RETURNING *");
+					+ " WHERE id = ? " +
+					"RETURNING *");
 			
 			int index = this.fillOnderhoudStatement(onderhoud);
 			preparedStatement.setObject(index++, onderhoud.getKlantID());
 			preparedStatement.setInt(index++, onderhoud.getOnderhoudID());
+
+			
 			onderhoudResultSet = preparedStatement.executeQuery();
 
 			if (onderhoudResultSet.next())
@@ -508,6 +519,13 @@ public class VoertuigDataAccess extends DataAccess
 				onderhoud.setVoertuig(new Voertuig());
 				onderhoud.getVoertuig().setVoertuigID(onderhoudResultSet.getInt("voertuigenid"));
 
+			}
+			if(!onderhoud.isVoldaan())
+			{			
+				preparedStatement = connection.prepareStatement("UPDATE voertuig SET verhuurbaar=FALSE WHERE id=?");
+			
+				preparedStatement.setInt(1, onderhoud.getVoertuig().getVoertuigID());
+				preparedStatement.execute();
 			}
 		}
 		catch (SQLException sqle)

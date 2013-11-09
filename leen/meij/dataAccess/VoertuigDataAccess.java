@@ -487,4 +487,54 @@ public class VoertuigDataAccess extends DataAccess
 		return onderhouden;
 	}
 
+	public Onderhoud editOnderhoud(Onderhoud onderhoud)
+	{
+		openConnection();
+
+		ResultSet onderhoudResultSet = null;
+
+		try
+		{
+			preparedStatement = connection.prepareStatement("UPDATE onderhoud SET beschrijving=?,handeling=?,locatie=?,voldaan=?,klantenid=? "
+					+ " WHERE id = ? RETURNING *");
+			
+			int index = this.fillOnderhoudStatement(onderhoud);
+			preparedStatement.setObject(index++, onderhoud.getKlantID());
+			preparedStatement.setInt(index++, onderhoud.getOnderhoudID());
+			onderhoudResultSet = preparedStatement.executeQuery();
+
+			if (onderhoudResultSet.next())
+			{
+				onderhoud = buildOnderhoudModel(onderhoudResultSet);
+				onderhoud.setVoertuig(new Voertuig());
+				onderhoud.getVoertuig().setVoertuigID(onderhoudResultSet.getInt("voertuigenid"));
+
+			}
+		}
+		catch (SQLException sqle)
+		{
+			sqle.printStackTrace();
+		}
+		finally
+		{
+			if (onderhoudResultSet != null) try
+			{
+				onderhoudResultSet.close();
+			}
+			catch (SQLException negeer)
+			{
+			}
+			if (preparedStatement != null) try
+			{
+				preparedStatement.close();
+			}
+			catch (SQLException negeer)
+			{
+			}
+			closeConnection();
+		}
+
+		return onderhoud;
+	}
+
 }

@@ -55,7 +55,7 @@ public class LoginView extends View<Gebruiker> implements ActionListener
 		{
 			runTask("Gebruiker","inloggen",new Object[]{
 					txtGebruikersnaam.getText(),
-					txtWachtwoord.getPassword().toString()
+					new String(txtWachtwoord.getPassword())
 			});
 		} 
 		else if(e.getSource() == btnExit)

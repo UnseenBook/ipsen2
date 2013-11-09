@@ -61,11 +61,10 @@ public class GebruikerDetailsView extends MasterView<Gebruiker> implements Actio
 		pnlContent.add(txtGebruikersnaam, wrap + span2);
 
 		// row 4
-		if (model.getGebruikerID() == 0)
-		{
-			pnlContent.add(new JLabel("Wachtwoord"));
-			pnlContent.add(txtWachtwoord, gap + span2);
-		}
+		
+		pnlContent.add(new JLabel("Wachtwoord"));
+		pnlContent.add(txtWachtwoord, gap + span2);
+	
 		pnlBotMenu.add(btnSave);
 		pnlBotMenu.add(btnCancel);
 
@@ -107,7 +106,7 @@ public class GebruikerDetailsView extends MasterView<Gebruiker> implements Actio
 		txtPersoneelnummer.setText(String.valueOf(model.getPersoneelnummer()));
 		txtTussenvoegsel.setText(model.getTussenvoegsel());
 		txtVoornaam.setText(model.getVoornaam());
-
+		txtWachtwoord.setText(model.getWachtworod());
 	}
 
 	protected Gebruiker getEditedModel()

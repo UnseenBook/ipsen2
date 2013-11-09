@@ -22,9 +22,8 @@ public class GebruikerController extends Controller
 	 */
 	public View inloggenTask(String gebruikersnaam, String wachtwoord)
 	{
-		return new TemporaryDefaultView();
-
-		/*
+		
+		
 		Gebruiker gebruiker = gebruikerDataAccess.select(gebruikersnaam, wachtwoord);
 		
 		if (gebruiker != null) 
@@ -39,7 +38,7 @@ public class GebruikerController extends Controller
 		gebruiker.getErrors().add("Gebruikersnaam of wachtwoord klopt niet.");
 
 		return new LoginView(gebruiker);
-*/
+
 	}
 
 	public View gebruikersOverzichtRaadplegenTask()

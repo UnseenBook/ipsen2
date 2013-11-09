@@ -38,7 +38,7 @@ public class GebruikerDataAccess extends DataAccess
 		preparedStatement.setString(4, gebruiker.getVoornaam());
 		preparedStatement.setString(5, gebruiker.getTussenvoegsel());
 		preparedStatement.setString(6, gebruiker.getAchternaam());
-
+		
 	}
 
 	/**
@@ -101,7 +101,7 @@ public class GebruikerDataAccess extends DataAccess
 		
 		try
 		{
-			preparedStatement = connection.prepareStatement("SELECT * FROM gebruiker WHERE gebruikersnaam = ? AND wachtwoord = ?");
+			preparedStatement = connection.prepareStatement("SELECT * FROM gebruiker WHERE gebruikersnaam = ? AND wachtwoord = MD5(?)");
 			preparedStatement.setString(1, gebruikersNaam);
 			preparedStatement.setString(2, wachtwoord);
 			resultSet = preparedStatement.executeQuery();
@@ -187,7 +187,7 @@ public class GebruikerDataAccess extends DataAccess
 		try
 		{
 			preparedStatement = connection
-					.prepareStatement("INSERT INTO gebruiker (personeelnummer,gebruikersnaam,wachtwoord,voornaam,tussenvoegsel,achternaam,afdelingid) VALUES (?,?,?,?,?,?,1) RETURNING *");// /////////////////////////////
+					.prepareStatement("INSERT INTO gebruiker (personeelnummer,gebruikersnaam,wachtwoord,voornaam,tussenvoegsel,achternaam,afdelingid) VALUES (?,?,MD5(?),?,?,?,1) RETURNING *");// /////////////////////////////
 																																															// Hardcoded
 																																															// afdeling
 			fillStatement(gebruiker);
@@ -220,8 +220,8 @@ public class GebruikerDataAccess extends DataAccess
 			}
 			closeConnection();
 		}
-
-		return gebruiker;
+ 
+		return gebruiker; 
 	}
 
 	/**
@@ -234,7 +234,7 @@ public class GebruikerDataAccess extends DataAccess
 		try
 		{
 			preparedStatement = connection.prepareStatement("DELETE FROM gebruiker WHERE id=?");
-
+ 
 			preparedStatement.setInt(1, gebruikerID);
 			preparedStatement.execute();
 
@@ -273,7 +273,7 @@ public class GebruikerDataAccess extends DataAccess
 		try
 		{
 			preparedStatement = connection
-					.prepareStatement("UPDATE gebruiker SET personeelnummer = ?, gebruikersnaam = ?, wachtwoord = ?, voornaam = ?, tussenvoegsel = ?, achternaam = ? WHERE id = ? RETURNING *");// /////////////////////////////
+					.prepareStatement("UPDATE gebruiker SET personeelnummer = ?, gebruikersnaam = ?, wachtwoord = MD5(?), voornaam = ?, tussenvoegsel = ?, achternaam = ? WHERE id = ? RETURNING *");// /////////////////////////////
 																																																// Hardcoded
 																																																// afdeling
 			fillStatement(gebruiker);

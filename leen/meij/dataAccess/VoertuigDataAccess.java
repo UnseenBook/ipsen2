@@ -399,8 +399,7 @@ public class VoertuigDataAccess extends DataAccess
 		try
 		{
 
-			preparedStatement = connection.prepareStatement("INSERT INTO onderhoud (beschrijving,handeling,locatie,voldaan,klantenid,voertuigenid) "
-					+ "VALUES (?,?,?,?,?,?) RETURNING *");
+			preparedStatement = connection.prepareStatement(builder.toString());
 			int index = this.fillOnderhoudStatement(onderhoud);
 			preparedStatement.setObject(index++, onderhoud.getKlantID());
 			preparedStatement.setInt(index++, onderhoud.getVoertuig().getVoertuigID());

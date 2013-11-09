@@ -34,6 +34,16 @@ public class VoertuigDataAccess extends DataAccess
 		voertuig.setMerk(resultSet.getString("kleur"));
 		voertuig.setType(resultSet.getString("beschrijving"));
 		voertuig.isVerhuurbaar(resultSet.getBoolean("verhuurbaar"));
+		voertuig.setKenteken(resultSet.getString("kenteken"));
+		voertuig.setBouwJaar(resultSet.getInt("bouwjaar"));
+		voertuig.setKilometerStand(resultSet.getInt("kilometerstand"));
+		voertuig.setBrandstof(resultSet.getString("brandstof"));
+		voertuig.setAirco(resultSet.getBoolean("airco"));
+		voertuig.setStation(resultSet.getBoolean("station"));
+		voertuig.setDagPrijs(resultSet.getDouble("dagprijs"));
+		voertuig.setBrandstofPrijs(resultSet.getDouble("brandstofprijs"));
+		voertuig.setKilometerPrijs(resultSet.getDouble("kilometerprijs"));
+		voertuig.setBorgPrijs(resultSet.getDouble("borgprijs"));
 
 		return voertuig;
 	}

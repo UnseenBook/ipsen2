@@ -22,11 +22,11 @@ public class FactuurView extends MasterView<Reservering> implements ListSelectio
 	private Factuur factuur; //This is temporary 
 	
 	//invoice components
-	private JTextField reserveringenid = new JTextField(15);
-	private JTextField voertuigenid = new JTextField(15);
-	private JTextField bedrag = new JTextField(15);
+	private JTextField txtreserveringenid = new JTextField(15);
+	private JTextField txtvoertuigenid = new JTextField(15);
+	private JTextField txtbedrag = new JTextField(15);
 	private JDateChooser datum = new JDateChooser(); 
-	private JTextField reden = new JTextField(15);
+	private JTextField txtreden = new JTextField(15);
 	
 	
 	public FactuurView(Reservering model) {
@@ -46,28 +46,29 @@ public class FactuurView extends MasterView<Reservering> implements ListSelectio
 		
 		//row 1
 		pnlContent.add(new JLabel("Reservering kenmerk"));
-		pnlContent.add(reserveringenid,wrap + gapTop + span2);
-		reserveringenid.setToolTipText("Reserverig kenmerk");
+		pnlContent.add(txtreserveringenid,wrap + gapTop + span2);
+		txtreserveringenid.setToolTipText("Reserverig kenmerk");
+		txtreserveringenid.setEditable(false);;
 		
 		//row 2
 		pnlContent.add(new JLabel("Voertuig"));
-		pnlContent.add(voertuigenid,wrap + gapTop + span2);
-		voertuigenid.setToolTipText("Voertuig id");
+		pnlContent.add(txtvoertuigenid,wrap + gapTop + span2);
+		txtvoertuigenid.setToolTipText("Voertuig id");
 		
 		//row 3
 		pnlContent.add(new JLabel("Bedrag"));
-		pnlContent.add(bedrag, wrap + gapTop + span2);
-		bedrag.setToolTipText("Totaal bedrag");
+		pnlContent.add(txtbedrag, wrap + gapTop + span2);
+		txtbedrag.setToolTipText("Totaal bedrag");
 		
 		//row 4
-		pnlContent.add(new JLabel("Datum"));
+		pnlContent.add(new JLabel("Factuur datum"));
 		pnlContent.add(datum, wrap + gapTop + span2);
 		datum.setToolTipText("Datum");
 		
 		//row 5
 		pnlContent.add(new JLabel("Reden"));
-		pnlContent.add(reden, wrap + gapTop + span2);
-		reden.setToolTipText("Opmerking");
+		pnlContent.add(txtreden, wrap + gapTop + span2);
+		txtreden.setToolTipText("Opmerking");
 		
 			
 		//buttons
@@ -81,6 +82,7 @@ public class FactuurView extends MasterView<Reservering> implements ListSelectio
 		pnlBotMenu.add(this.btnAnnuleren);
 		
 		setErrorMessages(model.getErrors());
+		loadModelData();
 	}
 
 	public void actionPerformed(ActionEvent e)
@@ -106,11 +108,22 @@ public class FactuurView extends MasterView<Reservering> implements ListSelectio
 		// TODO Auto-generated method stub
 		
 	}
+	private void loadModelData()
+	{
+		txtreserveringenid.setText(Integer.toString(model.getReserveringID()));
+		txtvoertuigenid.setText
+			(
+				"ID" +
+				Integer.toString(model.getVoertuigID()) +
+				model.getVoertuig().getMerk()
+			);
+		txtbedrag.setText(Double.toString(model.getBedrag()));
+	}
 
 	@Override
 	protected Reservering getEditedModel() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return this.model;
 	}
 
 }

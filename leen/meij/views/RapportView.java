@@ -4,7 +4,6 @@ package leen.meij.views;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
@@ -13,7 +12,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
@@ -32,10 +30,7 @@ public class RapportView extends MasterView<ArrayList<Reservering>> implements A
 	private JTable tblManagementVoertuig;
 	private JTable tblManagementReservering;
 	private JTable tblManagementGebruikers;
-	private JComboBox cbKlant = new JComboBox();
-	private JComboBox cbVoertuig = new JComboBox();
 	private JComboBox cbSelectie = new JComboBox();
-	private JComboBox cbReservering = new JComboBox();
 	private ArrayList<Klant> klantLijst;
 	private ArrayList<Voertuig> voertuigLijst;
 	private ArrayList<Gebruiker> gebruikerLijst;

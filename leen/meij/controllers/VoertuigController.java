@@ -1,4 +1,3 @@
-
 package leen.meij.controllers;
 
 import javax.swing.JDialog;
@@ -14,7 +13,7 @@ public class VoertuigController extends Controller
 {
 
 	private VoertuigDataAccess voertuigDataAccess = new VoertuigDataAccess();
-	
+
 	public View voertuigOverzichtRaadplegenTask()
 	{
 		// TODO - implement {class}.{operation}
@@ -35,16 +34,16 @@ public class VoertuigController extends Controller
 	{
 		// validate user data
 		voertuig.validateFields();
-                
+
 		if (voertuig.isValid())
 		{
 
 			voertuig = voertuigDataAccess.add(voertuig);
-			                 
+
 			// redirect back to the overview
 			return voertuigOverzichtRaadplegenTask();
 		}
-		
+
 		// show the same view with error messages
 		return new VoertuigDetailsView(voertuig);
 	}
@@ -67,15 +66,15 @@ public class VoertuigController extends Controller
 	public View voertuigWijzigenTask(Voertuig voertuig)
 	{
 		voertuig.validateFields();
-		
-		if(voertuig.isValid())
+
+		if (voertuig.isValid())
 		{
 			voertuig = voertuigDataAccess.edit(voertuig);
-			
+
 			// redirect back to the overview
 			return voertuigOverzichtRaadplegenTask();
 		}
-		
+
 		// show the same view with error messages
 		return new VoertuigDetailsView(voertuig);
 	}
@@ -87,10 +86,9 @@ public class VoertuigController extends Controller
 	public View voertuigVerwijderenTask(Integer voertuigID)
 	{
 		voertuigDataAccess.delete(voertuigID);
-		
+
 		return voertuigOverzichtRaadplegenTask();
 	}
-
 
 	/**
 	 * 
@@ -98,9 +96,23 @@ public class VoertuigController extends Controller
 	 */
 	public View onderhoudToevoegenTask(Onderhoud onderhoud)
 	{
-		onderhoud = voertuigDataAccess.addOnderhoud(onderhoud);
+		onderhoud.validateFields();
+		if (onderhoud.isValid())
+		{
+			onderhoud = voertuigDataAccess.addOnderhoud(onderhoud);
+		}
 		
 		return new VoertuigDetailsView(voertuigDataAccess.select(onderhoud.getVoertuig().getVoertuigID()));
 	}
 
+	public View onderhoudWijzigenTask(Onderhoud onderhoud)
+	{
+		onderhoud.validateFields();
+		if (onderhoud.isValid())
+		{
+			onderhoud = voertuigDataAccess.editOnderhoud(onderhoud);
+		}
+
+		return new VoertuigDetailsView(voertuigDataAccess.select(onderhoud.getVoertuig().getVoertuigID()));
+	}
 }

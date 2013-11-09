@@ -24,7 +24,7 @@ public class Voertuig extends Entity
 
 	private boolean verhuurbaar;
 
-	private String kentaken;
+	private String kenteken;
 
 	private int bouwJaar;
 
@@ -34,7 +34,7 @@ public class Voertuig extends Entity
 
 	private boolean airco;
 
-	private double station;
+	private boolean station;
 
 	private double dagPrijs;
 
@@ -72,9 +72,9 @@ public class Voertuig extends Entity
 		this.onderhoud = onderhoud;
 	}
 
-	public void setKentaken (String kentaken)
+	public void setKenteken (String kenteken)
 	{
-		this.kentaken = kentaken;
+		this.kenteken = kenteken;
 	}
 	public void setBouwJaar (int bouwJaar)
 	{
@@ -113,9 +113,9 @@ public class Voertuig extends Entity
 		this.borgPrijs = borgPrijs;
 	}
 
-	public String getKentaken()
+	public String getKenteken()
 	{
-		return this.kentaken;
+		return this.kenteken;
 	}
 	public int getBouwJaar()
 	{

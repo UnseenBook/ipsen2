@@ -47,12 +47,12 @@ public class VoertuigDataAccess extends DataAccess
 		preparedStatement.setString(i++, voertuig.getMerk());
 		preparedStatement.setString(i++, voertuig.getType());
 		preparedStatement.setBoolean(i++, voertuig.getVerhuurbaar());
-		preparedStatement.setString(i++, voertuig.getKentaken());
+		preparedStatement.setString(i++, voertuig.getKenteken());
 		preparedStatement.setInt(i++, voertuig.getBouwJaar());
 		preparedStatement.setInt(i++, voertuig.getKilometerStand());
 		preparedStatement.setString(i++, voertuig.getBrandstof());
 		preparedStatement.setBoolean(i++, voertuig.getAirco());
-		preparedStatement.setDouble(i++, voertuig.getStation());
+		preparedStatement.setBoolean(i++, voertuig.getStation());
 		preparedStatement.setDouble(i++, voertuig.getDagPrijs());
 		preparedStatement.setDouble(i++, voertuig.getBrandstofPrijs());
 		preparedStatement.setDouble(i++, voertuig.getKilometerPrijs());
@@ -199,7 +199,7 @@ public class VoertuigDataAccess extends DataAccess
 		builder.append("kleur,");
 		builder.append("beschrijving,");
 		builder.append("verhuurbaar, ");
-		builder.append("kentaken, ");
+		builder.append("kenteken, ");
 		builder.append("bouwJaar, ");
 		builder.append("kilometerStand, ");
 		builder.append("brandstof, ");
@@ -314,7 +314,7 @@ public class VoertuigDataAccess extends DataAccess
 
 		Voertuig edited = null;
 
-		StringBuilder builer = new StringBuilder("UPDATE voertuig SET ");
+		StringBuilder builder = new StringBuilder("UPDATE voertuig SET ");
 
 		builder.append("(categorie=?, ");
 		builder.append("merk=?, ");
@@ -322,7 +322,7 @@ public class VoertuigDataAccess extends DataAccess
 		builder.append("kleur=?, ");
 		builder.append("beschrijving=?, ");
 		builder.append("verhuurbaar=?,  ");
-		builder.append("kentaken=?, ");
+		builder.append("kenteken=?, ");
 		builder.append("bouwJaar=?, ");
 		builder.append("kilometerStand=?, ");
 		builder.append("brandstof=?, ");

@@ -1,22 +1,24 @@
 
 package leen.meij.views;
 
-import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+
 import leen.meij.Gebruiker;
+import leen.meij.Klant;
 import leen.meij.Reservering;
 import leen.meij.Voertuig;
 import leen.meij.dataAccess.GebruikerDataAccess;
+import leen.meij.dataAccess.KlantDataAccess;
 import leen.meij.dataAccess.ReserveringDataAccess;
 import leen.meij.dataAccess.VoertuigDataAccess;
 
@@ -30,9 +32,11 @@ public class RapportView extends MasterView<ArrayList<Reservering>> implements A
 	private JComboBox cbSelectie = new JComboBox();
 	private ArrayList<Voertuig> voertuigLijst;
 	private ArrayList<Gebruiker> gebruikerLijst;
+	private ArrayList<Klant> klantLijst;
 	private ArrayList<Reservering> reserveringLijst;
 	private VoertuigDataAccess voertuigDataAccess = new VoertuigDataAccess();
 	private GebruikerDataAccess gebruikerDataAccess = new GebruikerDataAccess();
+	private KlantDataAccess klantDataAccess = new KlantDataAccess();
 	private ReserveringDataAccess reserveringDataAccess = new ReserveringDataAccess();
 	private String gapTop = "gaptop 10, ";
 	private String wrap = "wrap,";
@@ -44,6 +48,7 @@ public class RapportView extends MasterView<ArrayList<Reservering>> implements A
 		this.setTitle("Management overzicht");
 		this.voertuigLijst = voertuigDataAccess.selectAll();
 		this.gebruikerLijst = gebruikerDataAccess.selectAll();
+		this.klantLijst = klantDataAccess.selectAll();
 		this.reserveringLijst = reserveringDataAccess.selectAll();
 	
 		//Default combobox 
@@ -150,15 +155,15 @@ public class RapportView extends MasterView<ArrayList<Reservering>> implements A
 		dm.addColumn("telefoonnummer");
 		dm.addColumn("land");
 		
-		for(Reservering reservering : reserveringLijst )
+		for(Klant klant : klantLijst )
 		{
 			dm.addRow(new Object[]{
-				reservering.getKlant().getKlantID(),
-				reservering.getKlant().getVolledigeNaam(),
-				reservering.getKlant().getBedrijfsnaam(),
-				(reservering.getKlant().getStraat() + " "  + reservering.getKlant().getHuisNummer()),
-				reservering.getKlant().getTelefoonnummer(),
-				reservering.getKlant().getLand()
+				klant.getKlantID(),
+				klant.getVolledigeNaam(),
+				klant.getBedrijfsnaam(),
+				(klant.getStraat() + " "  + klant.getHuisNummer()),
+				klant.getTelefoonnummer(),
+				klant.getLand()
 			});
 		}
 				

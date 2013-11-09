@@ -130,7 +130,6 @@ public class VoertuigDataAccess extends DataAccess
 		
 		Voertuig voertuig;
 
-//		ResultSet resultSet = null;
 		try
 		{
 			ArrayList<Voertuig> voertuigen = new ArrayList<Voertuig>();
@@ -195,9 +194,6 @@ public class VoertuigDataAccess extends DataAccess
 
 		try
 		{
-
-//			preparedStatement = connection.prepareStatement("INSERT INTO voertuig (categorie,merk,type,kleur,beschrijving,verhuurbaar) "
-//					+ "VALUES (?,?,?,?,?,?) RETURNING *");
 			preparedStatement = connection.prepareStatement(builder.toString());
 			this.fillVoertuigStatement(voertuig);
 

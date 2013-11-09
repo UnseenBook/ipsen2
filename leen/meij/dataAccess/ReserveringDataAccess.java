@@ -146,8 +146,6 @@ public class ReserveringDataAccess extends DataAccess
 
 			preparedStatement = connection.prepareStatement(builder.toString());
 
-			//preparedStatement = connection.prepareStatement("SELECT * FROM reservering WHERE id = ?");
-
 			preparedStatement.setInt(1, reserveringID);
 			resultSet = preparedStatement.executeQuery();
 
@@ -452,8 +450,6 @@ public class ReserveringDataAccess extends DataAccess
 		try
 		{
 			preparedStatement = connection.prepareStatement(builder.toString());
-			//preparedStatement = connection.prepareStatement("UPDATE reservering SET klantenid=?,voertuigenid=?,reserveerdatum=?,begindatum=?,einddatum=?,kilometer=?,bedrag=?,status=? "
-			//		+ "WHERE id = ? RETURNING *");
 
 			int index = this.fillStatement(reservering);
 			preparedStatement.setInt(index++, reservering.getReserveringID());

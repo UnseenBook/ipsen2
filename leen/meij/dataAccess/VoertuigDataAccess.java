@@ -13,15 +13,27 @@ public class VoertuigDataAccess extends DataAccess
 
 	public Voertuig buildVoertuigModel(ResultSet resultSet) throws SQLException
 	{
+		this.resultSet = resultSet;
+		return buildVoertuigModel();
+	}
+
+	private Voertuig buildVoertuigModel() throws SQLException
+	{
 		Voertuig voertuig = new Voertuig();
+
+		if (heeftKolom(resultSet, "id"))
+		{
+			voertuig.setVoertuigID(resultSet.getInt("id"));
+		} else
+		{
+			voertuig.setVoertuigID(resultSet.getInt("voertuig_id"));
+		}
 		voertuig.setBeschrijving(resultSet.getString("categorie"));
 		voertuig.setCategorie(resultSet.getString("merk"));
 		voertuig.setKleur(resultSet.getString("type"));
 		voertuig.setMerk(resultSet.getString("kleur"));
 		voertuig.setType(resultSet.getString("beschrijving"));
 		voertuig.isVerhuurbaar(resultSet.getBoolean("verhuurbaar"));
-
-		voertuig.setVoertuigID(resultSet.getInt("id"));
 
 		return voertuig;
 	}
@@ -39,14 +51,14 @@ public class VoertuigDataAccess extends DataAccess
 		return i;
 	}
 
-	private Onderhoud buildOnderhoud(ResultSet resultSet) throws SQLException
+	private Onderhoud buildOnderhoudModel(ResultSet onderhoudResultSet) throws SQLException
 	{
 		Onderhoud onderhoud = new Onderhoud();
-		onderhoud.setHandeling(resultSet.getString("handeling"));
-		onderhoud.setBeschrijving(resultSet.getString("beschrijving"));
-		onderhoud.setLocatie(resultSet.getString("locatie"));
-		onderhoud.setOnderhoudID(resultSet.getInt("id"));
-		onderhoud.setVoldaan(resultSet.getBoolean("voldaan"));
+		onderhoud.setHandeling(onderhoudResultSet.getString("handeling"));
+		onderhoud.setBeschrijving(onderhoudResultSet.getString("beschrijving"));
+		onderhoud.setLocatie(onderhoudResultSet.getString("locatie"));
+		onderhoud.setOnderhoudID(onderhoudResultSet.getInt("id"));
+		onderhoud.setVoldaan(onderhoudResultSet.getBoolean("voldaan"));
 
 		return onderhoud;
 	}
@@ -80,8 +92,8 @@ public class VoertuigDataAccess extends DataAccess
 
 			if (resultSet.next())
 			{
-				Voertuig voertuig = buildVoertuigModel(resultSet);
-				voertuig.setOnderhoud(getOnderhoud(voertuigID));
+				Voertuig voertuig = buildVoertuigModel();
+				voertuig.setOnderhoud(getOnderhoud(voertuigID)); //hierin wordt resultSet gesloten.TODO: onderhoud toevoegen in select query 
 
 				return voertuig;
 			}
@@ -115,9 +127,9 @@ public class VoertuigDataAccess extends DataAccess
 	public ArrayList<Voertuig> selectAll()
 	{
 		openConnection();
+		
+		Voertuig voertuig;
 
-		PreparedStatement preparedStatement = null;
-		ResultSet resultSet = null;
 		try
 		{
 			ArrayList<Voertuig> voertuigen = new ArrayList<Voertuig>();
@@ -127,7 +139,7 @@ public class VoertuigDataAccess extends DataAccess
 
 			while (resultSet.next())
 			{
-				Voertuig voertuig = buildVoertuigModel(resultSet);
+				voertuig = buildVoertuigModel();
 				voertuig.setOnderhoud(getOnderhoud(voertuig.getVoertuigID()));
 				voertuigen.add(voertuig);
 			}
@@ -168,18 +180,28 @@ public class VoertuigDataAccess extends DataAccess
 		openConnection();
 
 		Voertuig addedVoertuig = null;
+
+		StringBuilder builder = new StringBuilder("INSERT INTO voertuig (");
+
+		builder.append("categorie,");
+		builder.append("merk,");
+		builder.append("type,");
+		builder.append("kleur,");
+		builder.append("beschrijving,");
+		builder.append("verhuurbaar) ");
+		builder.append("VALUES (?,?,?,?,?,?) ");
+		builder.append("RETURNING *");
+
 		try
 		{
-
-			preparedStatement = connection.prepareStatement("INSERT INTO voertuig (categorie,merk,type,kleur,beschrijving,verhuurbaar) "
-					+ "VALUES (?,?,?,?,?,?) RETURNING *");
+			preparedStatement = connection.prepareStatement(builder.toString());
 			this.fillVoertuigStatement(voertuig);
 
 			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next())
 			{
-				addedVoertuig = buildVoertuigModel(resultSet);
+				addedVoertuig = buildVoertuigModel();
 
 				for (Onderhoud onderhoud : voertuig.getOnderhoud())
 				{
@@ -281,7 +303,7 @@ public class VoertuigDataAccess extends DataAccess
 
 			if (resultSet.next())
 			{
-				voertuig = buildVoertuigModel(resultSet);
+				voertuig = buildVoertuigModel();
 
 			}
 		}
@@ -319,6 +341,8 @@ public class VoertuigDataAccess extends DataAccess
 	{
 		openConnection();
 
+		ResultSet onderhoudResultSet = null;
+
 		try
 		{
 
@@ -327,13 +351,13 @@ public class VoertuigDataAccess extends DataAccess
 			int index = this.fillOnderhoudStatement(onderhoud);
 			preparedStatement.setObject(index++, onderhoud.getKlantID());
 			preparedStatement.setInt(index++, onderhoud.getVoertuig().getVoertuigID());
-			resultSet = preparedStatement.executeQuery();
+			onderhoudResultSet = preparedStatement.executeQuery();
 
-			if (resultSet.next())
+			if (onderhoudResultSet.next())
 			{
-				onderhoud = buildOnderhoud(resultSet);
+				onderhoud = buildOnderhoudModel(onderhoudResultSet);
 				onderhoud.setVoertuig(new Voertuig());
-				onderhoud.getVoertuig().setVoertuigID(resultSet.getInt("voertuigenid"));
+				onderhoud.getVoertuig().setVoertuigID(onderhoudResultSet.getInt("voertuigenid"));
 
 			}
 		}
@@ -343,9 +367,9 @@ public class VoertuigDataAccess extends DataAccess
 		}
 		finally
 		{
-			if (resultSet != null) try
+			if (onderhoudResultSet != null) try
 			{
-				resultSet.close();
+				onderhoudResultSet.close();
 			}
 			catch (SQLException negeer)
 			{
@@ -367,6 +391,7 @@ public class VoertuigDataAccess extends DataAccess
 	{
 		openConnection();
 		ArrayList<Onderhoud> onderhouden = new ArrayList<Onderhoud>();
+		ResultSet onderhoudResultSet = null;
 
 		try
 		{
@@ -375,11 +400,11 @@ public class VoertuigDataAccess extends DataAccess
 
 			preparedStatement.setInt(1, voertuigID);
 
-			resultSet = preparedStatement.executeQuery();
+			onderhoudResultSet = preparedStatement.executeQuery();
 
-			while (resultSet.next())
+			while (onderhoudResultSet.next())
 			{
-				Onderhoud onderhoud = buildOnderhoud(resultSet);
+				Onderhoud onderhoud = buildOnderhoudModel(onderhoudResultSet);
 				onderhouden.add(onderhoud);
 			}
 		}
@@ -389,9 +414,9 @@ public class VoertuigDataAccess extends DataAccess
 		}
 		finally
 		{
-			if (resultSet != null) try
+			if (onderhoudResultSet != null) try
 			{
-				resultSet.close();
+				onderhoudResultSet.close();
 			}
 			catch (SQLException negeer)
 			{

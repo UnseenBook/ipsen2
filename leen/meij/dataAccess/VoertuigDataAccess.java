@@ -51,14 +51,14 @@ public class VoertuigDataAccess extends DataAccess
 		return i;
 	}
 
-	private Onderhoud buildOnderhoud() throws SQLException
+	private Onderhoud buildOnderhoudModel(ResultSet onderhoudResultSet) throws SQLException
 	{
 		Onderhoud onderhoud = new Onderhoud();
-		onderhoud.setHandeling(resultSet.getString("handeling"));
-		onderhoud.setBeschrijving(resultSet.getString("beschrijving"));
-		onderhoud.setLocatie(resultSet.getString("locatie"));
-		onderhoud.setOnderhoudID(resultSet.getInt("id"));
-		onderhoud.setVoldaan(resultSet.getBoolean("voldaan"));
+		onderhoud.setHandeling(onderhoudResultSet.getString("handeling"));
+		onderhoud.setBeschrijving(onderhoudResultSet.getString("beschrijving"));
+		onderhoud.setLocatie(onderhoudResultSet.getString("locatie"));
+		onderhoud.setOnderhoudID(onderhoudResultSet.getInt("id"));
+		onderhoud.setVoldaan(onderhoudResultSet.getBoolean("voldaan"));
 
 		return onderhoud;
 	}
@@ -345,6 +345,8 @@ public class VoertuigDataAccess extends DataAccess
 	{
 		openConnection();
 
+		ResultSet onderhoudResultSet = null;
+
 		try
 		{
 
@@ -353,13 +355,13 @@ public class VoertuigDataAccess extends DataAccess
 			int index = this.fillOnderhoudStatement(onderhoud);
 			preparedStatement.setObject(index++, onderhoud.getKlantID());
 			preparedStatement.setInt(index++, onderhoud.getVoertuig().getVoertuigID());
-			resultSet = preparedStatement.executeQuery();
+			onderhoudResultSet = preparedStatement.executeQuery();
 
-			if (resultSet.next())
+			if (onderhoudResultSet.next())
 			{
-				onderhoud = buildOnderhoud();
+				onderhoud = buildOnderhoudModel(onderhoudResultSet);
 				onderhoud.setVoertuig(new Voertuig());
-				onderhoud.getVoertuig().setVoertuigID(resultSet.getInt("voertuigenid"));
+				onderhoud.getVoertuig().setVoertuigID(onderhoudResultSet.getInt("voertuigenid"));
 
 			}
 		}
@@ -369,9 +371,9 @@ public class VoertuigDataAccess extends DataAccess
 		}
 		finally
 		{
-			if (resultSet != null) try
+			if (onderhoudResultSet != null) try
 			{
-				resultSet.close();
+				onderhoudResultSet.close();
 			}
 			catch (SQLException negeer)
 			{
@@ -393,6 +395,7 @@ public class VoertuigDataAccess extends DataAccess
 	{
 		openConnection();
 		ArrayList<Onderhoud> onderhouden = new ArrayList<Onderhoud>();
+		ResultSet onderhoudResultSet = null;
 
 		try
 		{
@@ -401,11 +404,11 @@ public class VoertuigDataAccess extends DataAccess
 
 			preparedStatement.setInt(1, voertuigID);
 
-			resultSet = preparedStatement.executeQuery();
+			onderhoudResultSet = preparedStatement.executeQuery();
 
-			while (resultSet.next())
+			while (onderhoudResultSet.next())
 			{
-				Onderhoud onderhoud = buildOnderhoud();
+				Onderhoud onderhoud = buildOnderhoudModel(onderhoudResultSet);
 				onderhouden.add(onderhoud);
 			}
 		}
@@ -415,9 +418,9 @@ public class VoertuigDataAccess extends DataAccess
 		}
 		finally
 		{
-			if (resultSet != null) try
+			if (onderhoudResultSet != null) try
 			{
-				resultSet.close();
+				onderhoudResultSet.close();
 			}
 			catch (SQLException negeer)
 			{

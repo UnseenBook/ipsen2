@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -15,43 +16,51 @@ import javax.swing.table.TableColumnModel;
 
 import leen.meij.Reservering;
 
-public class HuurLijstView extends MasterView<ArrayList<Reservering>> implements ListSelectionListener,ActionListener {
+public class HuurLijstView extends MasterView<ArrayList<Reservering>> implements ListSelectionListener, ActionListener
+{
 
-	
 	private JTable tblHuurLijst;
-	
+
+	private JButton btnBack = new JButton("Terug");
+
 	public HuurLijstView(ArrayList<Reservering> model)
 	{
 		super(model);
 		this.setTitle("Huurlijst");
-		
-		//tabel begin
-		tblHuurLijst =  createHuurLijstTable();
-		
-		
-		
-		this.pnlContent.add(this.tblHuurLijst.getTableHeader(),"wrap");
+
+		// tabel begin
+		tblHuurLijst = createHuurLijstTable();
+
+		btnBack.addActionListener(this);
+
+		this.pnlBotMenu.add(this.btnBack);
+
+		this.pnlContent.add(this.tblHuurLijst.getTableHeader(), "wrap");
 		this.pnlContent.add(this.tblHuurLijst);
-		
+
 	}
-	
+
 	public void actionPerformed(ActionEvent e)
 	{
-	
 		super.actionPerformed(e);
+
+		if (e.getSource() == btnBack)
+		{
+			runTask("Reservering", "reserveringOverzichtRaadplegen");
+		}
 	}
-	
+
 	public void valueChanged(ListSelectionEvent e)
 	{
-		
-	}
-	
 
-	protected ArrayList<Reservering> getEditedModel() {
-		
+	}
+
+	protected ArrayList<Reservering> getEditedModel()
+	{
+
 		return model;
 	}
-	
+
 	private JTable createHuurLijstTable()
 	{
 		DefaultTableModel dm = new DefaultTableModel();
@@ -59,28 +68,24 @@ public class HuurLijstView extends MasterView<ArrayList<Reservering>> implements
 		dm.addColumn("Voertuigid");
 		dm.addColumn("reserveerdatum");
 		dm.addColumn("einddatum");
-		
-		for(Reservering reservering: model)
+
+		for (Reservering reservering : model)
 		{
-			dm.addRow(new Object[] {
-					reservering.getKlantID(),
-					reservering.getVoertuigID(),
-					reservering.getReserveerDatum(),
-					reservering.getEindDatum()
-			});
+			dm.addRow(new Object[] { reservering.getKlantID(), reservering.getVoertuigID(), reservering.getReserveerDatum(),
+					reservering.getEindDatum() });
 		}
-		
+
 		TableColumnModel tcm = new DefaultTableColumnModel();
-		tcm.addColumn(new TableColumn(0,100));
+		tcm.addColumn(new TableColumn(0, 100));
 		tcm.addColumn(new TableColumn(1, 150));
 		tcm.addColumn(new TableColumn(2, 150));
 		tcm.addColumn(new TableColumn(3, 150));
-		
+
 		tcm.getColumn(0).setHeaderValue("Klantnummer");
 		tcm.getColumn(1).setHeaderValue("Voertuig id");
 		tcm.getColumn(2).setHeaderValue("Reserveer datum");
 		tcm.getColumn(3).setHeaderValue("Eind datum");
-		
+
 		JTable table = new JTable(dm, tcm)
 		{
 			private static final long serialVersionUID = 1L;
@@ -90,14 +95,13 @@ public class HuurLijstView extends MasterView<ArrayList<Reservering>> implements
 				return false;
 			};
 		};
-		
+
 		table.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		table.getSelectionModel().addListSelectionListener(this);
-		//table.setAutoCreateRowSorter(false);
-		
-		
+		// table.setAutoCreateRowSorter(false);
+
 		return table;
-		
+
 	}
 
 }

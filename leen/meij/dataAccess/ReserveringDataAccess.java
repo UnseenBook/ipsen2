@@ -242,14 +242,14 @@ public class ReserveringDataAccess extends DataAccess
 
 			StringBuilder builder = new StringBuilder("SELECT ");
 			
-			builder.append("F.id AS factuur_id,");
-			builder.append("R.id AS reservering_id,");
-			builder.append("F.factuurnummer,");
-			builder.append("F.datum,");
-			builder.append("F.bedrag,");
-			builder.append("F.reden");
-			builder.append("FROM factuur AS F,");
-			builder.append("reservering AS R");
+			builder.append("F.id AS factuur_id, ");
+			builder.append("R.id AS reservering_id, ");
+			builder.append("F.factuurnummer, ");
+			builder.append("F.datum, ");
+			builder.append("F.bedrag, ");
+			builder.append("F.reden ");
+			builder.append("FROM factuur AS F, ");
+			builder.append("reservering AS R ");
 			builder.append("WHERE R.id = ?");
 			
 			preparedStatement = connection.prepareStatement(builder.toString());

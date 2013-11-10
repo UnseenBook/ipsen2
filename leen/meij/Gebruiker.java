@@ -1,156 +1,127 @@
-
 package leen.meij;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import leen.meij.utilities.*;
 
-public class Gebruiker extends Entity
-{
+public class Gebruiker extends Entity {
 
-	private int gebruikerID;
+    private int gebruikerID;
+    private int personeelnummer;
+    private String gebruikersnaam;
+    private String wachtwoord;
+    private int afdelingID;
+    private Afdeling afdeling;
+    private String voornaam;
+    private String tussenvoegsel;
+    private String achternaam;
 
-	private int personeelnummer;
+    public int getAfdelingID() {
+        return this.afdelingID;
+    }
 
-	private String gebruikersnaam;
+    public void setAfdelingID(int afdelingID) {
+        this.afdelingID = afdelingID;
+    }
 
-	private String wachtwoord;
+    public int getGebruikerID() {
+        return this.gebruikerID;
+    }
 
-	private int afdelingID;
+    /**
+     *
+     * @param gebruikerID
+     */
+    public void setGebruikerID(int gebruikerID) {
+        this.gebruikerID = gebruikerID;
+    }
 
-	private Afdeling afdeling;
+    public int getPersoneelnummer() {
+        return this.personeelnummer;
+    }
 
-	private String voornaam;
+    /**
+     *
+     * @param personeelnummer
+     */
+    public void setPersoneelnummer(int personeelnummer) {
+        this.personeelnummer = personeelnummer;
+    }
 
-	private String tussenvoegsel;
+    public String getGebruikersnaam() {
+        return this.gebruikersnaam;
+    }
 
-	private String achternaam;
+    /**
+     *
+     * @param gebruikersnaam
+     */
+    public void setGebruikersnaam(String gebruikersnaam) {
+        this.gebruikersnaam = gebruikersnaam;
+    }
 
-	public int getAfdelingID()
-	{
-		return this.afdelingID;
-	}
+    public String getWachtwoord() {
+        return this.wachtwoord;
+    }
 
-	public void setAfdelingID(int afdelingID)
-	{
-		this.afdelingID = afdelingID;
-	}
+    /**
+     *
+     * @param wachtworod
+     */
+    public void setWachtworod(String wachtworod) {
+        this.wachtwoord = wachtworod;
+    }
 
-	public int getGebruikerID()
-	{
-		return this.gebruikerID;
-	}
+    public Afdeling getAfdeling() {
+        return this.afdeling;
+    }
 
-	/**
-	 * 
-	 * @param gebruikerID
-	 */
-	public void setGebruikerID(int gebruikerID)
-	{
-		this.gebruikerID = gebruikerID;
-	}
+    /**
+     *
+     * @param afdeling
+     */
+    public void setAfdeling(Afdeling afdeling) {
+        this.afdeling = afdeling;
+    }
 
-	public int getPersoneelnummer()
-	{
-		return this.personeelnummer;
-	}
+    public String getVoornaam() {
+        return this.voornaam;
+    }
 
-	/**
-	 * 
-	 * @param personeelnummer
-	 */
-	public void setPersoneelnummer(int personeelnummer)
-	{
-		this.personeelnummer = personeelnummer;
-	}
+    /**
+     *
+     * @param voornaam
+     */
+    public void setVoornaam(String voornaam) {
+        this.voornaam = voornaam;
+    }
 
-	public String getGebruikersnaam()
-	{
-		return this.gebruikersnaam;
-	}
+    public String getTussenvoegsel() {
+        return this.tussenvoegsel;
+    }
 
-	/**
-	 * 
-	 * @param gebruikersnaam
-	 */
-	public void setGebruikersnaam(String gebruikersnaam)
-	{
-		this.gebruikersnaam = gebruikersnaam;
-	}
+    /**
+     *
+     * @param tussenvoegsel
+     */
+    public void setTussenvoegsel(String tussenvoegsel) {
+        this.tussenvoegsel = tussenvoegsel;
+    }
 
-	public String getWachtwoord()
-	{
-		return this.wachtwoord;
-	}
+    public String getAchternaam() {
+        return this.achternaam;
+    }
 
-	/**
-	 * 
-	 * @param wachtworod
-	 */
-	public void setWachtworod(String wachtworod)
-	{
-		this.wachtwoord = wachtworod;
-	}
+    /**
+     *
+     * @param achternaam
+     */
+    public void setAchternaam(String achternaam) {
+        this.achternaam = achternaam;
+    }
 
-	public Afdeling getAfdeling()
-	{
-		return this.afdeling;
-	}
-
-	/**
-	 * 
-	 * @param afdeling
-	 */
-	public void setAfdeling(Afdeling afdeling)
-	{
-		this.afdeling = afdeling;
-	}
-
-	public String getVoornaam()
-	{
-		return this.voornaam;
-	}
-
-	/**
-	 * 
-	 * @param voornaam
-	 */
-	public void setVoornaam(String voornaam)
-	{
-		this.voornaam = voornaam;
-	}
-
-	public String getTussenvoegsel()
-	{
-		return this.tussenvoegsel;
-	}
-
-	/**
-	 * 
-	 * @param tussenvoegsel
-	 */
-	public void setTussenvoegsel(String tussenvoegsel)
-	{
-		this.tussenvoegsel = tussenvoegsel;
-	}
-
-	public String getAchternaam()
-	{
-		return this.achternaam;
-	}
-
-	/**
-	 * 
-	 * @param achternaam
-	 */
-	public void setAchternaam(String achternaam)
-	{
-		this.achternaam = achternaam;
-	}
-
-	public void validateFields()
-	{
-		getErrors().clear();
+    public void validateFields() {
+        getErrors().clear();
         if (!validateRegex(this.voornaam, "[a-zA-Z0-9\\s-]+")) {
             getErrors().add("Voornaam foutief of niet ingevuld.");
             isValid = false;
@@ -172,10 +143,11 @@ public class Gebruiker extends Entity
         } else {
             isValid = true;
         }
-		
-		
-	}
-        private boolean validateRegex(String input, String regex) {
+
+
+    }
+
+    private boolean validateRegex(String input, String regex) {
 
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(input);
@@ -188,6 +160,4 @@ public class Gebruiker extends Entity
         }
 
     }
-        
-
 }

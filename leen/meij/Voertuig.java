@@ -325,18 +325,18 @@ public class Voertuig extends Entity
 		
 	}
         
-        private boolean validateRegex(String input, String regex){
-                
-                Pattern p = Pattern.compile(regex);
-                Matcher m = p.matcher(input);
-                
-                if(m.matches()){
-                    return true;
-                }else{
-                    System.err.println("Error met " + input);
-                    return false;
-                }
-            
+        private boolean validateRegex(String input, String regex) {
+
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(input);
+
+        if (m.matches()) {
+            return true;
+        } else {
+            System.err.println("Error met " + input);
+            return false;
         }
+
+    }
 
 }

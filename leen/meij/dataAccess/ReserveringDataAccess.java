@@ -77,11 +77,48 @@ public class ReserveringDataAccess extends DataAccess
 	{
 		Factuur factuur = new Factuur();
 		
-		factuur.setReserveringID(resultSet.getInt("id"));
-		factuur.setFactuurID(resultSet.getInt("id"));
-		factuur.setFactuurnummer(resultSet.getInt("factuurnummer"));
-		factuur.setDatum(resultSet.getString("datum"));
-		factuur.setReden(resultSet.getString("reden"));
+		if(heeftKolom(resultSet, "id"))
+		{
+			factuur.setFactuurID(resultSet.getInt("id"));
+		}
+		else
+		{
+			factuur.setFactuurID(resultSet.getInt("factuur_id"));
+		}
+		
+		if(heeftKolom(resultSet, "reservering_id"))
+		{
+			factuur.setReserveringID(resultSet.getInt("reservering_id"));
+		}
+		else
+		{
+			System.out.println("Fout id");
+		}
+		if(heeftKolom(resultSet, "factuurnummer"))
+		{
+			factuur.setFactuurnummer(resultSet.getInt("factuurnummer"));
+		}
+		else
+		{
+			factuur.setFactuurnummer(0);
+			System.out.println("Fout factuurnummer");
+		}
+		if(heeftKolom(resultSet, "datum"))
+		{
+			factuur.setDatum(resultSet.getString("datum"));
+		}
+		else
+		{
+			factuur.setDatum("dd-mm-yyyy");
+		}
+		if(heeftKolom(resultSet, "reden"))
+		{
+			factuur.setReden(resultSet.getString("reden"));
+		}
+		else
+		{
+			factuur.setReden("");
+		}
 		
 		return factuur;
 		
@@ -203,13 +240,27 @@ public class ReserveringDataAccess extends DataAccess
 		try
 		{
 
-			preparedStatement = connection.prepareStatement("SELECT * FROM factuur WHERE id = ?");
-
+			StringBuilder builder = new StringBuilder("SELECT ");
+			
+			builder.append("F.id AS factuur_id,");
+			builder.append("R.id AS reservering_id,");
+			builder.append("F.factuurnummer,");
+			builder.append("F.datum,");
+			builder.append("F.bedrag,");
+			builder.append("F.reden");
+			builder.append("FROM factuur AS F,");
+			builder.append("reservering AS R");
+			builder.append("WHERE R.id = ?");
+			
+			preparedStatement = connection.prepareStatement(builder.toString());
 			preparedStatement.setInt(1, reserveringID);
+			System.out.println("KIJK DAAR GAAT IE");
 			resultSet = preparedStatement.executeQuery();
+			
 
 			if (resultSet.next())
 			{
+				System.out.println("ZOZO TOCH GELUKT HE");
 				factuur = buildFactuurModel();
 				
 				return factuur;
@@ -217,6 +268,7 @@ public class ReserveringDataAccess extends DataAccess
 		}
 		catch (SQLException sqle)
 		{
+			System.out.println("NEE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			sqle.printStackTrace();
 		}
 		finally
@@ -407,6 +459,67 @@ public class ReserveringDataAccess extends DataAccess
 	
 	}
 
+//	public Factuur add(Factuur factuur)
+//	{
+//
+//		openConnection();
+//		
+//		Factuur tempFactuur;
+//
+//		StringBuilder builder = new StringBuilder("INSERT INTO factuur (");
+//
+//		builder.append("id,");
+//		builder.append("voertuigenid,");
+//		builder.append("reserveerdatum,");
+//		builder.append("begindatum,");
+//		builder.append("einddatum,");
+//		builder.append("kilometer,");
+//		builder.append("bedrag,");
+//		builder.append("status) ");
+//		builder.append("VALUES (?,?,?,?,?,?,?,?)");
+//		builder.append("RETURNING *");
+//
+//		try
+//		{
+//			preparedStatement = connection.prepareStatement(builder.toString());
+//																																				
+//			fillStatementFactuur(factuur);
+//			resultSet = preparedStatement.executeQuery();
+//
+//			if (resultSet.next())
+//			{
+//		
+//				factuur = tempFactuur;
+//			}
+//		}
+//		catch (SQLException sqle)
+//		{
+//			sqle.printStackTrace();
+//		}
+//		finally
+//		{
+//			if (resultSet != null) try
+//			{
+//				resultSet.close();
+//			}
+//			catch (SQLException negeer)
+//			{
+//			}
+//			if (preparedStatement != null) try
+//			{
+//				preparedStatement.close();
+//			}
+//			catch (SQLException negeer)
+//			{
+//			}
+//			closeConnection();
+//		}
+//		return factuur;
+//
+//	
+//	}
+	
+	
 	/**
 	 * 
 	 * @param klantID

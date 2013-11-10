@@ -41,6 +41,8 @@ public class LoginView extends View<Gebruiker> implements ActionListener
 		
 		btnLogin.addActionListener(this);
 		btnExit.addActionListener(this);
+		
+		txtGebruikersnaam.setText(model.getGebruikersnaam());
 	}
 
 	protected Gebruiker getEditedModel()

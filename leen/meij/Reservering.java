@@ -190,6 +190,7 @@ public class Reservering extends Entity
 		else if (beginDatum == null)
 		{
 			getErrors().add("Kies a.u.b. een begin datum.");
+			isValid = false;
 		}
 		else if (eindDatum == null)
 		{

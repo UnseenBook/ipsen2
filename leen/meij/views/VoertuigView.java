@@ -3,10 +3,19 @@ package leen.meij.views;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import javax.swing.*;
+
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableColumnModel;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
 
 import leen.meij.Rechten;
 import leen.meij.Voertuig;
@@ -14,17 +23,34 @@ import leen.meij.Voertuig;
 public class VoertuigView extends MasterView<ArrayList<Voertuig>> implements ListSelectionListener, ActionListener {
 
     private Voertuig selectedVoertuig;
+    private ArrayList<Voertuig> filteredVoertuigen;
     private JButton btnWijzigen = new JButton("Wijzigen");
     private JButton btnVerwijderen = new JButton("Verwijderen");
     private JButton btnToevoegen = new JButton("Toevoegen");
     private JTable tblVoertuigen;
+    private JComboBox<String> cbTypes;
+    private JComboBox<String> cbCategorieen;
+    private String selectedType = null;
+    private String selectedCategorie = null;
 
     public VoertuigView(ArrayList<Voertuig> model) {
         super(model);
         // TODO Auto-generated constructor stub
+
         this.setTitle("Voertuigen");
 
         // content panel
+        
+        cbTypes = new JComboBox<String>(Voertuig.types);
+        cbCategorieen = new JComboBox<String>(Voertuig.categorieen);
+
+        cbTypes.setSelectedItem(null);
+		this.pnlContent.add(new JLabel("Type"), "wrap");
+        this.pnlContent.add(cbTypes, "wrap");
+
+        cbCategorieen.setSelectedItem(null);
+		this.pnlContent.add(new JLabel("Categorie"), "wrap");
+        this.pnlContent.add(cbCategorieen, "wrap");
 
         tblVoertuigen = createVoertuigTable();
         this.pnlContent.add(this.tblVoertuigen.getTableHeader(), "wrap");
@@ -39,6 +65,8 @@ public class VoertuigView extends MasterView<ArrayList<Voertuig>> implements Lis
         this.pnlBotMenu.add(this.btnVerwijderen);
         this.pnlBotMenu.add(this.btnToevoegen);
 
+        cbTypes.addActionListener(this);
+        cbCategorieen.addActionListener(this);
         btnWijzigen.addActionListener(this);
         btnVerwijderen.addActionListener(this);
         btnToevoegen.addActionListener(this);
@@ -50,10 +78,32 @@ public class VoertuigView extends MasterView<ArrayList<Voertuig>> implements Lis
         return model;
     }
 
+    private void rebuildTable()
+    {
+        this.pnlContent.setVisible(false);
+        this.pnlContent.remove(this.tblVoertuigen);
+        this.pnlContent.remove(this.tblVoertuigen.getTableHeader());
+        this.tblVoertuigen = createVoertuigTable();
+        this.pnlContent.add(this.tblVoertuigen.getTableHeader(), "wrap");
+        this.pnlContent.add(this.tblVoertuigen);
+        this.pnlContent.setVisible(true);
+        this.repaint();
+    }
+
     public void actionPerformed(ActionEvent e) {
         super.actionPerformed(e);
 
-        if (e.getSource() == btnToevoegen) {
+        if (e.getSource().equals(cbTypes))
+        {
+            selectedType = (String) cbTypes.getSelectedItem();
+            rebuildTable();
+        }
+        else if(e.getSource().equals(cbCategorieen))
+        {
+            selectedCategorie = (String) cbCategorieen.getSelectedItem();
+            rebuildTable();
+        }
+        else if (e.getSource() == btnToevoegen) {
             runTask("Voertuig", "voertuigToevoegen");
         } else if (selectedVoertuig != null) // only enable this buttons if a Klant
         // is selected
@@ -73,12 +123,12 @@ public class VoertuigView extends MasterView<ArrayList<Voertuig>> implements Lis
     @Override
     public void valueChanged(ListSelectionEvent lse) {
         int index = tblVoertuigen.getSelectedRow();
-        boolean inRange = index >= 0 && index < this.model.size();
+        boolean inRange = index >= 0 && index < this.filteredVoertuigen.size();
 
         if (inRange) {
-            this.selectedVoertuig = this.model.get(index);
-
+            this.selectedVoertuig = this.filteredVoertuigen.get(index);
         }
+        
         btnVerwijderen.setEnabled(inRange);
         btnWijzigen.setEnabled(inRange);
     }
@@ -93,9 +143,14 @@ public class VoertuigView extends MasterView<ArrayList<Voertuig>> implements Lis
         dtm.addColumn("Beschrijving");
         dtm.addColumn("Verhuurbaar");
 
-        for (Voertuig voertuig : model) {
-            dtm.addRow(new Object[]{voertuig.getVoertuigID(), voertuig.getType(), voertuig.getCategorie(), voertuig.getMerk(), voertuig.getKleur(), voertuig.getBeschrijving(), voertuig.getVerhuurbaar()});
+        filteredVoertuigen = new ArrayList<Voertuig>();
 
+        for (Voertuig voertuig : model) {
+            if ((selectedType == null && selectedCategorie == null) || (voertuig.getCategorie().equals(selectedCategorie) && voertuig.getType().equals(selectedType)) || ((selectedType == null && voertuig.getCategorie().equals(selectedCategorie)) || voertuig.getType().equals(selectedType) && selectedCategorie == null))
+            {
+                dtm.addRow(new Object[]{voertuig.getVoertuigID(), voertuig.getType(), voertuig.getCategorie(), voertuig.getMerk(), voertuig.getKleur(), voertuig.getBeschrijving(), voertuig.getVerhuurbaar()});
+                filteredVoertuigen.add(voertuig);
+            }
         }
 
         TableColumnModel tcm = new DefaultTableColumnModel();

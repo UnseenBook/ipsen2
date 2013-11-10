@@ -7,6 +7,9 @@ import leen.meij.utilities.*;
 
 public class Voertuig extends Entity
 {
+	public static final String[] types = {"Scooter","Motor","Personen auto","Bestel bus"};
+
+	public static final String[] categorieen = {"Budget","Familie","Zakelijk","Luxe"};
 
 	private ArrayList<Onderhoud> onderhoud = new ArrayList<Onderhoud>();
 
@@ -43,7 +46,7 @@ public class Voertuig extends Entity
 	private double kilometerPrijs;
 
 	private double borgPrijs;
-	
+
 	public String toString()
 	{
 		return merk + " " + type;

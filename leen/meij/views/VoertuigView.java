@@ -45,11 +45,11 @@ public class VoertuigView extends MasterView<ArrayList<Voertuig>> implements Lis
         cbCategorieen = new JComboBox<String>(Voertuig.categorieen);
 
         cbTypes.setSelectedItem(null);
-		this.pnlContent.add(new JLabel("Type"));
+		this.pnlContent.add(new JLabel("Type"), "wrap");
         this.pnlContent.add(cbTypes, "wrap");
 
         cbCategorieen.setSelectedItem(null);
-		this.pnlContent.add(new JLabel("Categorie"));
+		this.pnlContent.add(new JLabel("Categorie"), "wrap");
         this.pnlContent.add(cbCategorieen, "wrap");
 
         tblVoertuigen = createVoertuigTable();

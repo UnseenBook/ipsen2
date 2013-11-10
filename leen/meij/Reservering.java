@@ -2,8 +2,6 @@ package leen.meij;
 
 import java.util.Date;
 
-
-
 /*****
  * 
  * @author Jovanny Martis
@@ -14,32 +12,33 @@ import leen.meij.utilities.Entity;
 
 public class Reservering extends Entity
 {
-	
+
 	private int reserveringID;
 	private int klantID;
 	private int voertuigID;
 	private Klant klant;
 	private Voertuig voertuig;
-	private Gebruiker gebruiker; //dit is tijdelijk (bij inleverlijst [gereserveerd door: gebruiker x]
+	private Gebruiker gebruiker; // dit is tijdelijk (bij inleverlijst
+									// [gereserveerd door: gebruiker x]
 	private Date reserveerDatum;
 	private Date beginDatum;
 	private Date eindDatum;
 	private int kilometer;
 	private double bedrag;
 	private String status;
-	
+
 	/**
 	 * @author Jovanny
 	 * **/
-	
-	
+
 	public Reservering()
 	{
 		this.klant = null;
 		this.voertuig = null;
 		this.gebruiker = null;
 	}
-	public Reservering(int klantID,Klant klant, Voertuig voertuig,Date begin, Date eind,int kilometer,double bedrag,String status)
+
+	public Reservering(int klantID, Klant klant, Voertuig voertuig, Date begin, Date eind, int kilometer, double bedrag, String status)
 	{
 		this.klantID = klantID;
 		this.klant = klant;
@@ -51,12 +50,11 @@ public class Reservering extends Entity
 		this.status = status;
 	}
 
-	
 	public int getReserveringID()
 	{
 		return this.reserveringID;
 	}
-	
+
 	public void setReserveringID(int reserveringID)
 	{
 		this.reserveringID = reserveringID;
@@ -89,11 +87,12 @@ public class Reservering extends Entity
 	{
 		this.voertuig = voertuig;
 	}
-	
+
 	public Gebruiker getGebruiker()
 	{
 		return gebruiker;
 	}
+
 	public void setGebruiker(Gebruiker gebruiker)
 	{
 		this.gebruiker = gebruiker;
@@ -141,7 +140,7 @@ public class Reservering extends Entity
 	{
 		return this.eindDatum;
 	}
-	
+
 	public int getKilometer()
 	{
 		return this.kilometer;
@@ -161,11 +160,6 @@ public class Reservering extends Entity
 		return this.bedrag;
 	}
 
-	public boolean isValid()
-	{
-		return true;
-	}
-
 	/**
 	 * 
 	 * @param bedrag
@@ -177,7 +171,34 @@ public class Reservering extends Entity
 
 	public void validateFields()
 	{
-	
+		getErrors().clear();
+		if (voertuigID == 0 && (voertuig == null || voertuig.getVoertuigID() == 0))
+		{
+			getErrors().add("Kies a.u.b. een voertuig.");
+			isValid = false;
+		}
+		else if (klantID == 0 && (klant == null || klant.getKlantID() == 0))
+		{
+			getErrors().add("Kies a.u.b. een klant.");
+			isValid = false;
+		}
+		else if (reserveerDatum == null)
+		{
+			getErrors().add("Kies a.u.b. een reserveer datum.");
+			isValid = false;
+		}
+		else if (beginDatum == null)
+		{
+			getErrors().add("Kies a.u.b. een begin datum.");
+		}
+		else if (eindDatum == null)
+		{
+			getErrors().add("Kies a.u.b. een eind datum.");
+		}
+		else
+		{
+			isValid = true;
+		}
 	}
 
 	/**
@@ -197,20 +218,19 @@ public class Reservering extends Entity
 	{
 		this.beginDatum = beginDatum;
 	}
-	
-	
-	//debug set STATUS
+
+	// debug set STATUS
 	public void setStatus(String status)
 	{
 		this.status = status;
 	}
-	
-	//debug get STATUS
+
+	// debug get STATUS
 	public String getStatus()
 	{
 		return status;
 	}
-	
+
 	/**
 	 * 
 	 * @param eindDatum

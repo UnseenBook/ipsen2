@@ -21,7 +21,7 @@ import leen.meij.dataAccess.ReserveringDataAccess;
 
 import com.toedter.calendar.JDateChooser;
 
-public class FactuurView extends MasterView<Factuur> implements ListSelectionListener,ActionListener{
+public class FactuurView extends MasterView<Reservering> implements ListSelectionListener,ActionListener{
 	
 	private JButton btnOpslaan = new JButton("Opslaan");
 	private JButton btnAnnuleren = new JButton("Annuleren");
@@ -49,7 +49,7 @@ public class FactuurView extends MasterView<Factuur> implements ListSelectionLis
 	private ReserveringDataAccess reserveringDataAccess = new ReserveringDataAccess();
 	
 	
-	public FactuurView(Factuur model) {
+	public FactuurView(Reservering model) {
 		super(model);
 		this.reserveringLijst = reserveringDataAccess.selectAll();
 		setTitle("Factuur opmaken");
@@ -145,7 +145,7 @@ public class FactuurView extends MasterView<Factuur> implements ListSelectionLis
 		pnlBotMenu.add(this.btnAnnuleren);
 		
 		setErrorMessages(model.getErrors());
-		//loadModelData();
+		loadModelData();
 	}
 	
 
@@ -175,36 +175,30 @@ public class FactuurView extends MasterView<Factuur> implements ListSelectionLis
 	}
 	private void loadModelData()
 	{
-//		for(Reservering reservering: reserveringLijst)
-//		{
-//		txtreserveringenid.setText(
-//				"V" + // voertuig v
-//				reservering.getVoertuigID() +
-//				"R" + //reservering r
-//				Integer.toString(reservering.getReserveringID()) + 
-//				"K" + //klant k
-//				reservering.getKlantID());
-//		}
-//		for(Reservering reservering: reserveringLijst)
-//		{
-//		txtvoertuigenid.setText
-//			(
-//				"ID" +
-//				Integer.toString(reservering.getVoertuigID()) +
-//				reservering.getVoertuig().getMerk()
-//			);
-//		}
-//		
-//		txtbedrag.setText("\u20ac "+ Double.toString(model.getBedrag()));
-//		//calFactuurdatum.setString(model.getDatum()); 
+		//txtmedewerkernaam.setText(model.getGebruiker().getGebruikersnaam());
+		txtreserveringenid.setText(
+				"V" + // voertuig v
+				Integer.toString(model.getVoertuigID()) +
+				"R" + //reservering r
+				Integer.toString(model.getReserveringID()) + 
+				"K" + //klant k
+				Integer.toString(model.getKlantID())
+				);
+		txtvoertuigenid.setText
+			(
+				"ID" +
+				Integer.toString(model.getVoertuigID()) +
+				model.getVoertuig().getMerk()
+			);
+		txtbedrag.setText("\u20ac "+ Double.toString(model.getBedrag()));
+		calFactuurdatum.setDate(model.getEindDatum()); 
 		
 	}
 
 	@Override
-	protected Factuur getEditedModel() {
+	protected Reservering getEditedModel() {
 		
 		//model.setReserveringID(model.getReserveringID());
-	//	model.set
 		return this.model;
 	}
 

@@ -254,7 +254,6 @@ public class ReserveringDataAccess extends DataAccess
 			
 			preparedStatement = connection.prepareStatement(builder.toString());
 			preparedStatement.setInt(1, reserveringID);
-			System.out.println("KIJK DAAR GAAT IE");
 			resultSet = preparedStatement.executeQuery();
 			
 
@@ -268,7 +267,6 @@ public class ReserveringDataAccess extends DataAccess
 		}
 		catch (SQLException sqle)
 		{
-			System.out.println("NEE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 			sqle.printStackTrace();
 		}
 		finally

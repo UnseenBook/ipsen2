@@ -103,12 +103,12 @@ public class ReserveringController extends Controller
 	 */
 	public View factuurOpmakenTask(Integer reserveringID)
 	{
-		Factuur factuur = reserveringDataAccess.selectFactuur(reserveringID);
-		if (factuur != null)
+		Reservering reservering = reserveringDataAccess.select(reserveringID);
+		if (reservering != null)
 		{
-			return new FactuurView(factuur);
+			return new FactuurView(reservering);
 		}
-		return new FactuurView(new Factuur());
+		return new FactuurView(reservering);
 	}
 	
 	

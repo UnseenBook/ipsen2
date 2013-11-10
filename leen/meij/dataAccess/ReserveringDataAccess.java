@@ -126,6 +126,22 @@ public class ReserveringDataAccess extends DataAccess
 
 	
 	
+	private int fillStatement(Factuur factuur) throws SQLException
+	{
+		int i = 1;
+
+		preparedStatement.setInt(i++, factuur.getReserveringID());
+		preparedStatement.setInt(i++, factuur.getFactuurnummer());
+		preparedStatement.setString(i++, factuur.getDatum());
+		preparedStatement.setString(i++, factuur.getReden());
+		preparedStatement.setDouble(i++, factuur.getBedrag());
+	
+
+
+
+		return i;
+	}
+	
 	/**
 	 * 
 	 * @param reserveringID
@@ -457,65 +473,65 @@ public class ReserveringDataAccess extends DataAccess
 	
 	}
 
-//	public Factuur add(Factuur factuur)
-//	{
-//
-//		openConnection();
-//		
-//		Factuur tempFactuur;
-//
-//		StringBuilder builder = new StringBuilder("INSERT INTO factuur (");
-//
-//		builder.append("id,");
-//		builder.append("voertuigenid,");
-//		builder.append("reserveerdatum,");
-//		builder.append("begindatum,");
-//		builder.append("einddatum,");
-//		builder.append("kilometer,");
-//		builder.append("bedrag,");
-//		builder.append("status) ");
-//		builder.append("VALUES (?,?,?,?,?,?,?,?)");
-//		builder.append("RETURNING *");
-//
-//		try
-//		{
-//			preparedStatement = connection.prepareStatement(builder.toString());
-//																																				
-//			fillStatementFactuur(factuur);
-//			resultSet = preparedStatement.executeQuery();
-//
-//			if (resultSet.next())
-//			{
-//		
-//				factuur = tempFactuur;
-//			}
-//		}
-//		catch (SQLException sqle)
-//		{
-//			sqle.printStackTrace();
-//		}
-//		finally
-//		{
-//			if (resultSet != null) try
-//			{
-//				resultSet.close();
-//			}
-//			catch (SQLException negeer)
-//			{
-//			}
-//			if (preparedStatement != null) try
-//			{
-//				preparedStatement.close();
-//			}
-//			catch (SQLException negeer)
-//			{
-//			}
-//			closeConnection();
-//		}
-//		return factuur;
-//
-//	
-//	}
+	public Factuur add(Factuur factuur)
+	{
+
+		openConnection();
+		
+		Factuur tempFactuur;
+
+		StringBuilder builder = new StringBuilder("INSERT INTO factuur (");
+
+		builder.append("id,");
+		builder.append("voertuigenid,");
+		builder.append("reserveerdatum,");
+		builder.append("begindatum,");
+		builder.append("einddatum,");
+		builder.append("kilometer,");
+		builder.append("bedrag,");
+		builder.append("status) ");
+		builder.append("VALUES (?,?,?,?,?,?,?,?)");
+		builder.append("RETURNING *");
+
+		try
+		{
+			preparedStatement = connection.prepareStatement(builder.toString());
+																																				
+			fillStatement(factuur);
+			resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next())
+			{
+				tempFactuur = buildFactuurModel();
+				factuur = tempFactuur;
+			}
+		}
+		catch (SQLException sqle)
+		{
+			sqle.printStackTrace();
+		}
+		finally
+		{
+			if (resultSet != null) try
+			{
+				resultSet.close();
+			}
+			catch (SQLException negeer)
+			{
+			}
+			if (preparedStatement != null) try
+			{
+				preparedStatement.close();
+			}
+			catch (SQLException negeer)
+			{
+			}
+			closeConnection();
+		}
+		return factuur;
+
+	
+	}
 	
 	
 	/**

@@ -58,6 +58,16 @@ public class ReserveringController extends Controller
 		}
 		return new ReserveringDetailsView(reservering);
 	}
+	
+	public View factuurToevoegenTask(Factuur factuur)
+	{
+		factuur.validateFields();
+		if(factuur.isValid())
+		{
+			factuur = reserveringDataAccess.add(factuur);
+			return inleverlijstRaadplegenTask();
+		}
+	}
 
 	/**
 	 * 

@@ -132,9 +132,9 @@ public class ReserveringDataAccess extends DataAccess
 
 		preparedStatement.setInt(i++, factuur.getReserveringID());
 		preparedStatement.setInt(i++, factuur.getFactuurnummer());
+		preparedStatement.setDouble(i++, factuur.getBedrag());
 		preparedStatement.setString(i++, factuur.getDatum());
 		preparedStatement.setString(i++, factuur.getReden());
-		preparedStatement.setDouble(i++, factuur.getBedrag());
 	
 
 
@@ -482,15 +482,12 @@ public class ReserveringDataAccess extends DataAccess
 
 		StringBuilder builder = new StringBuilder("INSERT INTO factuur (");
 
-		builder.append("id,");
-		builder.append("voertuigenid,");
-		builder.append("reserveerdatum,");
-		builder.append("begindatum,");
-		builder.append("einddatum,");
-		builder.append("kilometer,");
+		builder.append("reserveringenid,");
+		builder.append("factuurnummer,");
 		builder.append("bedrag,");
-		builder.append("status) ");
-		builder.append("VALUES (?,?,?,?,?,?,?,?)");
+		builder.append("datum,");
+		builder.append("reden,");
+		builder.append("VALUES (?,?,?,?,?)");
 		builder.append("RETURNING *");
 
 		try

@@ -1,17 +1,10 @@
 
 package leen.meij.controllers;
 
-import leen.meij.Factuur;
-import leen.meij.Reservering;
-import leen.meij.dataAccess.ReserveringDataAccess;
-import leen.meij.utilities.Controller;
-import leen.meij.utilities.View;
-import leen.meij.views.FactuurView;
-import leen.meij.views.HuurLijstView;
-import leen.meij.views.InleverLijstView;
-import leen.meij.views.RapportView;
-import leen.meij.views.ReserveringDetailsView;
-import leen.meij.views.ReserveringView;
+import leen.meij.*;
+import leen.meij.dataAccess.*;
+import leen.meij.utilities.*;
+import leen.meij.views.*;
 
 /**
  * 
@@ -22,6 +15,9 @@ public class ReserveringController extends Controller
 {
 	
 	private ReserveringDataAccess reserveringDataAccess = new ReserveringDataAccess();
+	private KlantDataAccess klantDataAccess = new KlantDataAccess();
+	private VoertuigDataAccess voertuigDataAccess = new VoertuigDataAccess();
+	
 	/**
 	 * Shows the reserveringen overzicht View.
 	 */
@@ -59,15 +55,7 @@ public class ReserveringController extends Controller
 		return new ReserveringDetailsView(reservering);
 	}
 	
-	public View factuurToevoegenTask(Factuur factuur)
-	{
-		factuur.validateFields();
-		if(factuur.isValid())
-		{
-			factuur = reserveringDataAccess.add(factuur);
-			return inleverlijstRaadplegenTask();
-		}
-	}
+
 
 	/**
 	 * 
@@ -106,23 +94,40 @@ public class ReserveringController extends Controller
 		
 		return reserveringOverzichtRaadplegenTask();
 	}
-
+	
+	public View factuurToevoegenTask(Factuur factuur)
+	{
+		factuur.validateFields();
+		if(factuur.isValid())
+		{
+			factuur = reserveringDataAccess.add(factuur);
+			return inleverlijstRaadplegenTask();
+		}
+		factuur.setReservering(reserveringDataAccess.select(factuur.getReserveringID()));
+		factuur.getReservering().setKlant(klantDataAccess.select(factuur.getReservering().getKlantID()));
+		factuur.getReservering().setVoertuig(voertuigDataAccess.select(factuur.getReservering().getVoertuigID()));
+		
+		return new FactuurView(factuur);
+	}
+	
 	/**
 	 * 
 	 * @param reserveringID
 	 */
 	public View factuurOpmakenTask(Integer reserveringID)
 	{
-		Reservering reservering = reserveringDataAccess.select(reserveringID);
-		if (reservering != null)
+		Factuur factuur = reserveringDataAccess.selectFactuur(reserveringID);
+		if(factuur == null)
 		{
-			return new FactuurView(reservering);
+			factuur = new Factuur();
+			factuur.setReserveringID(reserveringID);
 		}
-		return new FactuurView(reservering);
+		factuur.setReservering(reserveringDataAccess.select(factuur.getReserveringID()));
+		factuur.getReservering().setKlant(klantDataAccess.select(factuur.getReservering().getKlantID()));
+		factuur.getReservering().setVoertuig(voertuigDataAccess.select(factuur.getReservering().getVoertuigID()));
+		
+		return new FactuurView(factuur);
 	}
-	
-	
-	
 
 	public View huurlijstOverzichtRaadplegenTask()
 	{

@@ -15,18 +15,19 @@ public class ReserveringDataAccess extends DataAccess
 
 	private KlantDataAccess klantDataAccess = new KlantDataAccess();
 	private VoertuigDataAccess voertuigDataAccess = new VoertuigDataAccess();
-	
+
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
-	
+
 	private Reservering buildReserveringModel() throws SQLException
 	{
 		Reservering reservering = new Reservering();
-		
+
 		if (heeftKolom(resultSet, "id"))
 		{
 			reservering.setReserveringID(resultSet.getInt("id"));
-		} else
+		}
+		else
 		{
 			reservering.setReserveringID(resultSet.getInt("reservering_id"));
 		}
@@ -34,7 +35,8 @@ public class ReserveringDataAccess extends DataAccess
 		if (heeftKolom(resultSet, "klant_id"))
 		{
 			reservering.setKlant(klantDataAccess.buildModel(resultSet));
-		} else
+		}
+		else
 		{
 			reservering.setKlant(null);
 		}
@@ -42,7 +44,8 @@ public class ReserveringDataAccess extends DataAccess
 		if (heeftKolom(resultSet, "voertuig_id"))
 		{
 			reservering.setVoertuig(voertuigDataAccess.buildVoertuigModel(resultSet));
-		} else
+		}
+		else
 		{
 			reservering.setVoertuig(null);
 		}
@@ -55,7 +58,7 @@ public class ReserveringDataAccess extends DataAccess
 
 		return reservering;
 	}
-	
+
 	private int fillStatement(Reservering reservering) throws SQLException
 	{
 		int i = 1;
@@ -63,7 +66,7 @@ public class ReserveringDataAccess extends DataAccess
 		preparedStatement.setInt(i++, reservering.getKlant().getKlantID());
 		preparedStatement.setInt(i++, reservering.getVoertuig().getVoertuigID());
 		preparedStatement.setDate(i++, new java.sql.Date(reservering.getReserveerDatum().getTime()));
-		preparedStatement.setDate(i++,  new java.sql.Date(reservering.getBeginDatum().getTime()));
+		preparedStatement.setDate(i++, new java.sql.Date(reservering.getBeginDatum().getTime()));
 		preparedStatement.setDate(i++, new java.sql.Date(reservering.getEindDatum().getTime()));
 		preparedStatement.setInt(i++, reservering.getKilometer());
 		preparedStatement.setDouble(i++, reservering.getBedrag());
@@ -71,13 +74,12 @@ public class ReserveringDataAccess extends DataAccess
 
 		return i;
 	}
-	
-	
+
 	private Factuur buildFactuurModel() throws SQLException
 	{
 		Factuur factuur = new Factuur();
-		
-		if(heeftKolom(resultSet, "id"))
+
+		if (heeftKolom(resultSet, "id"))
 		{
 			factuur.setFactuurID(resultSet.getInt("id"));
 		}
@@ -85,8 +87,8 @@ public class ReserveringDataAccess extends DataAccess
 		{
 			factuur.setFactuurID(resultSet.getInt("factuur_id"));
 		}
-		
-		if(heeftKolom(resultSet, "reservering_id"))
+
+		if (heeftKolom(resultSet, "reservering_id"))
 		{
 			factuur.setReserveringID(resultSet.getInt("reservering_id"));
 		}
@@ -94,7 +96,7 @@ public class ReserveringDataAccess extends DataAccess
 		{
 			System.out.println("Fout id");
 		}
-		if(heeftKolom(resultSet, "factuurnummer"))
+		if (heeftKolom(resultSet, "factuurnummer"))
 		{
 			factuur.setFactuurnummer(resultSet.getInt("factuurnummer"));
 		}
@@ -103,15 +105,10 @@ public class ReserveringDataAccess extends DataAccess
 			factuur.setFactuurnummer(0);
 			System.out.println("Fout factuurnummer");
 		}
-		if(heeftKolom(resultSet, "datum"))
-		{
-			factuur.setDatum(resultSet.getString("datum"));
-		}
-		else
-		{
-			factuur.setDatum("dd-mm-yyyy");
-		}
-		if(heeftKolom(resultSet, "reden"))
+		factuur.setDatum(resultSet.getDate("datum"));
+		factuur.setBedrag(resultSet.getDouble("bedrag"));
+		
+		if (heeftKolom(resultSet, "reden"))
 		{
 			factuur.setReden(resultSet.getString("reden"));
 		}
@@ -119,29 +116,33 @@ public class ReserveringDataAccess extends DataAccess
 		{
 			factuur.setReden("");
 		}
-		
+
 		return factuur;
-		
+
 	}
 
-	
-	
-	private int fillStatement(Factuur factuur) throws SQLException
+	private int fillStatement(Factuur factuur, boolean setReserveringid) throws SQLException
 	{
 		int i = 1;
-
-		preparedStatement.setInt(i++, factuur.getReserveringID());
+		if (setReserveringid)
+		{
+			preparedStatement.setInt(i++, factuur.getReserveringID());
+		}
 		preparedStatement.setInt(i++, factuur.getFactuurnummer());
 		preparedStatement.setDouble(i++, factuur.getBedrag());
-		preparedStatement.setString(i++, factuur.getDatum());
-		preparedStatement.setString(i++, factuur.getReden());
-	
-
-
+		if (factuur.getDatum() != null)
+		{
+			preparedStatement.setDate(i++, new java.sql.Date(factuur.getDatum().getTime()));
+		}
+		else
+		{
+			preparedStatement.setDate(i++, new java.sql.Date(new java.util.Date().getTime()));
+		}
+		preparedStatement.setString(i++,( factuur.getReden() == null ? "" :factuur.getReden()) );
 
 		return i;
 	}
-	
+
 	/**
 	 * 
 	 * @param reserveringID
@@ -149,7 +150,7 @@ public class ReserveringDataAccess extends DataAccess
 	public Reservering select(int reserveringID)
 	{
 		openConnection();
-		
+
 		Reservering reservering;
 
 		StringBuilder builder = new StringBuilder("SELECT ");
@@ -203,7 +204,6 @@ public class ReserveringDataAccess extends DataAccess
 		builder.append("AND R.id = ? ");
 		builder.append("ORDER BY R.id");
 
-
 		try
 		{
 
@@ -215,7 +215,7 @@ public class ReserveringDataAccess extends DataAccess
 			if (resultSet.next())
 			{
 				reservering = buildReserveringModel();
-				
+
 				return reservering;
 			}
 		}
@@ -244,20 +244,19 @@ public class ReserveringDataAccess extends DataAccess
 
 		return null;
 	}
-	
-	
-	//temporary Factuur select
+
+	// temporary Factuur select
 	public Factuur selectFactuur(int reserveringID)
 	{
 		openConnection();
-		
+
 		Factuur factuur;
 
 		try
 		{
 
 			StringBuilder builder = new StringBuilder("SELECT ");
-			
+
 			builder.append("F.id AS factuur_id, ");
 			builder.append("R.id AS reservering_id, ");
 			builder.append("F.factuurnummer, ");
@@ -266,18 +265,16 @@ public class ReserveringDataAccess extends DataAccess
 			builder.append("F.reden ");
 			builder.append("FROM factuur AS F, ");
 			builder.append("reservering AS R ");
-			builder.append("WHERE R.id = ?");
-			
+			builder.append("WHERE F.reserveringenid = ?");
+
 			preparedStatement = connection.prepareStatement(builder.toString());
 			preparedStatement.setInt(1, reserveringID);
 			resultSet = preparedStatement.executeQuery();
-			
 
 			if (resultSet.next())
 			{
-				System.out.println("ZOZO TOCH GELUKT HE");
 				factuur = buildFactuurModel();
-				
+
 				return factuur;
 			}
 		}
@@ -306,7 +303,6 @@ public class ReserveringDataAccess extends DataAccess
 
 		return null;
 	}
-	
 
 	public ArrayList<Reservering> selectAll()
 	{
@@ -374,7 +370,7 @@ public class ReserveringDataAccess extends DataAccess
 				reservering.add(buildReserveringModel());
 			}
 			return reservering;
-			
+
 		}
 		catch (SQLException sqle)
 		{
@@ -409,26 +405,26 @@ public class ReserveringDataAccess extends DataAccess
 	{
 
 		openConnection();
-		
+
 		Reservering tempReservering;
 
-		StringBuilder builder = new StringBuilder("INSERT INTO reservering (");
+		StringBuilder builder = new StringBuilder("INSERT INTO reservering ( ");
 
-		builder.append("klantenid,");
-		builder.append("voertuigenid,");
-		builder.append("reserveerdatum,");
-		builder.append("begindatum,");
-		builder.append("einddatum,");
-		builder.append("kilometer,");
-		builder.append("bedrag,");
+		builder.append("klantenid, ");
+		builder.append("voertuigenid, ");
+		builder.append("reserveerdatum, ");
+		builder.append("begindatum, ");
+		builder.append("einddatum, ");
+		builder.append("kilometer, ");
+		builder.append("bedrag, ");
 		builder.append("status) ");
-		builder.append("VALUES (?,?,?,?,?,?,?,?)");
+		builder.append("VALUES (?,?,?,?,?,?,?,?) ");
 		builder.append("RETURNING *");
 
 		try
 		{
 			preparedStatement = connection.prepareStatement(builder.toString());
-																																				
+
 			fillStatement(reservering);
 			resultSet = preparedStatement.executeQuery();
 
@@ -439,7 +435,8 @@ public class ReserveringDataAccess extends DataAccess
 				{
 					tempReservering.setKlant(reservering.getKlant());
 					tempReservering.setVoertuig(reservering.getVoertuig());
-				} else if (tempReservering.getKlant() == null ^ tempReservering.getVoertuig() == null)
+				}
+				else if (tempReservering.getKlant() == null ^ tempReservering.getVoertuig() == null)
 				{
 					System.out.println("Het gaat anders dan je dacht Daan");
 				}
@@ -470,37 +467,56 @@ public class ReserveringDataAccess extends DataAccess
 		}
 		return reservering;
 
-	
 	}
 
 	public Factuur add(Factuur factuur)
 	{
 
 		openConnection();
-		
+
 		Factuur tempFactuur;
-
-		StringBuilder builder = new StringBuilder("INSERT INTO factuur (");
-
-		builder.append("reserveringenid,");
-		builder.append("factuurnummer,");
-		builder.append("bedrag,");
-		builder.append("datum,");
-		builder.append("reden,");
-		builder.append("VALUES (?,?,?,?,?)");
-		builder.append("RETURNING *");
 
 		try
 		{
-			preparedStatement = connection.prepareStatement(builder.toString());
-																																				
-			fillStatement(factuur);
+			if (factuur.getFactuurID() == 0)
+			{
+				StringBuilder builder = new StringBuilder("INSERT INTO factuur ( ");
+
+				builder.append("reserveringenid, ");
+				builder.append("factuurnummer, ");
+				builder.append("bedrag, ");
+				builder.append("datum, ");
+				builder.append("reden) ");
+				builder.append("VALUES (?,?,?,?,?) ");
+				builder.append("RETURNING *");
+
+				preparedStatement = connection.prepareStatement(builder.toString());
+
+				fillStatement(factuur, true);
+			}
+			else
+			{
+				StringBuilder builder = new StringBuilder("UPDATE factuur SET ");
+
+				builder.append("factuurnummer = ?, ");
+				builder.append("bedrag = ?, ");
+				builder.append("datum = ?, ");
+				builder.append("reden = ? ");
+				builder.append("WHERE reserveringenid = ? ");
+				builder.append("RETURNING *");
+
+				preparedStatement = connection.prepareStatement(builder.toString());
+
+				int index = fillStatement(factuur, false);
+				preparedStatement.setInt(index++, factuur.getReserveringID());
+			}
 			resultSet = preparedStatement.executeQuery();
 
 			if (resultSet.next())
 			{
-				tempFactuur = buildFactuurModel();
-				factuur = tempFactuur;
+				int reserveringenid = resultSet.getInt("reserveringenid");
+				factuur = selectFactuur(reserveringenid);
+
 			}
 		}
 		catch (SQLException sqle)
@@ -527,10 +543,8 @@ public class ReserveringDataAccess extends DataAccess
 		}
 		return factuur;
 
-	
 	}
-	
-	
+
 	/**
 	 * 
 	 * @param klantID
@@ -538,7 +552,7 @@ public class ReserveringDataAccess extends DataAccess
 	public void delete(int reserveringID)
 	{
 		openConnection();
-		
+
 		try
 		{
 
@@ -571,13 +585,12 @@ public class ReserveringDataAccess extends DataAccess
 		}
 	}
 
-
 	public Reservering edit(Reservering reservering)
 	{
 		openConnection();
 
 		Reservering tempReservering;
-		
+
 		StringBuilder builder = new StringBuilder("UPDATE reservering SET ");
 
 		builder.append("klantenid=?,");
@@ -598,14 +611,15 @@ public class ReserveringDataAccess extends DataAccess
 			int index = this.fillStatement(reservering);
 			preparedStatement.setInt(index++, reservering.getReserveringID());
 			resultSet = preparedStatement.executeQuery();
-			if(resultSet.next())
+			if (resultSet.next())
 			{
 				tempReservering = buildReserveringModel();
 				if (tempReservering.getKlant() == null && tempReservering.getVoertuig() == null)
 				{
 					tempReservering.setKlant(reservering.getKlant());
 					tempReservering.setVoertuig(reservering.getVoertuig());
-				} else if (tempReservering.getKlant() == null ^ tempReservering.getVoertuig() == null)
+				}
+				else if (tempReservering.getKlant() == null ^ tempReservering.getVoertuig() == null)
 				{
 					System.out.println("Het gaat anders dan je dacht Daan");
 				}
@@ -613,8 +627,7 @@ public class ReserveringDataAccess extends DataAccess
 			}
 		}
 
-		
-		catch(SQLException sqle)
+		catch (SQLException sqle)
 		{
 			sqle.printStackTrace();
 		}
@@ -634,7 +647,7 @@ public class ReserveringDataAccess extends DataAccess
 			catch (SQLException negeer)
 			{
 			}
-			closeConnection();	
+			closeConnection();
 		}
 		return reservering;
 	}

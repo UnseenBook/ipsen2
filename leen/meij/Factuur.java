@@ -1,6 +1,8 @@
 
 package leen.meij;
 
+import java.util.Date;
+
 import leen.meij.utilities.*;
 
 public class Factuur extends Entity
@@ -16,7 +18,7 @@ public class Factuur extends Entity
 
 	private double bedrag;
 
-	private String datum;
+	private Date datum;
 
 	private String reden;
 
@@ -88,7 +90,7 @@ public class Factuur extends Entity
 		this.bedrag = bedrag;
 	}
 
-	public String getDatum()
+	public Date getDatum()
 	{
 		return this.datum;
 	}
@@ -97,7 +99,7 @@ public class Factuur extends Entity
 	 * 
 	 * @param datum
 	 */
-	public void setDatum(String datum)
+	public void setDatum(Date datum)
 	{
 		this.datum = datum;
 	}
@@ -132,8 +134,7 @@ public class Factuur extends Entity
 
 	public void validateFields()
 	{
-		// TODO - implement {class}.{operation}
-		throw new UnsupportedOperationException();
+		isValid = true;
 	}
 
 }

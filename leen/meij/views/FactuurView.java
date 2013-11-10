@@ -16,12 +16,13 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import leen.meij.Factuur;
+import leen.meij.Klant;
 import leen.meij.Reservering;
 import leen.meij.dataAccess.ReserveringDataAccess;
 
 import com.toedter.calendar.JDateChooser;
 
-public class FactuurView extends MasterView<Reservering> implements ListSelectionListener,ActionListener{
+public class FactuurView extends MasterView<Factuur> implements ListSelectionListener,ActionListener{
 	
 	private JButton btnOpslaan = new JButton("Opslaan");
 	private JButton btnAnnuleren = new JButton("Annuleren");
@@ -33,11 +34,8 @@ public class FactuurView extends MasterView<Reservering> implements ListSelectio
 	private JTextField txtklantpostcode = new JTextField(6);
 	private JTextField txtklantplaats = new JTextField(8);
 	//bedrijf[leenmeij]
-	private JTextField txtmedewerkernaam = new JTextField(10);
-	private JTextField txtmedewerkerafdeling = new JTextField(10);
-	private JTextField txtmedewerkertelefoon  = new JTextField(10);
+
 	private JTextField txtbedrijfemail = new JTextField(10);
-	private JTextField txtbedrijfbankrek = new JTextField(15);
 	private JTextField txtreserveringenid = new JTextField(8);
 	private JTextField txtvoertuigenid = new JTextField(8);
 	private JTextField txtbedrag = new JTextField(8);
@@ -49,7 +47,8 @@ public class FactuurView extends MasterView<Reservering> implements ListSelectio
 	private ReserveringDataAccess reserveringDataAccess = new ReserveringDataAccess();
 	
 	
-	public FactuurView(Reservering model) {
+	
+	public FactuurView(Factuur model) {
 		super(model);
 		this.reserveringLijst = reserveringDataAccess.selectAll();
 		setTitle("Factuur opmaken");
@@ -84,9 +83,8 @@ public class FactuurView extends MasterView<Reservering> implements ListSelectio
 	
 		pnlContent.add(new JLabel ("Adres: "));
 		pnlContent.add(txtklantadres, wrap +span2);
-		pnlContent.add(new JLabel("Medewerker"), "pos 515px 90px,");
-		pnlContent.add(txtmedewerkernaam,"pos 600px 90px, ");
-		txtmedewerkernaam.setEditable(false);
+
+
 		pnlContent.add(new JLabel("postcode"));
 		pnlContent.add(txtklantpostcode, span3);
 		pnlContent.add(txtklantplaats, span2 + wrap);
@@ -101,12 +99,8 @@ public class FactuurView extends MasterView<Reservering> implements ListSelectio
 		txtreden.setToolTipText("Opmerking");
 	
 		
-		//factuur kop-rechts
-		pnlContent.add(new JLabel("Afdeling"), span2 + "pos 515px 120px,");
-		pnlContent.add(txtmedewerkerafdeling, "pos 600px 120px, ");
 		
-		pnlContent.add(new JLabel("Telefoon"), span2 + "pos 515px 150px, ");
-		pnlContent.add(txtmedewerkertelefoon, " pos 600px 150px, ");
+		//factuur kop-rechts
 		
 		pnlContent.add(new JLabel("E-mail"), span2 + "pos 515px 180px, ");
 		pnlContent.add(txtbedrijfemail, span2 + "pos 600px 180px, ");
@@ -128,12 +122,21 @@ public class FactuurView extends MasterView<Reservering> implements ListSelectio
 		pnlContent.add(new JLabel("Datum"),span2 + "pos 515px 300px, ");
 		pnlContent.add(calFactuurdatum, span2 + "pos 600px 300px, ");
 		calFactuurdatum.setToolTipText("Factuur datum");
-		calFactuurdatum.setEnabled(false);
+		
 	
 //		//row 5
 //	
 //		
 			
+		txtbedrijfemail.setEditable(false);
+		txtklantadres.setEditable(false);
+		txtklantnaam.setEditable(false);
+		txtklantplaats.setEditable(false);
+		txtklantpostcode.setEditable(false);
+		txtreserveringenid.setEditable(false);
+		txtvoertuigenid.setEditable(false);
+		
+		
 		//buttons
 		btnAnnuleren.setToolTipText("Terug naar overzicht");
 		btnAnnuleren.addActionListener(this);
@@ -155,12 +158,7 @@ public class FactuurView extends MasterView<Reservering> implements ListSelectio
 	
 		if(e.getSource() == btnOpslaan)
 		{
-			if(model.getReserveringID() == 0)
-			{
-				runTask("Reservering", "reserveringToevoegen",
-						new Object[] { getEditedModel() });
-			}
-			
+			runTask("Reservering", "factuurToevoegen",	new Object[]{ getEditedModel() });
 		}
 		else if(e.getSource() == btnAnnuleren)
 		{
@@ -169,12 +167,30 @@ public class FactuurView extends MasterView<Reservering> implements ListSelectio
 	}
 
 	@Override
-	public void valueChanged(ListSelectionEvent e) {
+	public void valueChanged(ListSelectionEvent e) 
+	{
 		// TODO Auto-generated method stub
 		
 	}
 	private void loadModelData()
 	{
+		// model data that is saved/edited
+		calFactuurdatum.setDate(model.getDatum());
+		txtreden.setText(model.getReden());
+		txtbedrag.setText(String.valueOf(model.getBedrag()));
+		
+		Klant klant = model.getReservering().getKlant();
+		
+		txtbedrijfemail.setText(klant.getEmailadres());
+		txtklantadres.setText(klant.getStraat() + " " + klant.getHuisNummer());
+		txtklantnaam.setText(klant.getVolledigeNaam());
+		txtklantplaats.setText(klant.getWoonplaats());
+		txtklantpostcode.setText(klant.getPostcode());
+
+		
+		txtvoertuigenid.setText(model.getReservering().getVoertuig().toString());
+		
+		/*
 		//txtmedewerkernaam.setText(model.getGebruiker().getGebruikersnaam());
 		txtreserveringenid.setText(
 				"V" + // voertuig v
@@ -192,13 +208,19 @@ public class FactuurView extends MasterView<Reservering> implements ListSelectio
 			);
 		txtbedrag.setText("\u20ac "+ Double.toString(model.getBedrag()));
 		calFactuurdatum.setDate(model.getEindDatum()); 
+		*/
 		
 	}
 
 	@Override
-	protected Reservering getEditedModel() {
+	protected Factuur getEditedModel() {
 		
-		//model.setReserveringID(model.getReserveringID());
+		// model data that is saved/edited
+		model.setDatum(calFactuurdatum.getDate());
+		model.setReden(txtreden.getText());
+		model.setBedrag(Double.valueOf(txtbedrag.getText()));
+		
+		
 		return this.model;
 	}
 

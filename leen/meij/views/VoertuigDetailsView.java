@@ -316,7 +316,7 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
 	{
 		try
 		{
-			return Integer.parseInt(string);
+			return Double.parseDouble(string);
 		}
 		catch (NumberFormatException ex)
 		{

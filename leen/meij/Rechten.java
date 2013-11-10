@@ -27,6 +27,11 @@ public final class Rechten
 
 	public static final int All = (1 << 31) - 1; // set all bits to 1
 
+	/**
+	 * Returns a value indicating wether the current Gebruiker has a specified recht.
+	 * @param recht The recht to check.
+	 * @return A value indicating wether the current Gebruiker has the specified recht.
+	 */
 	public static boolean heeftRecht(int recht)
 	{
 		int rechten = 0;

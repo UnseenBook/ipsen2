@@ -1,14 +1,16 @@
 package leen.meij;
 
+import java.util.ArrayList;
 import java.util.Date;
 
+import leen.meij.dataAccess.ReserveringDataAccess;
+import leen.meij.utilities.Entity;
 /*****
  * 
  * @author Jovanny Martis
  * 
  * 
  */
-import leen.meij.utilities.Entity;
 
 public class Reservering extends Entity
 {
@@ -169,6 +171,26 @@ public class Reservering extends Entity
 		this.bedrag = bedrag;
 	}
 
+	private boolean gereserveerd()
+	{
+		ReserveringDataAccess reserveringDataAccess = new ReserveringDataAccess();
+		ArrayList<Reservering> reserveringen = reserveringDataAccess.selectDatumByVoertuigID(voertuigID);
+
+		Date reserveringBeginDatum;
+		Date reserveringEindDatum;
+
+		for (Reservering reservering : reserveringen)
+		{
+			reserveringBeginDatum = new Date(reservering.getBeginDatum().getTime());
+			reserveringEindDatum = new Date(reservering.getEindDatum().getTime());
+			if ((! beginDatum.before(reservering.getBeginDatum()) && ! beginDatum.after(reservering.getEindDatum())) || (! eindDatum.before(reservering.getBeginDatum()) && ! eindDatum.after(reservering.getEindDatum())))
+			{
+				return false;
+			}
+		}
+		return true;
+	}
+
 	public void validateFields()
 	{
 		getErrors().clear();
@@ -195,6 +217,17 @@ public class Reservering extends Entity
 		else if (eindDatum == null)
 		{
 			getErrors().add("Kies a.u.b. een eind datum.");
+			isValid = false;
+		}
+		else if (gereserveerd())
+		{
+			getErrors().add("Het geselecteerde voertuig is in deze tijd al gereserveerd.");
+			isValid = false;
+		}
+		else if (! voertuig.getVerhuurbaar())
+		{
+			getErrors().add("Dit voertuig is op het moment niet verhuurbaar. Kies a.u.b. een ander voertuig.");
+			isValid = false;
 		}
 		else
 		{

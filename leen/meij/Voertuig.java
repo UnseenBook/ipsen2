@@ -49,7 +49,7 @@ public class Voertuig extends Entity
 
 	public String toString()
 	{
-		return merk + " " + type;
+		return type + ", " +  categorie + ", " + merk;
 	}
 	
 	public Voertuig(){}

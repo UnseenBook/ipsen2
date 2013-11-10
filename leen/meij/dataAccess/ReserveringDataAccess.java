@@ -304,6 +304,58 @@ public class ReserveringDataAccess extends DataAccess
 		return null;
 	}
 
+	public ArrayList<Reservering> selectDatumByVoertuigID(int voertuigID)
+	{
+		ArrayList<Reservering> reservering = new ArrayList<Reservering>();
+		openConnection();
+		StringBuilder builder = new StringBuilder("SELECT ");
+		builder.append("id,");
+		builder.append("klantenid,");
+		builder.append("voertuigenid,");
+		builder.append("reserveerdatum,");
+		builder.append("begindatum,");
+		builder.append("einddatum ");
+		builder.append("FROM reservering ");
+		builder.append("WHERE voertuigenid = ? ");
+
+		try
+		{
+			preparedStatement = connection.prepareStatement(builder.toString());
+			preparedStatement.setInt(1, voertuigID);
+			resultSet = preparedStatement.executeQuery();
+
+			while (resultSet.next())
+			{
+				reservering.add(buildReserveringModel());
+			}
+			return reservering;
+
+		}
+		catch (SQLException sqle)
+		{
+			sqle.printStackTrace();
+		}
+		finally
+		{
+			if (resultSet != null) try
+			{
+				resultSet.close();
+			}
+			catch (SQLException negeer)
+			{
+			}
+			if (preparedStatement != null) try
+			{
+				preparedStatement.close();
+			}
+			catch (SQLException negeer)
+			{
+			}
+			closeConnection();
+		}
+		return null;
+	}
+
 	public ArrayList<Reservering> selectAll()
 	{
 		ArrayList<Reservering> reservering = new ArrayList<Reservering>();

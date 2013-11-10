@@ -3,9 +3,8 @@ package leen.meij.views;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -86,14 +85,17 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 		// Combobox Voertuig vullen
 		for (Voertuig voertuig : voertuigLijst)
 		{
-			if (model.getVoertuig() != null && model.getVoertuig().getVoertuigID() == voertuig.getVoertuigID())
-			{
-				cbVoertuig.addItem(model.getVoertuig());
-			}
-			else
-			{
-				cbVoertuig.addItem(voertuig);
-			}
+			//if (voertuig.getVerhuurbaar())
+			//{
+				if (model.getVoertuig() != null && model.getVoertuig().getVoertuigID() == voertuig.getVoertuigID())
+				{
+					cbVoertuig.addItem(model.getVoertuig());
+				}
+				else
+				{
+					cbVoertuig.addItem(voertuig);
+				}
+			//}
 		}
 
 		// row 1
@@ -193,10 +195,12 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 
 	protected Reservering getEditedModel()
 	{
-
+		model.setKlantID(((Klant) cbKlant.getSelectedItem()).getKlantID());
 		model.setKlant((Klant) cbKlant.getSelectedItem());
+		model.setVoertuigID(((Voertuig) cbVoertuig.getSelectedItem()).getVoertuigID());
 		model.setVoertuig((Voertuig) cbVoertuig.getSelectedItem());
 		model.setReserveerDatum(dcReserveerDatum.getDate());
+		model.setBeginDatum(dcBeginDatum.getDate());
 		model.setBeginDatum(dcBeginDatum.getDate());
 		model.setEindDatum(dcEindDatum.getDate());
 		model.setKilometer(Integer.parseInt(txtKilometer.getText()));

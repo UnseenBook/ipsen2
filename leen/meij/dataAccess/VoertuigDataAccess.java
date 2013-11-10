@@ -28,11 +28,11 @@ public class VoertuigDataAccess extends DataAccess
 		{
 			voertuig.setVoertuigID(resultSet.getInt("voertuig_id"));
 		}
-		voertuig.setBeschrijving(resultSet.getString("categorie"));
-		voertuig.setCategorie(resultSet.getString("merk"));
-		voertuig.setKleur(resultSet.getString("type"));
-		voertuig.setMerk(resultSet.getString("kleur"));
-		voertuig.setType(resultSet.getString("beschrijving"));
+		voertuig.setCategorie(resultSet.getString("categorie"));
+		voertuig.setMerk(resultSet.getString("merk"));
+		voertuig.setType(resultSet.getString("type"));
+		voertuig.setKleur(resultSet.getString("kleur"));
+		voertuig.setBeschrijving(resultSet.getString("beschrijving"));
 		voertuig.isVerhuurbaar(resultSet.getBoolean("verhuurbaar"));
 		voertuig.setKenteken(resultSet.getString("kenteken"));
 		voertuig.setBouwJaar(resultSet.getInt("bouwjaar"));
@@ -51,11 +51,11 @@ public class VoertuigDataAccess extends DataAccess
 	private int fillVoertuigStatement(Voertuig voertuig) throws SQLException
 	{
 		int i = 1;
-		preparedStatement.setString(i++, voertuig.getBeschrijving());
 		preparedStatement.setString(i++, voertuig.getCategorie());
-		preparedStatement.setString(i++, voertuig.getKleur());
 		preparedStatement.setString(i++, voertuig.getMerk());
 		preparedStatement.setString(i++, voertuig.getType());
+		preparedStatement.setString(i++, voertuig.getKleur());
+		preparedStatement.setString(i++, voertuig.getBeschrijving());
 		preparedStatement.setBoolean(i++, voertuig.getVerhuurbaar());
 		preparedStatement.setString(i++, voertuig.getKenteken());
 		preparedStatement.setInt(i++, voertuig.getBouwJaar());
@@ -210,15 +210,15 @@ public class VoertuigDataAccess extends DataAccess
 		builder.append("beschrijving,");
 		builder.append("verhuurbaar, ");
 		builder.append("kenteken, ");
-		builder.append("bouwJaar, ");
-		builder.append("kilometerStand, ");
+		builder.append("bouwjaar, ");
+		builder.append("kilometerstand, ");
 		builder.append("brandstof, ");
 		builder.append("airco, ");
 		builder.append("station, ");
-		builder.append("dagPrijs, ");
-		builder.append("brandstofPrijs, ");
-		builder.append("kilometerPrijs, ");
-		builder.append("borgPrijs) ");
+		builder.append("dagprijs, ");
+		builder.append("brandstofprijs, ");
+		builder.append("kilometerprijs, ");
+		builder.append("borgprijs) ");
 		builder.append("VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?) ");
 		builder.append("RETURNING *");
 

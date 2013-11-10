@@ -17,8 +17,8 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
 
 	private Onderhoud selectedOnderhoud;
 
-	private JTextField txtType = new JTextField(15);
-	private JTextField txtCategorie = new JTextField(15);
+	private JComboBox<String> cbType = new JComboBox<String>(Voertuig.types);
+	private JComboBox<String> cbCategorie = new JComboBox<String>(Voertuig.categorieen);
 	private JTextField txtMerk = new JTextField(15);
 	private JTextField txtKleur = new JTextField(15);
 	private JTextField txtBeschrijving = new JTextField(15);
@@ -61,10 +61,10 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
 		tblOnderhoud = createOnderhoudTable(model.getOnderhoud());
 
 		pnlContent.add(new JLabel("Type"));
-		pnlContent.add(txtType, gap);
+		pnlContent.add(cbType, gap);
 
 		pnlContent.add(new JLabel("Categorie"));
-		pnlContent.add(txtCategorie, wrap);
+		pnlContent.add(cbCategorie, wrap);
 
 		pnlContent.add(new JLabel("Merk"));
 		pnlContent.add(txtMerk, gap);
@@ -131,8 +131,10 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
 	protected Voertuig getEditedModel()
 	{
 
-		model.setType(txtType.getText());
-		model.setCategorie(txtCategorie.getText());
+		//model.setType(txtType.getText());
+		model.setType((String)cbType.getSelectedItem());
+		model.setCategorie((String)cbCategorie.getSelectedItem());
+		//model.setCategorie(txtCategorie.getText());
 		model.setMerk(txtMerk.getText());
 		model.setKleur(txtKleur.getText());
 		model.setBeschrijving(txtBeschrijving.getText());
@@ -155,8 +157,10 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
 	private void loadModelData()
 	{
 		// setAllThings!
-		txtType.setText(model.getType());
-		txtCategorie.setText(model.getCategorie());
+		//txtType.setText(model.getType());
+		cbType.setSelectedItem(model.getType());
+		cbCategorie.setSelectedItem(model.getCategorie());
+		//setText(model.getCategorie());
 		txtMerk.setText(model.getMerk());
 		txtKleur.setText(model.getKleur());
 		txtBeschrijving.setText(model.getBeschrijving());

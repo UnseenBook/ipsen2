@@ -2,6 +2,8 @@
 package leen.meij;
 
 import java.util.ArrayList;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import leen.meij.utilities.*;
 
@@ -259,8 +261,82 @@ public class Voertuig extends Entity
 
 	public void validateFields()
 	{
-		// TODO - implement {class}.{operation}
-		isValid = true;
+            
+                getErrors().clear();
+                if(!validateRegex(this.merk,"[a-zA-Z0-9\\s-]+"))
+                {
+                        getErrors().add("Merk foutief of niet ingevuld.");
+                        isValid = false;
+                }else if(!validateRegex(this.kleur, "[a-zA-Z0-9\\s-]+")){
+                    getErrors().add("kleur foutief of niet ingevuld.");
+                        isValid = false;
+                }
+                else if(!validateRegex(this.brandstof, "[a-zA-Z0-9\\s-]+")){
+                    getErrors().add("brandstof foutief of niet ingevuld.");
+                        isValid = false;
+                }
+                
+                else if(!validateRegex(this.type, "[a-zA-Z0-9\\s-]+")){
+                    getErrors().add("type foutief of niet ingevuld.");
+                        isValid = false;
+                }
+                
+                else if(!validateRegex(this.beschrijving, "[a-zA-Z0-9\\s-]+")){
+                    getErrors().add("Beschrijving foutief of niet ingevuld.");
+                        isValid = false;
+                }
+                else if(!validateRegex(this.kenteken, "[a-zA-Z0-9\\s-]+")){
+                    getErrors().add("Kenteken foutief of niet ingevuld.");
+                        isValid = false;
+                }
+                else if(!validateRegex(Integer.toString(this.bouwJaar), "[0-9]{4}+")){
+                    getErrors().add("Bouwjaar foutief of niet ingevuld.");
+                        isValid = false;
+                }
+                else if(!validateRegex(Integer.toString(this.kilometerStand), "[0-9]*(,|.)[0-9]{1,}+")){
+                    getErrors().add("Kilometerstand foutief of niet ingevuld.");
+                        isValid = false;
+                }
+                else if(!validateRegex(this.brandstof, "[a-zA-Z0-9\\s-]+")){
+                    getErrors().add("brandstof foutief of niet ingevuld.");
+                        isValid = false;
+                }
+                else if(!validateRegex(Double.toString(this.dagPrijs), "[0-9]*(,|.)[0-9]{1,}+")){
+                    getErrors().add("Dag prijs foutief of niet ingevuld.");
+                        isValid = false;
+                }
+                else if(!validateRegex(Double.toString(this.brandstofPrijs), "[0-9]*(,|.)[0-9]{1,}+")){
+                    getErrors().add("Brandstof prijs foutief of niet ingevuld.");
+                        isValid = false;
+                }
+                else if(!validateRegex(Double.toString(this.kilometerPrijs), "[0-9]*(,|.)[0-9]{1,}+")){
+                    getErrors().add("Kilometer prijs foutief of niet ingevuld.");
+                        isValid = false;
+                }
+                else if(!validateRegex(Double.toString(this.borgPrijs), "[0-9]*(,|.)[0-9]{1,}+")){
+                    getErrors().add("Borg prijs foutief of niet ingevuld.");
+                        isValid = false;
+                }
+                else{
+                    isValid = true;
+                }
+                
+                
+		
 	}
+        
+        private boolean validateRegex(String input, String regex){
+                
+                Pattern p = Pattern.compile(regex);
+                Matcher m = p.matcher(input);
+                
+                if(m.matches()){
+                    return true;
+                }else{
+                    System.err.println("Error met " + input);
+                    return false;
+                }
+            
+        }
 
 }

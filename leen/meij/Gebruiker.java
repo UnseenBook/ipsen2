@@ -1,6 +1,8 @@
 
 package leen.meij;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import leen.meij.utilities.*;
 
 public class Gebruiker extends Entity
@@ -149,27 +151,43 @@ public class Gebruiker extends Entity
 	public void validateFields()
 	{
 		getErrors().clear();
-		if(gebruikersnaam.length() < 5)
-		{
-			getErrors().add("Vul a.u.b. een gebruikernaam is van minimaal 5 tekens");
-			isValid = false;
-		}
-		else if (afdelingID == 0 && (afdeling == null || afdeling.getAfdelingID() == 0))
-		{
-			getErrors().add("Kies a.u.b. een afdeling");
-			isValid = false;
-		}
-		else if(wachtwoord.length() < 5)
-		{
-			getErrors().add("Kies a.u.b. een wachtwoord is van minimaal 5 tekens");
-			isValid = false;
-		}
-		else
-		{
-			isValid = true;
-		}
+        if (!validateRegex(this.voornaam, "[a-zA-Z0-9\\s-]+")) {
+            getErrors().add("Voornaam foutief of niet ingevuld.");
+            isValid = false;
+        } else if (!validateRegex(this.tussenvoegsel, "[a-zA-Z0-9\\s-]+")) {
+            getErrors().add("Tussenvoegsel foutief of niet ingevuld.");
+            isValid = false;
+        } else if (!validateRegex(this.achternaam, "[a-zA-Z0-9\\s-]+")) {
+            getErrors().add("Achternaam foutief of niet ingevuld.");
+            isValid = false;
+        } else if (!validateRegex(this.wachtwoord, "[a-zA-Z0-9@#$%^&+=-]+")) {
+            getErrors().add("Bedrijfsnaam foutief of niet ingevuld.");
+            isValid = false;
+        } else if (!validateRegex(this.gebruikersnaam, "[a-zA-Z0-9\\s-]+")) {
+            getErrors().add("Kvk nummer foutief of niet ingevuld.");
+            isValid = false;
+        } else if (!validateRegex(Integer.toString(this.personeelnummer), "[0-9]+")) {
+            getErrors().add("Straat foutief of niet ingevuld.");
+            isValid = false;
+        } else {
+            isValid = true;
+        }
 		
 		
 	}
+        private boolean validateRegex(String input, String regex) {
+
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(input);
+
+        if (m.matches()) {
+            return true;
+        } else {
+            System.err.println("Error met " + input);
+            return false;
+        }
+
+    }
+        
 
 }

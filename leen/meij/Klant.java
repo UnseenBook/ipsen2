@@ -314,6 +314,8 @@ public class Klant extends Entity
 	{
 
 		getErrors().clear();
+		
+		isValid = true;
 	}
 
 	public String getVolledigeNaam()

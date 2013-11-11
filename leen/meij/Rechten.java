@@ -43,7 +43,7 @@ public final class Rechten
 		{
 		}
 
-		return ((rechten & recht) == recht) || true; // TODO: remove '|| true'
+		return ((rechten & recht) == recht); // TODO: remove '|| true'
 	}
 
 }

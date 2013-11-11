@@ -24,7 +24,7 @@ public class GebruikerController extends Controller
 	{
 		Gebruiker gebruiker = gebruikerDataAccess.select(gebruikersnaam, wachtwoord);
 		
-		if (gebruiker != null || true) // TODO: remove '|| true' 
+		if (gebruiker != null) // TODO: remove '|| true' 
 		{ 
 			Site.getInstance().setGebruiker(gebruiker);
 			

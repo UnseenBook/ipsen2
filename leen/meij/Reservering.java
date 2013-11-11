@@ -1,218 +1,256 @@
 package leen.meij;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * ***
- *
- * @author Jovanny Martis
- *
- *
- */
+import leen.meij.dataAccess.*;
 import leen.meij.utilities.Entity;
 
-public class Reservering extends Entity {
+public class Reservering extends Entity
+{
 
-    private int reserveringID;
-    private int klantID;
-    private int voertuigID;
-    private Klant klant;
-    private Voertuig voertuig;
-    private Gebruiker gebruiker; // dit is tijdelijk (bij inleverlijst
-    // [gereserveerd door: gebruiker x]
-    private Date reserveerDatum;
-    private Date beginDatum;
-    private Date eindDatum;
-    private int kilometer;
-    private double bedrag;
-    private String status;
+	private int reserveringID;
+	private int klantID;
+	private int voertuigID;
+	private Klant klant;
+	private Voertuig voertuig;
+	private Gebruiker gebruiker; // dit is tijdelijk (bij inleverlijst
+	// [gereserveerd door: gebruiker x]
+	private Date reserveerDatum;
+	private Date beginDatum;
+	private Date eindDatum;
+	private int kilometer;
+	private double bedrag;
+	private String status;
 
-    /**
-     * @author Jovanny
-	 * *
-     */
-    public Reservering() {
-        this.klant = null;
-        this.voertuig = null;
-        this.gebruiker = null;
-    }
+	/**
+	 * @author Jovanny *
+	 */
+	public Reservering()
+	{
+		this.klant = null;
+		this.voertuig = null;
+		this.gebruiker = null;
+	}
 
-    public Reservering(int klantID, Klant klant, Voertuig voertuig, Date begin, Date eind, int kilometer, double bedrag, String status) {
-        this.klantID = klantID;
-        this.klant = klant;
-        this.voertuig = voertuig;
-        this.beginDatum = begin;
-        this.eindDatum = eind;
-        this.kilometer = kilometer;
-        this.bedrag = bedrag;
-        this.status = status;
-    }
+	public Reservering(int klantID, Klant klant, Voertuig voertuig, Date begin, Date eind, int kilometer, double bedrag, String status)
+	{
+		this.klantID = klantID;
+		this.klant = klant;
+		this.voertuig = voertuig;
+		this.beginDatum = begin;
+		this.eindDatum = eind;
+		this.kilometer = kilometer;
+		this.bedrag = bedrag;
+		this.status = status;
+	}
 
-    public int getReserveringID() {
-        return this.reserveringID;
-    }
+	public int getReserveringID()
+	{
+		return this.reserveringID;
+	}
 
-    public void setReserveringID(int reserveringID) {
-        this.reserveringID = reserveringID;
-    }
+	public void setReserveringID(int reserveringID)
+	{
+		this.reserveringID = reserveringID;
+	}
 
-    public Klant getKlant() {
-        return this.klant;
-    }
+	public Klant getKlant()
+	{
+		return this.klant;
+	}
 
-    /**
-     *
-     * @param klant
-     */
-    public void setKlant(Klant klant) {
-        this.klant = klant;
-    }
+	/**
+	 * 
+	 * @param klant
+	 */
+	public void setKlant(Klant klant)
+	{
+		this.klant = klant;
+	}
 
-    public Voertuig getVoertuig() {
-        return this.voertuig;
-    }
+	public Voertuig getVoertuig()
+	{
+		return this.voertuig;
+	}
 
-    /**
-     *
-     * @param voertuig
-     */
-    public void setVoertuig(Voertuig voertuig) {
-        this.voertuig = voertuig;
-    }
+	/**
+	 * 
+	 * @param voertuig
+	 */
+	public void setVoertuig(Voertuig voertuig)
+	{
+		this.voertuig = voertuig;
+	}
 
-    public Gebruiker getGebruiker() {
-        return gebruiker;
-    }
+	public Gebruiker getGebruiker()
+	{
+		return gebruiker;
+	}
 
-    public void setGebruiker(Gebruiker gebruiker) {
-        this.gebruiker = gebruiker;
-    }
+	public void setGebruiker(Gebruiker gebruiker)
+	{
+		this.gebruiker = gebruiker;
+	}
 
-    public int getKlantID() {
-        return this.klantID;
-    }
+	public int getKlantID()
+	{
+		return this.klantID;
+	}
 
-    /**
-     *
-     * @param klantID
-     */
-    public void setKlantID(int klantID) {
-        this.klantID = klantID;
-    }
+	/**
+	 * 
+	 * @param klantID
+	 */
+	public void setKlantID(int klantID)
+	{
+		this.klantID = klantID;
+	}
 
-    public int getVoertuigID() {
-        return this.voertuigID;
-    }
+	public int getVoertuigID()
+	{
+		return this.voertuigID;
+	}
 
-    /**
-     *
-     * @param voertuigID
-     */
-    public void setVoertuigID(int voertuigID) {
-        this.voertuigID = voertuigID;
-    }
+	/**
+	 * 
+	 * @param voertuigID
+	 */
+	public void setVoertuigID(int voertuigID)
+	{
+		this.voertuigID = voertuigID;
+	}
 
-    public Date getReserveerDatum() {
-        return this.reserveerDatum;
-    }
+	public Date getReserveerDatum()
+	{
+		return this.reserveerDatum;
+	}
 
-    public Date getBeginDatum() {
-        return this.beginDatum;
-    }
+	public Date getBeginDatum()
+	{
+		return this.beginDatum;
+	}
 
-    public Date getEindDatum() {
-        return this.eindDatum;
-    }
+	public Date getEindDatum()
+	{
+		return this.eindDatum;
+	}
 
-    public int getKilometer() {
-        return this.kilometer;
-    }
+	public int getKilometer()
+	{
+		return this.kilometer;
+	}
 
-    /**
-     *
-     * @param kilometer
-     */
-    public void setKilometer(int kilometer) {
-        this.kilometer = kilometer;
-    }
+	/**
+	 * 
+	 * @param kilometer
+	 */
+	public void setKilometer(int kilometer)
+	{
+		this.kilometer = kilometer;
+	}
 
-    public double getBedrag() {
-        return this.bedrag;
-    }
+	public double getBedrag()
+	{
+		return this.bedrag;
+	}
 
-    /**
-     *
-     * @param bedrag
-     */
-    public void setBedrag(double bedrag) {
-        this.bedrag = bedrag;
-    }
+	/**
+	 * 
+	 * @param bedrag
+	 */
+	public void setBedrag(double bedrag)
+	{
+		this.bedrag = bedrag;
+	}
 
-    public void validateFields() {
+	public void validateFields()
+	{
 
-        getErrors().clear();
-        if (!validateRegex(Integer.toString(this.kilometer), "[0-9]*(,|.)[0-9]{1,}+")) {
-            getErrors().add("Kilometer foutief of niet ingevuld.");
-            isValid = false;
-        } else if (!validateRegex(Double.toString(this.bedrag), "[0-9]*(,|.)[0-9]{1,}+")) {
-            getErrors().add("Bedrag foutief of niet ingevuld.");
-            isValid = false;
-        } else if (!validateRegex(this.status, "[a-zA-Z0-9\\s-]+")) {
-            getErrors().add("Status foutief of niet ingevuld.");
-            isValid = false;
-        } else {
-            isValid = true;
-        }
-        //id's nog checken?
-    }
+		getErrors().clear();
 
-    /**
-     *
-     * @param reserveerDatum
-     */
-    public void setReserveerDatum(Date reserveerDatum) {
-        this.reserveerDatum = reserveerDatum;
-    }
+		//
+		if (voertuigID == 0 && (voertuig == null || voertuig.getVoertuigID() == 0))
+		{
+			getErrors().add("Kies a.u.b. een voertuig.");
+			isValid = false;
+		}
+		else if (klantID == 0 && (klant == null || klant.getKlantID() == 0))
+		{
+			getErrors().add("Kies a.u.b. een klant.");
+			isValid = false;
+		}
+		else if (reserveerDatum == null)
+		{
+			getErrors().add("Kies a.u.b. een reserveer datum.");
+			isValid = false;
+		}
+		else if (beginDatum == null)
+		{
+			getErrors().add("Kies a.u.b. een begin datum.");
+		}
+		else if (eindDatum == null)
+		{
+			getErrors().add("Kies a.u.b. een eind datum.");
+		}
+		else
+		{
+			VoertuigDataAccess voertuigDataAccess = new VoertuigDataAccess();
+			ReserveringDataAccess reserveringDataAccess = new ReserveringDataAccess();
+			// check if the
+			Voertuig voertuig = voertuigDataAccess.select(getVoertuig() == null ? getVoertuigID() : getVoertuig().getVoertuigID());
 
-    /**
-     *
-     * @param beginDatum
-     */
-    public void setBeginDatum(Date beginDatum) {
-        this.beginDatum = beginDatum;
-    }
+			if (!voertuig.gereserveerd(this))
+			{
+				getErrors().add("Voertuig is niet beschikbaar in dit tijdsbestek.");
+				isValid = false;
+			}
+			else
+			{
+				isValid = true;
+			}
+		}
+	}
 
-    // debug set STATUS
-    public void setStatus(String status) {
-        this.status = status;
-    }
+	/**
+	 * 
+	 * @param reserveerDatum
+	 */
+	public void setReserveerDatum(Date reserveerDatum)
+	{
+		this.reserveerDatum = reserveerDatum;
+	}
 
-    // debug get STATUS
-    public String getStatus() {
-        return status;
-    }
+	/**
+	 * 
+	 * @param beginDatum
+	 */
+	public void setBeginDatum(Date beginDatum)
+	{
+		this.beginDatum = beginDatum;
+	}
 
-    /**
-     *
-     * @param eindDatum
-     */
-    public void setEindDatum(Date eindDatum) {
-        this.eindDatum = eindDatum;
-    }
+	// debug set STATUS
+	public void setStatus(String status)
+	{
+		this.status = status;
+	}
 
-    private boolean validateRegex(String input, String regex) {
+	// debug get STATUS
+	public String getStatus()
+	{
+		return status;
+	}
 
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(input);
+	/**
+	 * 
+	 * @param eindDatum
+	 */
+	public void setEindDatum(Date eindDatum)
+	{
+		this.eindDatum = eindDatum;
+	}
 
-        if (m.matches()) {
-            return true;
-        } else {
-            System.err.println("Error met " + input);
-            return false;
-        }
-
-    }
 }

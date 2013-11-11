@@ -1,17 +1,18 @@
-
 package leen.meij;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import leen.meij.dataAccess.ReserveringDataAccess;
 import leen.meij.utilities.*;
 
 public class Voertuig extends Entity
 {
-	public static final String[] types = {"Scooter","Motor","Personen auto","Bestel bus"};
+	public static final String[] types = { "Scooter", "Motor", "Personen auto", "Bestel bus" };
 
-	public static final String[] categorieen = {"Budget","Familie","Zakelijk","Luxe"};
+	public static final String[] categorieen = { "Budget", "Familie", "Zakelijk", "Luxe" };
 
 	private ArrayList<Onderhoud> onderhoud = new ArrayList<Onderhoud>();
 
@@ -53,15 +54,16 @@ public class Voertuig extends Entity
 	{
 		return merk + " " + type;
 	}
-	
-	public Voertuig(){}
-	
-	public Voertuig(int voertuigID,String merk)
+
+	public Voertuig()
+	{
+	}
+
+	public Voertuig(int voertuigID, String merk)
 	{
 		this.voertuigID = voertuigID;
 		this.merk = merk;
 	}
-	
 
 	public ArrayList<Onderhoud> getOnderhoud()
 	{
@@ -77,43 +79,52 @@ public class Voertuig extends Entity
 		this.onderhoud = onderhoud;
 	}
 
-	public void setKenteken (String kenteken)
+	public void setKenteken(String kenteken)
 	{
 		this.kenteken = kenteken;
 	}
-	public void setBouwJaar (int bouwJaar)
+
+	public void setBouwJaar(int bouwJaar)
 	{
 		this.bouwJaar = bouwJaar;
 	}
-	public void setKilometerStand (int kilometerStand)
+
+	public void setKilometerStand(int kilometerStand)
 	{
 		this.kilometerStand = kilometerStand;
 	}
-	public void setBrandstof (String brandstof)
+
+	public void setBrandstof(String brandstof)
 	{
 		this.brandstof = brandstof;
 	}
-	public void setAirco (boolean airco)
+
+	public void setAirco(boolean airco)
 	{
 		this.airco = airco;
 	}
-	public void setStation (boolean station)
+
+	public void setStation(boolean station)
 	{
 		this.station = station;
 	}
-	public void setDagPrijs (double dagPrijs)
+
+	public void setDagPrijs(double dagPrijs)
 	{
 		this.dagPrijs = dagPrijs;
 	}
-	public void setBrandstofPrijs (double brandstofPrijs)
+
+	public void setBrandstofPrijs(double brandstofPrijs)
 	{
 		this.brandstofPrijs = brandstofPrijs;
 	}
-	public void setKilometerPrijs (double kilometerPrijs)
+
+	public void setKilometerPrijs(double kilometerPrijs)
 	{
 		this.kilometerPrijs = kilometerPrijs;
 	}
-	public void setBorgPrijs (double borgPrijs)
+
+	public void setBorgPrijs(double borgPrijs)
 	{
 		this.borgPrijs = borgPrijs;
 	}
@@ -122,38 +133,47 @@ public class Voertuig extends Entity
 	{
 		return this.kenteken;
 	}
+
 	public int getBouwJaar()
 	{
 		return this.bouwJaar;
 	}
+
 	public int getKilometerStand()
 	{
 		return this.kilometerStand;
 	}
+
 	public String getBrandstof()
 	{
 		return this.brandstof;
 	}
+
 	public boolean getAirco()
 	{
 		return this.airco;
 	}
+
 	public boolean getStation()
 	{
 		return this.station;
 	}
+
 	public double getDagPrijs()
 	{
 		return this.dagPrijs;
 	}
+
 	public double getBrandstofPrijs()
 	{
 		return this.brandstofPrijs;
 	}
+
 	public double getKilometerPrijs()
 	{
 		return this.kilometerPrijs;
 	}
+
 	public double getBorgPrijs()
 	{
 		return this.borgPrijs;
@@ -191,8 +211,7 @@ public class Voertuig extends Entity
 	{
 		return this.merk;
 	}
-	
-	
+
 	/**
 	 * 
 	 * @param merk
@@ -261,82 +280,42 @@ public class Voertuig extends Entity
 
 	public void validateFields()
 	{
-            
-                getErrors().clear();
-                if(!validateRegex(this.merk,"[a-zA-Z0-9\\s-]+"))
-                {
-                        getErrors().add("Merk foutief of niet ingevuld.");
-                        isValid = false;
-                }else if(!validateRegex(this.kleur, "[a-zA-Z0-9\\s-]+")){
-                    getErrors().add("kleur foutief of niet ingevuld.");
-                        isValid = false;
-                }
-                else if(!validateRegex(this.brandstof, "[a-zA-Z0-9\\s-]+")){
-                    getErrors().add("brandstof foutief of niet ingevuld.");
-                        isValid = false;
-                }
-                
-                else if(!validateRegex(this.type, "[a-zA-Z0-9\\s-]+")){
-                    getErrors().add("type foutief of niet ingevuld.");
-                        isValid = false;
-                }
-                
-                else if(!validateRegex(this.beschrijving, "[a-zA-Z0-9\\s-]+")){
-                    getErrors().add("Beschrijving foutief of niet ingevuld.");
-                        isValid = false;
-                }
-                else if(!validateRegex(this.kenteken, "[a-zA-Z0-9\\s-]+")){
-                    getErrors().add("Kenteken foutief of niet ingevuld.");
-                        isValid = false;
-                }
-                else if(!validateRegex(Integer.toString(this.bouwJaar), "[0-9]{4}+")){
-                    getErrors().add("Bouwjaar foutief of niet ingevuld.");
-                        isValid = false;
-                }
-                else if(!validateRegex(Integer.toString(this.kilometerStand), "[0-9]*(,|.)[0-9]{1,}+")){
-                    getErrors().add("Kilometerstand foutief of niet ingevuld.");
-                        isValid = false;
-                }
-                else if(!validateRegex(this.brandstof, "[a-zA-Z0-9\\s-]+")){
-                    getErrors().add("brandstof foutief of niet ingevuld.");
-                        isValid = false;
-                }
-                else if(!validateRegex(Double.toString(this.dagPrijs), "[0-9]*(,|.)[0-9]{1,}+")){
-                    getErrors().add("Dag prijs foutief of niet ingevuld.");
-                        isValid = false;
-                }
-                else if(!validateRegex(Double.toString(this.brandstofPrijs), "[0-9]*(,|.)[0-9]{1,}+")){
-                    getErrors().add("Brandstof prijs foutief of niet ingevuld.");
-                        isValid = false;
-                }
-                else if(!validateRegex(Double.toString(this.kilometerPrijs), "[0-9]*(,|.)[0-9]{1,}+")){
-                    getErrors().add("Kilometer prijs foutief of niet ingevuld.");
-                        isValid = false;
-                }
-                else if(!validateRegex(Double.toString(this.borgPrijs), "[0-9]*(,|.)[0-9]{1,}+")){
-                    getErrors().add("Borg prijs foutief of niet ingevuld.");
-                        isValid = false;
-                }
-                else{
-                    isValid = true;
-                }
-                
-                
-		
+
+		getErrors().clear();
+
+		if (categorie == null)
+		{
+			getErrors().add("Kies a.u.b. een categorie");
+			isValid = false;
+		}
+		else if (type == null)
+		{
+			getErrors().add("Kies a.u.b. een categorie");
+		}
+		else
+		{
+			isValid = true;
+		}
+
 	}
-        
-        private boolean validateRegex(String input, String regex) {
 
-        Pattern p = Pattern.compile(regex);
-        Matcher m = p.matcher(input);
+	public boolean gereserveerd(Reservering reservering)
+	{
+		ReserveringDataAccess reserveringDataAccess = new ReserveringDataAccess();
+		ArrayList<Reservering> reserveringen = reserveringDataAccess.selectDatumByVoertuigID(voertuigID);
 
-        if (m.matches()) {
-            return true;
-        } else {
-            System.err.println("Error met " + input);
-            return false;
-        }
+		for (Reservering r : reserveringen)
+		{
+			Date start1 = new Date(r.getBeginDatum().getTime());
+			Date end1 = new Date(r.getEindDatum().getTime());
 
-    }
+			Date start2 = reservering.getBeginDatum();
+			Date end2 = reservering.getEindDatum();
 
+			boolean overlap = start1.getTime() <= end2.getTime() && start2.getTime() <= end1.getTime();
+
+			if (overlap) { return false; }
+		}
+		return true;
+	}
 }

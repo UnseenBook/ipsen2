@@ -86,13 +86,16 @@ public class ReserveringDetailsView extends MasterView<Reservering> implements A
 		// Combobox Voertuig vullen
 		for (Voertuig voertuig : voertuigLijst)
 		{
-			if (model.getVoertuig() != null && model.getVoertuig().getVoertuigID() == voertuig.getVoertuigID())
+			if (voertuig.getVerhuurbaar())
 			{
-				cbVoertuig.addItem(model.getVoertuig());
-			}
-			else
-			{
-				cbVoertuig.addItem(voertuig);
+				if (model.getVoertuig() != null && model.getVoertuig().getVoertuigID() == voertuig.getVoertuigID())
+				{
+					cbVoertuig.addItem(model.getVoertuig());
+				}
+				else
+				{
+					cbVoertuig.addItem(voertuig);
+				}
 			}
 		}
 

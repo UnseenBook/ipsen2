@@ -11,6 +11,11 @@ import leen.meij.*;
 
 import leen.meij.views.*;
 
+/**
+ * Provides the routing between Views and Controllers.
+ * @author Thijs
+ *
+ */
 public class Site extends JFrame
 {
 
@@ -20,6 +25,10 @@ public class Site extends JFrame
 	private Gebruiker gebruiker;
 	private JPanel panel;
 	
+	/**
+	 * Gets the current Site instance.
+	 * @return The current Site instance.
+	 */
 	public static Site getInstance()
 	{
 		if(Site.instance == null)
@@ -51,16 +60,20 @@ public class Site extends JFrame
 		
 	}
 	
+	/**
+	 * The main method.
+	 * @param args not used.
+	 */
 	public static void main(String[] args)
 	{
 		Site.getInstance();
 	}
 	
 	/**
-	 * 
-	 * @param controller
-	 * @param task
-	 * @param args
+	 * Runs a task specified by a controller name, a task name and an array of arguments. 
+	 * @param controller The name of the controller (class).
+	 * @param task The name of the task (method) from the specified controller.
+	 * @param args The arguments to pass to the task method.
 	 */
 	public void runTask(String controllerName, String taskName, Object[] args)
 	{
@@ -93,8 +106,8 @@ public class Site extends JFrame
 	}
 
 	/**
-	 * 
-	 * @param newView
+	 * Changes the view of the application.
+	 * @param newView The new view to display.
 	 */
 	private void changeView(View newView)
 	{
@@ -111,11 +124,19 @@ public class Site extends JFrame
 		}
 	}
 
+	/**
+	 * Gets the logged in Gebruiker; otherwise null.
+	 * @return The logged in Gebruiker; otherwise null.
+	 */
 	public Gebruiker getGebruiker()
 	{
 		return gebruiker;
 	}
 
+	/**
+	 * Sets the logged in Gebruiker.
+	 * @param gebruiker The logged in gebruiker.
+	 */
 	public void setGebruiker(Gebruiker gebruiker)
 	{
 		this.gebruiker = gebruiker;

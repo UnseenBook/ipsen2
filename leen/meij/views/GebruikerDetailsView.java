@@ -7,6 +7,12 @@ import net.miginfocom.swing.MigLayout;
 
 import leen.meij.*;
 
+/**
+ * Displays A single Gebruiker in a View.
+ * 
+ * @author Thijs
+ * 
+ */
 public class GebruikerDetailsView extends MasterView<Gebruiker> implements ActionListener
 {
 
@@ -19,13 +25,15 @@ public class GebruikerDetailsView extends MasterView<Gebruiker> implements Actio
 
 	private JTextField txtWachtwoord = new JTextField(15);
 
-	
-	
 	private JButton btnSave = new JButton("Opslaan");
 	private JButton btnCancel = new JButton("Annuleren");
 
 	private JButton btnChangePassword = new JButton("Wachtwoord veranderen");
-	
+
+	/**
+	 * Initializes a new instance of the GebruikerDetailsView, specifying a Gebruiker object.
+	 * @param model The Gebruiker object.
+	 */
 	public GebruikerDetailsView(Gebruiker model)
 	{
 		super(model);
@@ -69,16 +77,15 @@ public class GebruikerDetailsView extends MasterView<Gebruiker> implements Actio
 
 		// row 4
 		if (model.getGebruikerID() == 0)
-		{		
+		{
 			pnlContent.add(new JLabel("Wachtwoord"));
 			pnlContent.add(txtWachtwoord, gap + span2);
 		}
-		
+
 		pnlBotMenu.add(btnChangePassword);
 		pnlBotMenu.add(btnSave);
 		pnlBotMenu.add(btnCancel);
-		
-		
+
 		btnSave.addActionListener(this);
 		btnCancel.addActionListener(this);
 		btnChangePassword.addActionListener(this);
@@ -87,6 +94,9 @@ public class GebruikerDetailsView extends MasterView<Gebruiker> implements Actio
 		loadModelData();
 	}
 
+	/**
+	 * Handles used interaction such as button clicks.
+	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		super.actionPerformed(e);
@@ -108,29 +118,32 @@ public class GebruikerDetailsView extends MasterView<Gebruiker> implements Actio
 		{
 			runTask("Gebruiker", "gebruikersOverzichtRaadplegen");
 		}
-		else if(e.getSource() == btnChangePassword)
+		else if (e.getSource() == btnChangePassword)
 		{
 			JPanel view = new JPanel();
 			view.setLayout(new MigLayout());
 			JTextField wachtwoord = new JTextField(15);
 			view.add(new JLabel("Nieuw wachtwoord"));
 			view.add(wachtwoord);
-			
+
 			int value = JOptionPane.showConfirmDialog(this, view, "Wachtwoord veranderen", JOptionPane.OK_CANCEL_OPTION);
 
 			if (value == JOptionPane.OK_OPTION)
 			{
-				runTask("Gebruiker","wachtwoordVeranderen",new Object[]{model.getGebruikerID(),wachtwoord.getText()});
+				runTask("Gebruiker", "wachtwoordVeranderen", new Object[] { model.getGebruikerID(), wachtwoord.getText() });
 			}
 		}
 	}
 
+	/**
+	 * Loads data from the model into the view.
+	 */
 	private void loadModelData()
 	{
 		txtAchternaam.setText(model.getAchternaam());
-		
+
 		cbAfdeling.setSelectedItem(model.getAfdeling());
-		
+
 		txtGebruikersnaam.setText(model.getGebruikersnaam());
 		txtPersoneelnummer.setText(String.valueOf(model.getPersoneelnummer()));
 		txtTussenvoegsel.setText(model.getTussenvoegsel());
@@ -138,10 +151,13 @@ public class GebruikerDetailsView extends MasterView<Gebruiker> implements Actio
 		txtWachtwoord.setText(model.getWachtwoord());
 	}
 
+	/**
+	 * Loads data from the view into the model.
+	 */
 	protected Gebruiker getEditedModel()
 	{
 		model.setAchternaam(txtAchternaam.getText());
-		
+
 		model.setGebruikersnaam(txtGebruikersnaam.getText());
 		model.setPersoneelnummer(Integer.parseInt(txtPersoneelnummer.getText()));
 		model.setTussenvoegsel(txtTussenvoegsel.getText());
@@ -149,7 +165,7 @@ public class GebruikerDetailsView extends MasterView<Gebruiker> implements Actio
 		model.setWachtworod(txtWachtwoord.getText());
 
 		model.setAfdeling(cbAfdeling.getItemAt(cbAfdeling.getSelectedIndex()));
-		
+
 		return model;
 	}
 

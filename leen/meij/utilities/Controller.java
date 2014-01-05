@@ -41,6 +41,11 @@ public abstract class Controller
 		this.currentView = currentView;
 	}
 
+	/**
+	 * Gets the current logged in Gebruiker.
+	 * 
+	 * @return The current logged in Gebruiker.
+	 */
 	public Gebruiker getGebruiker()
 	{
 		return Site.getInstance().getGebruiker();

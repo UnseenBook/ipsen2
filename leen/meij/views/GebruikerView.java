@@ -7,6 +7,11 @@ import javax.swing.event.*;
 import javax.swing.table.*;
 import leen.meij.*;
 
+/**
+ * Displays a list of gebruikers in a view.
+ * @author Thijs
+ *
+ */
 public class GebruikerView extends MasterView<ArrayList<Gebruiker>> implements ListSelectionListener, ActionListener
 {
 	private Gebruiker selectedGebruiker;
@@ -17,6 +22,10 @@ public class GebruikerView extends MasterView<ArrayList<Gebruiker>> implements L
 
 	private JTable tblGebruikers;
 
+	/**
+	 * Initializes a new instance of the GebruikerView, specifying a model object.
+	 * @param model
+	 */
 	public GebruikerView(ArrayList<Gebruiker> model)
 	{
 		super(model);
@@ -45,11 +54,17 @@ public class GebruikerView extends MasterView<ArrayList<Gebruiker>> implements L
 		this.pnlBotMenu.setVisible(Rechten.heeftRecht(Rechten.Gebruikers));
 	}
 
+	/**
+	 * Gets the model.
+	 */
 	protected ArrayList<Gebruiker> getEditedModel()
 	{
 		return model;
 	}
-
+	
+	/**
+	 * Handles used interaction such as button clicks.
+	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		super.actionPerformed(e);
@@ -75,6 +90,9 @@ public class GebruikerView extends MasterView<ArrayList<Gebruiker>> implements L
 		}
 	}
 
+	/**
+	 * Handles the selection of the Gebruiker in the table.
+	 */
 	@Override
 	public void valueChanged(ListSelectionEvent e)
 	{
@@ -91,6 +109,10 @@ public class GebruikerView extends MasterView<ArrayList<Gebruiker>> implements L
 
 	}
 
+	/**
+	 * Creates a table object for displaying purposes.
+	 * @return
+	 */
 	private JTable createGebruikerTable()
 	{
 		DefaultTableModel dtm = new DefaultTableModel();

@@ -1,7 +1,11 @@
 package leen.meij;
 
 import leen.meij.utilities.Site;
-
+/**
+ * A static class containing all the privileges.
+ * @author Thijs
+ * @static
+ */
 public final class Rechten
 {
 	// bits

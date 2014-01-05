@@ -7,11 +7,18 @@ import java.util.*;
 import leen.meij.utilities.*;
 import leen.meij.*;
 
+
 public class KlantDataAccess extends DataAccess
 {
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
 
+	/**
+	 * Creates a Klant model object and fills it with the data from a specified ResultSet object.
+	 * @param resultSet The ResultSet object.
+	 * @return A Klant model object
+	 * @throws SQLException 
+	 */
 	public Klant buildModel(ResultSet resultSet) throws SQLException
 	{
 		this.resultSet = resultSet;
@@ -87,8 +94,8 @@ public class KlantDataAccess extends DataAccess
 	}
 
 	/**
-	 * 
-	 * @param klantID
+	 * Gets a Klant object specified by a klant ID.
+	 * @param klantID The Dlant ID.
 	 */
 	public Klant select(int klantID)
 	{
@@ -131,6 +138,10 @@ public class KlantDataAccess extends DataAccess
 		return null;
 	}
 
+	/**
+	 * Gets a list of all the Klant objects.
+	 * @return A list of all the Klant objects.
+	 */
 	public ArrayList<Klant> selectAll()
 	{
 		openConnection();
@@ -175,8 +186,8 @@ public class KlantDataAccess extends DataAccess
 	}
 
 	/**
-	 * 
-	 * @param klant
+	 * Adds a Klant object.
+	 * @param klant The added Klant object.
 	 */
 	public Klant add(Klant klant)
 	{
@@ -224,8 +235,8 @@ public class KlantDataAccess extends DataAccess
 	}
 
 	/**
-	 * 
-	 * @param klantID
+	 * Deletes a Klant object specified by an ID.
+	 * @param klantID The ID of the Klant to delete.
 	 */
 	public void delete(int klantID)
 	{
@@ -263,9 +274,11 @@ public class KlantDataAccess extends DataAccess
 		}
 	}
 
+
 	/**
-	 * 
-	 * @param klant
+	 * Modifies an existing Klant object.
+	 * @param klant The Klant object to modify.
+	 * @return The modified Klant object.
 	 */
 	public Klant edit(Klant klant)
 	{

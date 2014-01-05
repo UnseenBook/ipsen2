@@ -9,7 +9,7 @@ import javax.swing.table.*;
 import leen.meij.*;
 
 /**
- * 
+ * Displays an overview of Klant objects.
  * @author Thijs
  * 
  */
@@ -23,6 +23,10 @@ public class KlantView extends MasterView<ArrayList<Klant>> implements ListSelec
 
 	private JTable tblKlanten;
 
+	/**
+	 * Initializes a new instance of the KlantView class, specifying a list of Klant objects to display..
+	 * @param model A list of Klant objects to display.
+	 */
 	public KlantView(ArrayList<Klant> model)
 	{
 		super(model);
@@ -56,6 +60,9 @@ public class KlantView extends MasterView<ArrayList<Klant>> implements ListSelec
 		return model;
 	}
 
+	/**
+	 * Handles user interaction.
+	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		super.actionPerformed(e);
@@ -83,6 +90,9 @@ public class KlantView extends MasterView<ArrayList<Klant>> implements ListSelec
 		}
 	}
 
+	/**
+	 * Handles the event when the selection of a row in the table has changed.
+	 */
 	@Override
 	public void valueChanged(ListSelectionEvent e)
 	{
@@ -98,6 +108,10 @@ public class KlantView extends MasterView<ArrayList<Klant>> implements ListSelec
 		btnWijzigen.setEnabled(inRange);
 	}
 
+	/**
+	 * Creates a Klant table object for display purposes.
+	 * @return
+	 */
 	private JTable createKlantTable()
 	{
 		DefaultTableModel dtm = new DefaultTableModel();

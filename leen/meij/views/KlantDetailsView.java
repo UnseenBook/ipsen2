@@ -16,9 +16,9 @@ import javax.swing.text.DateFormatter;
 import leen.meij.Klant;
 
 /**
- * 
+ * Displays a single Klant object in a view.
  * @author Thijs
- * 
+ *
  */
 public class KlantDetailsView extends MasterView<Klant> implements
 		ActionListener
@@ -51,6 +51,10 @@ public class KlantDetailsView extends MasterView<Klant> implements
 	private JButton btnSave = new JButton("Opslaan");
 	private JButton btnCancel = new JButton("Annuleren");
 
+	/**
+	 * Initializes a new instance of the KlantDetailsView, specifying a Klant object.
+	 * @param model The klant object.
+	 */
 	public KlantDetailsView(Klant model)
 	{
 		super(model);
@@ -140,6 +144,9 @@ public class KlantDetailsView extends MasterView<Klant> implements
 		loadModelData();
 	}
 
+	/**
+	 * Handles user interaction, for example when buttons are clicked.
+	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		super.actionPerformed(e);
@@ -182,6 +189,9 @@ public class KlantDetailsView extends MasterView<Klant> implements
 		}
 	}
 
+	/**
+	 * Loads model data into the view.
+	 */
 	private void loadModelData()
 	{
 		txtAchternaam.setText(model.getAchternaam());
@@ -204,6 +214,9 @@ public class KlantDetailsView extends MasterView<Klant> implements
 		loadImages();
 	}
 
+	/**
+	 * Loads view data into the model.
+	 */
 	protected Klant getEditedModel()
 	{
 		model.setAchternaam(txtAchternaam.getText());
@@ -283,6 +296,9 @@ public class KlantDetailsView extends MasterView<Klant> implements
 		return null;
 	}
 
+	/**
+	 * Loads a displays images.
+	 */
 	private void loadImages()
 	{
 		if (this.model == null) return;

@@ -22,7 +22,13 @@ import leen.meij.dataAccess.ReserveringDataAccess;
 
 import com.toedter.calendar.JDateChooser;
 
-public class FactuurView extends MasterView<Factuur> implements ListSelectionListener,ActionListener{
+/**
+ * Displays a Factuur.
+ * @author Thijs
+ *
+ */
+public class FactuurView extends MasterView<Factuur> implements ListSelectionListener,ActionListener
+{
 	
 	private JButton btnOpslaan = new JButton("Opslaan");
 	private JButton btnAnnuleren = new JButton("Annuleren");
@@ -47,7 +53,10 @@ public class FactuurView extends MasterView<Factuur> implements ListSelectionLis
 	private ReserveringDataAccess reserveringDataAccess = new ReserveringDataAccess();
 	
 	
-	
+	/**
+	 * Initializes a new instance of the FactuurView, specifying a Factuur object.
+	 * @param model The Factuur object to display.
+	 */
 	public FactuurView(Factuur model) {
 		super(model);
 		this.reserveringLijst = reserveringDataAccess.selectAll();
@@ -151,7 +160,9 @@ public class FactuurView extends MasterView<Factuur> implements ListSelectionLis
 		loadModelData();
 	}
 	
-
+	/**
+	 * Handles user interaction.
+	 */
 	public void actionPerformed(ActionEvent e)
 	{
 		super.actionPerformed(e);
@@ -166,12 +177,18 @@ public class FactuurView extends MasterView<Factuur> implements ListSelectionLis
 		}
 	}
 
+	/**
+	 * Empty.
+	 */
 	@Override
 	public void valueChanged(ListSelectionEvent e) 
 	{
-		// TODO Auto-generated method stub
 		
 	}
+
+	/**
+	 * Loads model data into the view.
+	 */
 	private void loadModelData()
 	{
 		// model data that is saved/edited
@@ -212,6 +229,9 @@ public class FactuurView extends MasterView<Factuur> implements ListSelectionLis
 		
 	}
 
+	/**
+	 * Loads view data into the model.
+	 */
 	@Override
 	protected Factuur getEditedModel() {
 		

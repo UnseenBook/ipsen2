@@ -11,6 +11,11 @@ import net.miginfocom.swing.*;
 import leen.meij.Gebruiker;
 import leen.meij.utilities.*;
 
+/**
+ * Displays a login form in a view.
+ * @author Thijs
+ *
+ */
 public class LoginView extends View<Gebruiker> implements ActionListener
 {
 
@@ -24,6 +29,10 @@ public class LoginView extends View<Gebruiker> implements ActionListener
 	private JButton btnLogin = new JButton("Login");
 	private JButton btnExit = new JButton("Exit");
 	
+	/**
+	 * Initializes a new instance of the LoginView class, specifying a Gebruiker object.
+	 * @param model The Gebruiker object.
+	 */
 	public LoginView(Gebruiker model)
 	{
 		super(model);
@@ -50,6 +59,9 @@ public class LoginView extends View<Gebruiker> implements ActionListener
 		return this.model;
 	}
 
+	/**
+	 * Handles user actions such as button clicks.
+	 */
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{

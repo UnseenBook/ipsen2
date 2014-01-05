@@ -6,6 +6,11 @@ import java.util.regex.Pattern;
 
 import leen.meij.utilities.*;
 
+/**
+ * The Klant entity class.
+ * @author Thijs
+ *
+ */
 public class Klant extends Entity
 {
 
@@ -318,6 +323,10 @@ public class Klant extends Entity
 		isValid = true;
 	}
 
+	/**
+	 * Gets the full name of the Klant.
+	 * @return The full name of the Klant.
+	 */
 	public String getVolledigeNaam()
 	{
 		String naam = "";

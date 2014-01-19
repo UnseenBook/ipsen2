@@ -6,10 +6,19 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import com.sun.org.apache.bcel.internal.generic.RETURN;
+import com.sun.org.apache.xalan.internal.xsltc.runtime.Parameter;
+
 import leen.meij.Factuur;
 import leen.meij.Reservering;
 import leen.meij.utilities.DataAccess;
-
+/**
+ *@author Jovanny Martis - s1078785 
+ * @category Data
+ * This class connects with Leenmeij's database to retrieve data. The queried data are
+ * returned whenever requested.
+ * 
+ * **/
 public class ReserveringDataAccess extends DataAccess
 {
 
@@ -18,6 +27,17 @@ public class ReserveringDataAccess extends DataAccess
 
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
+	
+	/***
+	 * <b>Description: </b> Build the model to be populated by using the ResultSet. If the requested values are found, 
+	 * then it will get this value and store it into the reservering object. This is why such majestic method
+	 * like the one here down below cannot be called anything else than buildReserveringModel.
+	 * 
+	 * @throws SQLException
+	 * @return {@link Reservering}
+	 *
+	 * 
+	 * */
 
 	private Reservering buildReserveringModel() throws SQLException
 	{
@@ -59,6 +79,17 @@ public class ReserveringDataAccess extends DataAccess
 		return reservering;
 	}
 
+	/***
+	 *  
+	 * <b>Description: </b>Okay, Before something can be build, we first need to fill the database. Otherwise there will be nothing
+	 * to query from the database meaning no meaningful data to show on our fancy views. We use prepared statement
+	 * to fill our database. Why? because! And no, the data yet to be filled is unknown. 
+	 * @throws SQLException 
+	 * @return {@link Integer}
+	 
+	 * 
+	 * 
+	 * */
 	private int fillStatement(Reservering reservering) throws SQLException
 	{
 		int i = 1;
@@ -75,6 +106,17 @@ public class ReserveringDataAccess extends DataAccess
 		return i;
 	}
 
+	/**
+	 * <b>Description: </b>Build the model to be populated by using the ResultSet. If the requested values are found, 
+	 * then it will get this value and store it into the factuur object.
+	 * <br>
+	 * <br>
+	 * @throws SQLException
+	 * @return {@link Factuur}
+	 * 
+	 *
+	 * 
+	 * */
 	private Factuur buildFactuurModel() throws SQLException
 	{
 		Factuur factuur = new Factuur();
@@ -121,6 +163,12 @@ public class ReserveringDataAccess extends DataAccess
 
 	}
 
+	/**
+	 * <b>Description: </b> This method serve to fill the factuur relation. 
+	 * It get the values from the Factuur object
+	 * @throws SQLException
+	 * @return {@link Integer}
+	 * **/
 	private int fillStatement(Factuur factuur, boolean setReserveringid) throws SQLException
 	{
 		int i = 1;
@@ -144,8 +192,10 @@ public class ReserveringDataAccess extends DataAccess
 	}
 
 	/**
-	 * 
+	 * <b>Description: </b> This method connects with the database and select the row that the user have chosen
+	 * to either edit or delete.
 	 * @param reserveringID
+	 * @return {@link Integer}
 	 */
 	public Reservering select(int reserveringID)
 	{
@@ -245,7 +295,15 @@ public class ReserveringDataAccess extends DataAccess
 		return null;
 	}
 
-	// temporary Factuur select
+	/***
+	 * <b>Description: </b>This magnificent method queries the database to retrieve the necessary values
+	 * to edit or delete one ore more invoice records.
+	 * 
+	 *  @param reserveringID
+	 *  @return <code>null</code>
+	 *  
+	 * 
+	 * ***/
 	public Factuur selectFactuur(int reserveringID)
 	{
 		openConnection();
@@ -304,6 +362,12 @@ public class ReserveringDataAccess extends DataAccess
 		return null;
 	}
 
+	/****
+	 * 
+	 * <b>Description: </b>This method retrieves all the required records from the database to display data
+	 * on the reserveringView table. 
+	 * @return <code>null</code>
+	 * */
 	public ArrayList<Reservering> selectAll()
 	{
 		ArrayList<Reservering> reservering = new ArrayList<Reservering>();
@@ -398,8 +462,13 @@ public class ReserveringDataAccess extends DataAccess
 	}
 
 	/**
-	 * 
+	 * <b>Description: </b>This method is used to add a new record to the reservering relation on the database.
+	 * Data are stored on the database by using the aforementioned buildReserveringModel method. The SQL statement
+	 * is stored on a StringBuilder called builder. The SQL query execution occurs within a try-catch block. This is needed
+	 * because there is a greater probability that the query execution will fail. 
+	 * We sure want to be there to catch the errors :-)  
 	 * @param reservering
+	 * @return {@link Reservering}
 	 */
 	public Reservering add(Reservering reservering)
 	{
@@ -468,7 +537,16 @@ public class ReserveringDataAccess extends DataAccess
 		return reservering;
 
 	}
-
+	
+	/******
+	 * <b>Description: </b>This method is used to add a new record to the factuur relation on the database.
+	 * Data are stored on the database by using the aforementioned buildFactuurModell method. The SQL statement
+	 * is stored on a StringBuilder called builder. The SQL query execution occurs within a try-catch block. This is needed
+	 * because there is a greater probability that the query execution will fail. 
+	 * We sure want to be there to catch the errors :-)  
+	 *  @param factuur
+	 *  @return {@link Factuur}
+	 * */
 	public Factuur add(Factuur factuur)
 	{
 
@@ -546,8 +624,10 @@ public class ReserveringDataAccess extends DataAccess
 	}
 
 	/**
+	 * <b>Description: </b>This method is used to delete a existing record from the reservering relation of Leenmeij's database.
+	 * The method takes an integer as parameter which will be used to delete the selected record.
+	 * @param reserveringID
 	 * 
-	 * @param klantID
 	 */
 	public void delete(int reserveringID)
 	{
@@ -584,7 +664,12 @@ public class ReserveringDataAccess extends DataAccess
 			closeConnection();
 		}
 	}
-
+	/***
+	 * <b>Description: </b>This method is used to edit a existing record from the reservering relation of Leenmeij's database.
+	 * The method takes the selected reservering object as parameter which will be used to edit the selected record.
+	 * @param reservering
+	 * @return {@link Reservering}
+	 * */
 	public Reservering edit(Reservering reservering)
 	{
 		openConnection();
@@ -652,6 +737,12 @@ public class ReserveringDataAccess extends DataAccess
 		return reservering;
 	}
 
+	/**
+	 * <b>Description: </b>This method is used to select dates of reservations by using 
+	 * and integer as parameter.
+	 * @param voertuigID
+	 * @return <code>null</code>
+	 * **/
 	public ArrayList<Reservering> selectDatumByVoertuigID(int voertuigID)
 	{
 		ArrayList<Reservering> reservering = new ArrayList<Reservering>();

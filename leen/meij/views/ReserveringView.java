@@ -20,7 +20,12 @@ import javax.swing.table.TableColumnModel;
 import leen.meij.Klant;
 import leen.meij.Rechten;
 import leen.meij.Reservering;
-
+/**
+ *@author Jovanny Martis - s1078785 
+ * @category View
+ * This class shows the content of Reservering.
+ * 
+ * **/
 public class ReserveringView extends MasterView<ArrayList<Reservering>> implements ListSelectionListener,ActionListener
 
 {
@@ -38,7 +43,10 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 
 	private JTable tblReserveringen;
 	
-	
+	/****
+	 * <b>Description: </b>The values of the buttons and the table to be shown are declared in the body of the constructor.
+	 * @param model
+	 * */
 	public ReserveringView(ArrayList<Reservering> model)
 	{
 		super(model);
@@ -82,6 +90,11 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 	}
 	
 
+	/***
+	 * <b>Description: </b>The method actionPerformed(ActionEvent e) handles the event when a button of the view
+	 * is pressed.
+	 * @param e
+	 * **/
 	
 	public void actionPerformed(ActionEvent e)
 	{
@@ -124,6 +137,10 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 		}
 	}
 	
+	/***
+	 * <b>Description: </b>The method valueChanged(ListSelectionEvent e) handles the event when the value of the selected list changes.
+	 * @param e
+	 * **/
 	@Override
 	public void valueChanged(ListSelectionEvent e)
 	{
@@ -139,7 +156,11 @@ public class ReserveringView extends MasterView<ArrayList<Reservering>> implemen
 		btnAanpassen.setEnabled(inRange);
 	}
 	
-	
+	/****
+	 * <b>Description: </b>This method creates the table to be displayed on this view.
+	 * 
+	 * @return {@link JTable}
+	 * */
 	private JTable createReserveringOverviewTable()
 	{
 		DefaultTableModel dm = new DefaultTableModel();

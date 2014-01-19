@@ -8,7 +8,8 @@ import leen.meij.views.*;
 
 /**
  * 
- * @author Jovanny
+ * @author Jovanny Martis - s1078785
+ * @category Controller
  * 
  * **/
 public class ReserveringController extends Controller
@@ -41,6 +42,10 @@ public class ReserveringController extends Controller
 	/**
 	 * 
 	 * @param reservering.
+	 * @return reserverinOverzichtRaadplegenTask();
+	 * Before we can add a new reservation it is necessary to validate the values entered by the 
+	 * user. This nullifies the possibility to get an empty/invalid record in the database. 
+	 * After the required values are successfully validated, the method returns the previous view. 
 	 */
 	public View reserveringToevoegenTask(Reservering reservering)
 	{
@@ -70,6 +75,10 @@ public class ReserveringController extends Controller
 	/**
 	 * 
 	 * @param reservering
+	 * @return ReserveringDetailsView(reservering);
+	 * Whenever one or more value of a placed reservation need to be made, the method 
+	 * checks if the changes are made accordingly. After validating, it returns to the previous View
+	 * The changes made are immediately visible.
 	 */
 	public View reserveringWijzigenTask(Reservering reservering)
 	{
@@ -95,6 +104,16 @@ public class ReserveringController extends Controller
 		return reserveringOverzichtRaadplegenTask();
 	}
 	
+	/**
+	 * @param factuur
+	 * @return FactuurView(factuur)
+	 * This method generates an invoice based on existing data from many relations on Leenmeij's database. 
+	 *  This method returns the 'FactuurView' invoice, giving users the possibility to fill the nullable row
+	 *  of the factuur relation called beschrijving. After adding(editing) the invoice, the method returns the 
+	 *  previous view.
+	 * 
+	 * **/
+	
 	public View factuurToevoegenTask(Factuur factuur)
 	{
 		factuur.validateFields();
@@ -113,6 +132,9 @@ public class ReserveringController extends Controller
 	/**
 	 * 
 	 * @param reserveringID
+	 * @return FactuurView(factuur);
+	 * This method collects data from many relation of Leenmeij's database and show it as a collection 
+	 * of all reservations. 
 	 */
 	public View factuurOpmakenTask(Integer reserveringID)
 	{

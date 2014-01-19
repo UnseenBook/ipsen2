@@ -13,10 +13,11 @@ import leen.meij.Voertuig;
 import leen.meij.utilities.View;
 
 /**
+ *@author Jovanny Martis - s1078785 
+ * @category View
+ * This class shows the form to be filled in order to edit or add a new 'Reservering'.
  * 
- * @author abetcke
- * 
- */
+ * **/
 public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionListener, ListSelectionListener
 {
 
@@ -46,6 +47,10 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
 	private JButton btnSave = new JButton("Opslaan");
 	private JButton btnCancel = new JButton("Annuleren");
 
+	/****
+	 * <b>Description: </b>The values of the buttons and the text boxes to be shown are declared in the body of the constructor.
+	 * @param model
+	 * */
 	public VoertuigDetailsView(Voertuig model)
 	{
 		super(model);

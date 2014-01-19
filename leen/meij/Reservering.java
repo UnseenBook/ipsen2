@@ -7,7 +7,11 @@ import java.util.regex.Pattern;
 
 import leen.meij.dataAccess.*;
 import leen.meij.utilities.Entity;
-
+/**
+ * @author Jovanny Martis - s1078785
+ * @category Model
+ * @
+ */
 public class Reservering extends Entity
 {
 
@@ -16,8 +20,7 @@ public class Reservering extends Entity
 	private int voertuigID;
 	private Klant klant;
 	private Voertuig voertuig;
-	private Gebruiker gebruiker; // dit is tijdelijk (bij inleverlijst
-	// [gereserveerd door: gebruiker x]
+	private Gebruiker gebruiker; 
 	private Date reserveerDatum;
 	private Date beginDatum;
 	private Date eindDatum;
@@ -25,16 +28,15 @@ public class Reservering extends Entity
 	private double bedrag;
 	private String status;
 
-	/**
-	 * @author Jovanny *
-	 */
+	
 	public Reservering()
 	{
 		this.klant = null;
 		this.voertuig = null;
 		this.gebruiker = null;
 	}
-
+	
+	
 	public Reservering(int klantID, Klant klant, Voertuig voertuig, Date begin, Date eind, int kilometer, double bedrag, String status)
 	{
 		this.klantID = klantID;
@@ -166,6 +168,11 @@ public class Reservering extends Entity
 		this.bedrag = bedrag;
 	}
 
+	/**
+	 * Check if fields are not empty. 
+	 * By doing this, we nullify empty values by validate the fields.
+	 * 
+	 * **/
 	public void validateFields()
 	{
 
@@ -199,7 +206,7 @@ public class Reservering extends Entity
 		{
 			VoertuigDataAccess voertuigDataAccess = new VoertuigDataAccess();
 			ReserveringDataAccess reserveringDataAccess = new ReserveringDataAccess();
-			// check if the
+			
 			Voertuig voertuig = voertuigDataAccess.select(getVoertuig() == null ? getVoertuigID() : getVoertuig().getVoertuigID());
 
 			if (!voertuig.gereserveerd(this))
@@ -232,13 +239,13 @@ public class Reservering extends Entity
 		this.beginDatum = beginDatum;
 	}
 
-	// debug set STATUS
+
 	public void setStatus(String status)
 	{
 		this.status = status;
 	}
 
-	// debug get STATUS
+	
 	public String getStatus()
 	{
 		return status;

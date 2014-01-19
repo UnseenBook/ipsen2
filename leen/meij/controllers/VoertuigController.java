@@ -9,25 +9,36 @@ import leen.meij.*;
 import leen.meij.views.VoertuigDetailsView;
 import leen.meij.views.VoertuigView;
 
+/**
+ * 
+ * @author abetcke
+ * 
+ */
 public class VoertuigController extends Controller
 {
 
 	private VoertuigDataAccess voertuigDataAccess = new VoertuigDataAccess();
 
+        /**
+	 * 
+	 * Shows the voertuigView view with a list of vehicles (Voertuig)
+	 */
 	public View voertuigOverzichtRaadplegenTask()
 	{
-		// TODO - implement {class}.{operation}
 		return new VoertuigView(voertuigDataAccess.selectAll());
 	}
 
+        /**
+	 * 
+	 * Shows a empty VoertuigDetailsView for adding a vehicle (Voertuig)
+	 */
 	public View voertuigToevoegenTask()
 	{
-		// TODO - implement {class}.{operation}
 		return new VoertuigDetailsView(new Voertuig());
 	}
 
 	/**
-	 * 
+	 * Adds a vehicle (voertuig) to the database after validation
 	 * @param voertuig
 	 */
 	public View voertuigToevoegenTask(Voertuig voertuig)
@@ -49,7 +60,7 @@ public class VoertuigController extends Controller
 	}
 
 	/**
-	 * 
+	 * Shows the VoertuigDetailsView with an existing vehicle (voertuig) for editing the vehicle
 	 * @param voertuigID
 	 */
 	public View voertuigWijzigenTask(Integer voertuigID)
@@ -60,7 +71,7 @@ public class VoertuigController extends Controller
 	}
 
 	/**
-	 * 
+	 * Updates a vehicle (voertuig) from the database after validation
 	 * @param voertuig
 	 */
 	public View voertuigWijzigenTask(Voertuig voertuig)
@@ -80,7 +91,7 @@ public class VoertuigController extends Controller
 	}
 
 	/**
-	 * 
+	 * Removes a vehicle (voertuig) from the database
 	 * @param voertuigID
 	 */
 	public View voertuigVerwijderenTask(Integer voertuigID)
@@ -91,7 +102,7 @@ public class VoertuigController extends Controller
 	}
 
 	/**
-	 * 
+	 * Adds a maintenance item to the database after validation
 	 * @param onderhoud
 	 */
 	public View onderhoudToevoegenTask(Onderhoud onderhoud)
@@ -104,7 +115,11 @@ public class VoertuigController extends Controller
 		
 		return new VoertuigDetailsView(voertuigDataAccess.select(onderhoud.getVoertuig().getVoertuigID()));
 	}
-
+        
+        /**
+	 * Updates a maintenance item from the database after validation
+	 * @param onderhoud
+	 */
 	public View onderhoudWijzigenTask(Onderhoud onderhoud)
 	{
 		onderhoud.validateFields();

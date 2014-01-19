@@ -33,9 +33,13 @@ public class VoertuigView extends MasterView<ArrayList<Voertuig>> implements Lis
     private String selectedType = null;
     private String selectedCategorie = null;
 
+    /**
+    * 
+    * @author abetcke
+    * 
+    */
     public VoertuigView(ArrayList<Voertuig> model) {
         super(model);
-        // TODO Auto-generated constructor stub
 
         this.setTitle("Voertuigen");
 
@@ -78,6 +82,11 @@ public class VoertuigView extends MasterView<ArrayList<Voertuig>> implements Lis
         return model;
     }
 
+    /**
+    * 
+    * repopulates the table
+    * 
+    */
     private void rebuildTable()
     {
         this.pnlContent.setVisible(false);
@@ -89,7 +98,12 @@ public class VoertuigView extends MasterView<ArrayList<Voertuig>> implements Lis
         this.pnlContent.setVisible(true);
         this.repaint();
     }
-
+    
+    /**
+        * 
+        * Button handler. Specific buttons run specific tasks from the controller
+        * Handles itemselection of the table
+        */
     public void actionPerformed(ActionEvent e) {
         super.actionPerformed(e);
 
@@ -133,6 +147,11 @@ public class VoertuigView extends MasterView<ArrayList<Voertuig>> implements Lis
         btnWijzigen.setEnabled(inRange);
     }
 
+    /**
+    * 
+    * creates a vehicletable (voertuig) with vehicile attibutes shown
+    * @return JTable
+    */
     private JTable createVoertuigTable() {
         DefaultTableModel dtm = new DefaultTableModel();
         dtm.addColumn("Nummer");

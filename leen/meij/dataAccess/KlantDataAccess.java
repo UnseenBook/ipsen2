@@ -7,7 +7,11 @@ import java.util.*;
 import leen.meij.utilities.*;
 import leen.meij.*;
 
-
+/**
+ * The KlantDataAccess class. Provides data access methods for Klant objects.
+ * @author Thijs
+ *
+ */
 public class KlantDataAccess extends DataAccess
 {
 	private PreparedStatement preparedStatement = null;

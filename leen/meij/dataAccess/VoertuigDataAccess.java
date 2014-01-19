@@ -5,18 +5,34 @@ import java.util.*;
 
 import leen.meij.utilities.*;
 import leen.meij.*;
-
+/**
+ * 
+ * @author abetcke
+ * 
+ */
 public class VoertuigDataAccess extends DataAccess
 {
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
 
+        /**
+        * 
+        * Sets local variable specified by resultSet
+        * @return Voertuig @see	buildVoertuigModel
+        * @throws SQLException
+        */
 	public Voertuig buildVoertuigModel(ResultSet resultSet) throws SQLException
 	{
 		this.resultSet = resultSet;
 		return buildVoertuigModel();
 	}
 
+        /**
+        * 
+        * Populates the vehicle (voertuig) model from the db query result
+        * @return Voertuig
+        * @throws SQLException
+        */
 	private Voertuig buildVoertuigModel() throws SQLException
 	{
 		Voertuig voertuig = new Voertuig();
@@ -48,6 +64,13 @@ public class VoertuigDataAccess extends DataAccess
 		return voertuig;
 	}
 
+        /**
+        * 
+        * Populates the attributes for preparedstatement from the vehicle (voertuig) model
+        * @return int
+        * @param voertuig
+        * @throws SQLException
+        */
 	private int fillVoertuigStatement(Voertuig voertuig) throws SQLException
 	{
 		int i = 1;
@@ -70,7 +93,14 @@ public class VoertuigDataAccess extends DataAccess
 
 		return i;
 	}
-
+        
+        /**
+        * 
+        * Populates the maintenance (onderhoud) model from the db query result
+        * @return Onderhoud
+        * @param onderhoudResultSet
+        * @throws SQLException
+        */
 	private Onderhoud buildOnderhoudModel(ResultSet onderhoudResultSet) throws SQLException
 	{
 		Onderhoud onderhoud = new Onderhoud();
@@ -83,6 +113,13 @@ public class VoertuigDataAccess extends DataAccess
 		return onderhoud;
 	}
 
+        /**
+        * 
+        * Populates the attributes for preparedstatement from the maintenance (onderhoud) model
+        * @return int
+        * @param onderhoud
+        * @throws SQLException
+        */
 	private int fillOnderhoudStatement(Onderhoud onderhoud) throws SQLException
 	{
 		int i = 1;
@@ -95,7 +132,8 @@ public class VoertuigDataAccess extends DataAccess
 	}
 
 	/**
-	 * 
+	 * selection of a specific vehicle (voertuig) from the database, specified by ID
+         * @return Voertuig
 	 * @param voertuigID
 	 */
 	public Voertuig select(int voertuigID)
@@ -144,6 +182,10 @@ public class VoertuigDataAccess extends DataAccess
 		return null;
 	}
 
+        /**
+	 * selection all vehicles (voertuig) from the database, in a arraylist of vehicle (voertuig) models
+	 * @return ArrayList<Voertuig>
+	 */
 	public ArrayList<Voertuig> selectAll()
 	{
 		openConnection();
@@ -192,7 +234,8 @@ public class VoertuigDataAccess extends DataAccess
 	}
 
 	/**
-	 * 
+	 * Adds a vehicle (voertuig) to the database, specified by the model
+         * @return Voertuig
 	 * @param voertuig
 	 */
 	public Voertuig add(Voertuig voertuig)
@@ -269,8 +312,8 @@ public class VoertuigDataAccess extends DataAccess
 	}
 
 	/**
-	 * 
-	 * @param klantID
+	 * Deletes a specific vehicle (voertuig) from the database, specified by ID 
+	 * @param voertuigID
 	 */
 	public void delete(int voertuigID)
 	{
@@ -315,7 +358,8 @@ public class VoertuigDataAccess extends DataAccess
 	}
 
 	/**
-	 * 
+	 * Updates the vehicle (voertuig)from the database, specified by the vehicle model 
+         * @return Voertuig
 	 * @param voertuig
 	 */
 	public Voertuig edit(Voertuig voertuig)
@@ -386,7 +430,8 @@ public class VoertuigDataAccess extends DataAccess
 	}
 
 	/**
-	 * 
+	 * Adds a maintenance item (onderhoud) to the database, specified by the model
+         * @return Onderhoud
 	 * @param onderhoud
 	 */
 	public Onderhoud addOnderhoud(Onderhoud onderhoud)
@@ -457,6 +502,11 @@ public class VoertuigDataAccess extends DataAccess
 		return onderhoud;
 	}
 
+        
+        /**
+	 * selection of all maintenance items (Onderhoud) from the database by vehicleId, in a arraylist of maintenance items (Onderhoud) models.
+	 * @return ArrayList<Onderhoud>
+	 */
 	private ArrayList<Onderhoud> getOnderhoud(int voertuigID)
 	{
 		openConnection();
@@ -504,6 +554,11 @@ public class VoertuigDataAccess extends DataAccess
 		return onderhouden;
 	}
 
+        /**
+	 * Updates the maintenance item (onderhoud) from the database, specified by the onderhoud model 
+         * @return Onderhoud
+	 * @param voertuig
+	 */
 	public Onderhoud editOnderhoud(Onderhoud onderhoud)
 	{
 		openConnection();

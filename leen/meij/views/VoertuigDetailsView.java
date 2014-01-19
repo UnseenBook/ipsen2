@@ -12,6 +12,11 @@ import leen.meij.Onderhoud;
 import leen.meij.Voertuig;
 import leen.meij.utilities.View;
 
+/**
+ * 
+ * @author abetcke
+ * 
+ */
 public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionListener, ListSelectionListener
 {
 
@@ -127,7 +132,11 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
 		setErrorMessages(model.getErrors());
 		loadModelData();
 	}
-
+        
+        /**
+        * 
+        * sets model attributes from swing components
+        */
 	protected Voertuig getEditedModel()
 	{
 
@@ -154,6 +163,10 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
 		return this.model;
 	}
 
+        /**
+        * 
+        * sets swing components values from the model attributes
+        */
 	private void loadModelData()
 	{
 		// setAllThings!
@@ -179,6 +192,11 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
 		cbStation.setSelected(model.getStation());
 	}
 
+        /**
+        * 
+        * Button handler. Specific buttons run specific tasks from the controller
+        * 
+        */
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
@@ -231,6 +249,11 @@ public class VoertuigDetailsView extends MasterView<Voertuig> implements ActionL
 		}
 	}
 
+        /**
+        * 
+        * Creates the maintenance table with maintenance items
+        * * @param onderhoudLijst
+        */
 	private JTable createOnderhoudTable(ArrayList<Onderhoud> onderhoudLijst)
 	{
 

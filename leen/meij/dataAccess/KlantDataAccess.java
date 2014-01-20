@@ -9,7 +9,7 @@ import leen.meij.*;
 
 /**
  * The KlantDataAccess class. Provides data access methods for Klant objects.
- * @author Thijs
+ * @author Thijs, Daan
  *
  */
 public class KlantDataAccess extends DataAccess
@@ -99,7 +99,7 @@ public class KlantDataAccess extends DataAccess
 
 	/**
 	 * Gets a Klant object specified by a klant ID.
-	 * @param klantID The Dlant ID.
+	 * @param klantID The Klant ID.
 	 */
 	public Klant select(int klantID)
 	{

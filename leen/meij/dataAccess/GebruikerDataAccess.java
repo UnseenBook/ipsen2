@@ -9,11 +9,23 @@ import leen.meij.Afdeling;
 import leen.meij.Gebruiker;
 import leen.meij.utilities.DataAccess;
 
+/**
+ * The GebruikerDataAccess class. Provides data access methods for Gebruiker objects.
+ * @author Daan, Thijs
+ *
+ */
+
 public class GebruikerDataAccess extends DataAccess
 {
 	private PreparedStatement preparedStatement = null;
 	private ResultSet resultSet = null;
 
+	/**
+	 * Creates a Afdeling model and fills it with the data from a ResultSet object. The object is returned to be pu in the Gebruiker model.
+	 * @param afdelingResultSet
+	 * @return
+	 * @throws SQLException
+	 */
 	private Afdeling buildAfdelingModel(ResultSet afdelingResultSet) throws SQLException
 	{
 		Afdeling afdeling = new Afdeling();
@@ -31,6 +43,11 @@ public class GebruikerDataAccess extends DataAccess
 		return buildGebruikerModel();
 	}
 
+	/**
+	 * Creates a Gebruiker model and fills it with data fram a ResultSet object. It also checks if the ResultSet has data of the Afdeling model and if there is, it will place the Afdeling model in the Gebruiker model.
+	 * @return The Gebruiker object filled with the found data
+	 * @throws SQLException When an SQLException occurs it will be thrown in the method where this method is called
+	 */
 	private Gebruiker buildGebruikerModel() throws SQLException
 	{
 		Gebruiker gebruiker = new Gebruiker();
@@ -61,6 +78,13 @@ public class GebruikerDataAccess extends DataAccess
 		return gebruiker;
 	}
 
+	/**
+	 * When making an edit in a database record or add a database record, this method will fill the prepared statement with the model data. 
+	 * @param gebruiker The model that will be placed in the database
+	 * @param metWachtwoord True when the password has to be updated, otherwise false
+	 * @return number of items added in the prepared statement
+	 * @throws SQLException When an SQLException occurs it will be thrown in the method where this method is called
+	 */
 	private int fillStatement(Gebruiker gebruiker, boolean metWachtwoord) throws SQLException
 	{
 		int i = 1;
@@ -80,8 +104,9 @@ public class GebruikerDataAccess extends DataAccess
 	}
 
 	/**
-	 * 
-	 * @param gebruikerID
+	 * Finds a specific Gebruiker in the database based on the id of the Gebruiker and returns the model of the found Gebruiker or NULL if the Gebruiker is not found
+	 * @param gebruikerID The id of the selected Gebruiker
+	 * @return The found Gebruiker object
 	 */
 	public Gebruiker select(int gebruikerID)
 	{
@@ -143,9 +168,10 @@ public class GebruikerDataAccess extends DataAccess
 	}
 
 	/**
-	 * 
-	 * @param gebruikersNaam
-	 * @param wachtwoord
+	 * Finds a specific Gebruiker object in the database based on the username and password of the Gebruiker and returns the model of the found Gebruiker or NULL if the Gebruiker is not found
+	 * @param gebruikersNaam The username of the Gebruiker object
+	 * @param wachtwoord The password of the Gebruiker object
+	 * @return The found Gebruiker object
 	 */
 	public Gebruiker select(String gebruikersNaam, String wachtwoord)
 	{
@@ -208,6 +234,10 @@ public class GebruikerDataAccess extends DataAccess
 		return gebruiker;
 	}
 
+	/**
+	 * Finds all the Gebruiker objects in the database
+	 * @return A list of all the Gebruiker objects
+	 */
 	public ArrayList<Gebruiker> selectAll()
 	{
 		ArrayList<Gebruiker> gebruikerList = new ArrayList<Gebruiker>();
@@ -265,8 +295,9 @@ public class GebruikerDataAccess extends DataAccess
 	}
 
 	/**
-	 * 
-	 * @param gebruiker
+	 * Will add the Gebruiker object to the database
+	 * @param gebruiker The object inserted into the database
+	 * @return The added Gebruiker object
 	 */
 	public Gebruiker add(Gebruiker gebruiker)
 	{
@@ -336,8 +367,8 @@ public class GebruikerDataAccess extends DataAccess
 	}
 
 	/**
-	 * 
-	 * @param gebruikerID
+	 * Deletes a Gebruiker object from the database
+	 * @param gebruikerID The Gebruiker object's id to be deleted
 	 */
 	public void delete(int gebruikerID)
 	{
@@ -375,8 +406,9 @@ public class GebruikerDataAccess extends DataAccess
 	}
 
 	/**
-	 * 
-	 * @param gebruiker
+	 * Edits a Gebruiker object in the database
+	 * @param gebruiker The Gebruiker object to edit
+	 * @return The edited Gebruiker object
 	 */
 	public Gebruiker edit(Gebruiker gebruiker)
 	{
@@ -433,6 +465,12 @@ public class GebruikerDataAccess extends DataAccess
 		return gebruiker;
 	}
 
+	/**
+	 * Edits a Gebruiker object his password
+	 * @param gebruikerID The id of the Gebruiker object
+	 * @param wachtwoord The new password of the Gebruiker object
+	 * @return NULL
+	 */
 	public Gebruiker editWachtwoord(int gebruikerID, String wachtwoord)
 	{
 		openConnection();

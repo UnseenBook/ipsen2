@@ -13,7 +13,7 @@ import leen.meij.Factuur;
 import leen.meij.Reservering;
 import leen.meij.utilities.DataAccess;
 /**
- *@author Jovanny Martis - s1078785 
+ *@author Jovanny Martis - s1078785 , Daan, Thijs
  * @category Data
  * This class connects with Leenmeij's database to retrieve data. The queried data are
  * returned whenever requested.

@@ -8,6 +8,11 @@ import java.util.regex.Pattern;
 import leen.meij.dataAccess.ReserveringDataAccess;
 import leen.meij.utilities.*;
 
+/**
+ * The Voertuig Entity class
+ * @author Daan, Thijs, Jovanny, Angelo
+ *
+ */
 public class Voertuig extends Entity
 {
 	public static final String[] types = { "Scooter", "Motor", "Personen auto", "Bestel bus" };

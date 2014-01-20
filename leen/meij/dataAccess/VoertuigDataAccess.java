@@ -558,8 +558,8 @@ public class VoertuigDataAccess extends DataAccess
 
         /**
 	 * Updates the maintenance item (onderhoud) from the database, specified by the onderhoud model 
-         * @return Onderhoud
-	 * @param voertuig
+	 * @return Onderhoud
+	 * @param onderhoud
 	 */
 	public Onderhoud editOnderhoud(Onderhoud onderhoud)
 	{

@@ -9,7 +9,6 @@ import leen.meij.dataAccess.*;
 import leen.meij.utilities.Entity;
 /**
  * @author Jovanny Martis - s1078785
- * @category Model
  * 
  */
 public class Reservering extends Entity

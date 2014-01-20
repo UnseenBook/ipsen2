@@ -24,7 +24,7 @@ public class GebruikerDataAccess extends DataAccess
 	/**
 	 * Creates a Afdeling model and fills it with the data from a ResultSet object. The object is returned to be pu in the Gebruiker model.
 	 * @param afdelingResultSet
-	 * @return
+	 * @return Afdeling object
 	 * @throws SQLException
 	 */
 	private Afdeling buildAfdelingModel(ResultSet afdelingResultSet) throws SQLException

@@ -47,7 +47,7 @@ public class GebruikerController extends Controller
 
 	/**
 	 * Shows the page with all the Gebruiker objects
-	 * @return
+	 * 
 	 */
 	public View gebruikersOverzichtRaadplegenTask()
 	{

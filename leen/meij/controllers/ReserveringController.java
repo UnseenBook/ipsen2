@@ -9,7 +9,6 @@ import leen.meij.views.*;
 /**
  * 
  * @author Jovanny Martis - s1078785
- * @category Controller
  * 
  * **/
 public class ReserveringController extends Controller
@@ -41,7 +40,7 @@ public class ReserveringController extends Controller
 
 	/**
 	 * 
-	 * @param reservering.
+	 * @param reservering
 	 * @return reserverinOverzichtRaadplegenTask();
 	 * Before we can add a new reservation it is necessary to validate the values entered by the 
 	 * user. This nullifies the possibility to get an empty/invalid record in the database. 

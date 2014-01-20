@@ -24,7 +24,6 @@ public abstract class Controller
 	/**
 	 * Gets the current active view.
 	 * 
-	 * @return
 	 */
 	public View getCurrentView()
 	{

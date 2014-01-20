@@ -111,7 +111,7 @@ public class GebruikerView extends MasterView<ArrayList<Gebruiker>> implements L
 
 	/**
 	 * Creates a table object for displaying purposes.
-	 * @return
+	 * @return Table object with all the Gebruiker objects information
 	 */
 	private JTable createGebruikerTable()
 	{

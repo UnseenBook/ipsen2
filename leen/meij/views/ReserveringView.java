@@ -21,8 +21,7 @@ import leen.meij.Klant;
 import leen.meij.Rechten;
 import leen.meij.Reservering;
 /**
- *@author Jovanny Martis - s1078785 
- * @category View
+ * @author Jovanny Martis - s1078785 
  * This class shows the content of Reservering.
  * 
  * **/

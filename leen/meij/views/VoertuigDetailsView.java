@@ -13,8 +13,7 @@ import leen.meij.Voertuig;
 import leen.meij.utilities.View;
 
 /**
- *@author Jovanny Martis - s1078785 
- * @category View
+ * @author Jovanny Martis - s1078785 
  * This class shows the form to be filled in order to edit or add a new 'Reservering'.
  * 
  * **/

@@ -110,7 +110,7 @@ public class KlantView extends MasterView<ArrayList<Klant>> implements ListSelec
 
 	/**
 	 * Creates a Klant table object for display purposes.
-	 * @return
+	 * @return Table object with all the Klant objects information
 	 */
 	private JTable createKlantTable()
 	{

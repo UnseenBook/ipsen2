@@ -71,8 +71,8 @@ public class Site extends JFrame
 	
 	/**
 	 * Runs a task specified by a controller name, a task name and an array of arguments. 
-	 * @param controller The name of the controller (class).
-	 * @param task The name of the task (method) from the specified controller.
+	 * @param controllerName The name of the controller (class).
+	 * @param taskName The name of the task (method) from the specified controller.
 	 * @param args The arguments to pass to the task method.
 	 */
 	public void runTask(String controllerName, String taskName, Object[] args)

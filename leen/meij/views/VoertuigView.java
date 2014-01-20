@@ -20,6 +20,11 @@ import javax.swing.table.TableColumnModel;
 import leen.meij.Rechten;
 import leen.meij.Voertuig;
 
+/**
+ * 
+ * @author abetcke
+ * 
+ */
 public class VoertuigView extends MasterView<ArrayList<Voertuig>> implements ListSelectionListener, ActionListener {
 
     private Voertuig selectedVoertuig;
@@ -33,11 +38,7 @@ public class VoertuigView extends MasterView<ArrayList<Voertuig>> implements Lis
     private String selectedType = null;
     private String selectedCategorie = null;
 
-    /**
-    * 
-    * @author abetcke
-    * 
-    */
+    
     public VoertuigView(ArrayList<Voertuig> model) {
         super(model);
 

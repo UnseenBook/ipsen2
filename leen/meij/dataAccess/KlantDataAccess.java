@@ -9,7 +9,8 @@ import leen.meij.*;
 
 /**
  * The KlantDataAccess class. Provides data access methods for Klant objects.
- * @author Thijs, Daan
+ * @author Thijs
+ * @author Daan
  *
  */
 public class KlantDataAccess extends DataAccess

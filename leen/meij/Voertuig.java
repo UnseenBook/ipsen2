@@ -10,7 +10,10 @@ import leen.meij.utilities.*;
 
 /**
  * The Voertuig Entity class
- * @author Daan, Thijs, Jovanny, Angelo
+ * @author Daan
+ * @author Thijs
+ * @author Jovanny
+ * @author Angelo
  *
  */
 public class Voertuig extends Entity

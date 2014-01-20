@@ -11,7 +11,8 @@ import leen.meij.utilities.DataAccess;
 
 /**
  * The GebruikerDataAccess class. Provides data access methods for Gebruiker objects.
- * @author Daan, Thijs
+ * @author Daan
+ * @author Thijs
  *
  */
 

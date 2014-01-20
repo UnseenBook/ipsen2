@@ -7,7 +7,9 @@ import leen.meij.utilities.*;
 import leen.meij.*;
 /**
  * 
- * @author abetcke, Daan, Thijs
+ * @author abetcke
+ * @author Daan
+ * @author Thijs
  * 
  */
 public class VoertuigDataAccess extends DataAccess

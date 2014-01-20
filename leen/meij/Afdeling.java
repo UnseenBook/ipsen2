@@ -2,6 +2,11 @@ package leen.meij;
 
 import leen.meij.utilities.*;
 
+/**
+ * 
+ * @author Thijs
+ * 
+ */
 public class Afdeling extends Entity
 {
 	public static final Afdeling[] Afdelingen = {

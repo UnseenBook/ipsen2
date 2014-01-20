@@ -6,9 +6,6 @@ import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import com.sun.org.apache.bcel.internal.generic.RETURN;
-import com.sun.org.apache.xalan.internal.xsltc.runtime.Parameter;
-
 import leen.meij.Factuur;
 import leen.meij.Reservering;
 import leen.meij.utilities.DataAccess;

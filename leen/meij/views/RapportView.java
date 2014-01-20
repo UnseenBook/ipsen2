@@ -22,7 +22,11 @@ import leen.meij.dataAccess.KlantDataAccess;
 import leen.meij.dataAccess.ReserveringDataAccess;
 import leen.meij.dataAccess.VoertuigDataAccess;
 
-
+/**
+ * 
+ * @author Thijs
+ * 
+ */
 public class RapportView extends MasterView<ArrayList<Reservering>> implements ActionListener
 {
 	private JTable tblManagementKlanten;

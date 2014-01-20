@@ -1,134 +1,114 @@
 package leen.meij;
 
 import leen.meij.utilities.*;
+/**
+ * @author abetcke
+ *
+ */
+public class Onderhoud extends Entity {
 
-public class Onderhoud extends Entity
-{
+    private int onderhoudID;
+    private Klant klant;
+    private Voertuig voertuig;
+    private String locatie;
+    private String handeling;
+    private boolean voldaan;
+    private String beschrijving;
 
-	private int onderhoudID;
+    public Klant getKlant() {
+        return this.klant;
+    }
 
-	private Klant klant;
+    /**
+     *
+     * @param klant
+     */
+    public void setKlant(Klant klant) {
+        this.klant = klant;
+    }
 
-	private Voertuig voertuig;
+    public Voertuig getVoertuig() {
+        return this.voertuig;
+    }
 
-	private String locatie;
+    /**
+     *
+     * @param voertuig
+     */
+    public void setVoertuig(Voertuig voertuig) {
+        this.voertuig = voertuig;
+    }
 
-	private String handeling;
+    public int getOnderhoudID() {
+        return this.onderhoudID;
+    }
 
-	private boolean voldaan;
+    /**
+     *
+     * @param onderhoudID
+     */
+    public void setOnderhoudID(int onderhoudID) {
+        this.onderhoudID = onderhoudID;
+    }
 
-	private String beschrijving;
+    public String getLocatie() {
+        return this.locatie;
+    }
 
-	public Klant getKlant()
-	{
-		return this.klant;
-	}
+    /**
+     *
+     * @param locatie
+     */
+    public void setLocatie(String locatie) {
+        this.locatie = locatie;
+    }
 
-	/**
-	 * 
-	 * @param klant
-	 */
-	public void setKlant(Klant klant)
-	{
-		this.klant = klant;
-	}
+    public String getHandeling() {
+        return this.handeling;
+    }
 
-	public Voertuig getVoertuig()
-	{
-		return this.voertuig;
-	}
+    /**
+     *
+     * @param handeling
+     */
+    public void setHandeling(String handeling) {
+        this.handeling = handeling;
+    }
 
-	/**
-	 * 
-	 * @param voertuig
-	 */
-	public void setVoertuig(Voertuig voertuig)
-	{
-		this.voertuig = voertuig;
-	}
+    public boolean isVoldaan() {
+        return this.voldaan;
+    }
 
-	public int getOnderhoudID()
-	{
-		return this.onderhoudID;
-	}
+    /**
+     *
+     * @param voldaan
+     */
+    public void setVoldaan(boolean voldaan) {
+        this.voldaan = voldaan;
+    }
 
-	/**
-	 * 
-	 * @param onderhoudID
-	 */
-	public void setOnderhoudID(int onderhoudID)
-	{
-		this.onderhoudID = onderhoudID;
-	}
+    public void validateFields() {
+        isValid = true;
+    }
 
-	public String getLocatie()
-	{
-		return this.locatie;
-	}
+    public Integer getKlantID() {
+        if (this.klant == null) {
+            return null;
+        }
+        return this.klant.getKlantID();
+    }
 
-	/**
-	 * 
-	 * @param locatie
-	 */
-	public void setLocatie(String locatie)
-	{
-		this.locatie = locatie;
-	}
+    /**
+     * @return the beschrijving
+     */
+    public String getBeschrijving() {
+        return beschrijving;
+    }
 
-	public String getHandeling()
-	{
-		return this.handeling;
-	}
-
-	/**
-	 * 
-	 * @param handeling
-	 */
-	public void setHandeling(String handeling)
-	{
-		this.handeling = handeling;
-	}
-
-	public boolean isVoldaan()
-	{
-		return this.voldaan;
-	}
-
-	/**
-	 * 
-	 * @param voldaan
-	 */
-	public void setVoldaan(boolean voldaan)
-	{
-		this.voldaan = voldaan;
-	}
-
-	public void validateFields()
-	{
-		isValid = true;
-	}
-
-	public Integer getKlantID()
-	{
-		if (this.klant == null) return null;
-		return this.klant.getKlantID();
-	}
-
-	/**
-	 * @return the beschrijving
-	 */
-	public String getBeschrijving()
-	{
-		return beschrijving;
-	}
-
-	/**
-	 * @param beschrijving
-	 *            the beschrijving to set
-	 */
-	public void setBeschrijving(String beschrijving)
-	{
-		this.beschrijving = beschrijving;
-	}
-
+    /**
+     * @param beschrijving the beschrijving to set
+     */
+    public void setBeschrijving(String beschrijving) {
+        this.beschrijving = beschrijving;
+    }
 }

@@ -1,140 +1,120 @@
-
 package leen.meij;
 
 import java.util.Date;
 
 import leen.meij.utilities.*;
+/**
+ * The Gebruiker entity class.
+ * 
+ * @author Thijs
+ * 
+ */
+public class Factuur extends Entity {
 
-public class Factuur extends Entity
-{
+    private int factuurID;
+    private int reserveringID;
+    private Reservering reservering;
+    private int factuurnummer;
+    private double bedrag;
+    private Date datum;
+    private String reden;
 
-	private int factuurID;
+    public Factuur() {
+    }
 
-	private int reserveringID;
+    /**
+     *
+     * @param factuurID
+     */
+    public Factuur(int factuurID) {
+        this.factuurID = factuurID;
+    }
 
-	private Reservering reservering;
+    public Reservering getReservering() {
+        return this.reservering;
+    }
 
-	private int factuurnummer;
+    /**
+     *
+     * @param reservering
+     */
+    public void setReservering(Reservering reservering) {
+        this.reservering = reservering;
+    }
 
-	private double bedrag;
+    public int getFactuurID() {
+        return this.factuurID;
+    }
 
-	private Date datum;
+    /**
+     *
+     * @param factuurID
+     */
+    public void setFactuurID(int factuurID) {
+        this.factuurID = factuurID;
+    }
 
-	private String reden;
+    public int getFactuurnummer() {
+        return this.factuurnummer;
+    }
 
-	
-	public Factuur(){}
-	
-	/**
-	 * 
-	 * @param factuurID
-	 */
-	public Factuur(int factuurID)
-	{
-		this.factuurID = factuurID;
-	}
+    /**
+     *
+     * @param factuurnummer
+     */
+    public void setFactuurnummer(int factuurnummer) {
+        this.factuurnummer = factuurnummer;
+    }
 
-	public Reservering getReservering()
-	{
-		return this.reservering;
-	}
+    public double getBedrag() {
+        return this.bedrag;
+    }
 
-	/**
-	 * 
-	 * @param reservering
-	 */
-	public void setReservering(Reservering reservering)
-	{
-		this.reservering = reservering;
-	}
+    /**
+     *
+     * @param bedrag
+     */
+    public void setBedrag(double bedrag) {
+        this.bedrag = bedrag;
+    }
 
-	public int getFactuurID()
-	{
-		return this.factuurID;
-	}
+    public Date getDatum() {
+        return this.datum;
+    }
 
-	/**
-	 * 
-	 * @param factuurID
-	 */
-	public void setFactuurID(int factuurID)
-	{
-		this.factuurID = factuurID;
-	}
+    /**
+     *
+     * @param datum
+     */
+    public void setDatum(Date datum) {
+        this.datum = datum;
+    }
 
-	public int getFactuurnummer()
-	{
-		return this.factuurnummer;
-	}
+    public String getReden() {
+        return this.reden;
+    }
 
-	/**
-	 * 
-	 * @param factuurnummer
-	 */
-	public void setFactuurnummer(int factuurnummer)
-	{
-		this.factuurnummer = factuurnummer;
-	}
+    /**
+     *
+     * @param reden
+     */
+    public void setReden(String reden) {
+        this.reden = reden;
+    }
 
-	public double getBedrag()
-	{
-		return this.bedrag;
-	}
+    public int getReserveringID() {
+        return this.reserveringID;
+    }
 
-	/**
-	 * 
-	 * @param bedrag
-	 */
-	public void setBedrag(double bedrag)
-	{
-		this.bedrag = bedrag;
-	}
+    /**
+     *
+     * @param reserveringID
+     */
+    public void setReserveringID(int reserveringID) {
+        this.reserveringID = reserveringID;
+    }
 
-	public Date getDatum()
-	{
-		return this.datum;
-	}
-
-	/**
-	 * 
-	 * @param datum
-	 */
-	public void setDatum(Date datum)
-	{
-		this.datum = datum;
-	}
-
-	public String getReden()
-	{
-		return this.reden;
-	}
-
-	/**
-	 * 
-	 * @param reden
-	 */
-	public void setReden(String reden)
-	{
-		this.reden = reden;
-	}
-
-	public int getReserveringID()
-	{
-		return this.reserveringID;
-	}
-
-	/**
-	 * 
-	 * @param reserveringID
-	 */
-	public void setReserveringID(int reserveringID)
-	{
-		this.reserveringID = reserveringID;
-	}
-
-	public void validateFields()
-	{
-		isValid = true;
-	}
-
+    public void validateFields() {
+        isValid = true;
+    }
 }

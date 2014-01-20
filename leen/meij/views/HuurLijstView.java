@@ -15,7 +15,11 @@ import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
 
 import leen.meij.Reservering;
-
+/**
+ * 
+ * @author Thijs
+ * 
+ */
 public class HuurLijstView extends MasterView<ArrayList<Reservering>> implements ListSelectionListener, ActionListener
 {
 

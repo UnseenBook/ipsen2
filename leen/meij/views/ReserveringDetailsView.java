@@ -17,7 +17,10 @@ import leen.meij.dataAccess.KlantDataAccess;
 import leen.meij.dataAccess.VoertuigDataAccess;
 
 import com.toedter.calendar.JDateChooser;
-
+/**
+ *@author Jovanny Martis - s1078785 
+ * 
+ * **/
 public class ReserveringDetailsView extends MasterView<Reservering> implements ActionListener
 {
 	private JDateChooser dcReserveerDatum = new JDateChooser();
